@@ -1,0 +1,61 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Assignment {
+    _id: String!
+    assignmentBrief: String!
+    assignmentCourse: Course!
+    assignmentDueDate: String!
+    assignmentIsAssigned: Boolean!
+    assignmentLateDate: String!
+    assignmentName: String!
+    assignmentSpecifications: String!
+    dateCreated: String!
+}
+
+type Course {
+    _id: String!
+    courseAssignments: [Assignment]!
+    courseInstructor: String!
+    courseIsLocked: Boolean!
+    courseName: String!
+    courseSection: Int!
+    dateCreated: String!
+}
+
+type Mutation {
+    _empty: String
+    assignAssignment(assignmentId: String!): Assignment
+    createAssignment(assignmentCourse: String!, assignmentDueDate: String!, assignmentLateDate: String!, assignmentName: String!): Assignment
+    createCourse(courseName: String!, courseSection: Int!): Course
+    createUser(email: String!, firstname: String!, lastname: String!, password: String!, username: String!): User
+    updateUser(email: String, password: String): User
+}
+
+type Query {
+    _empty: String
+    courseAssignment(courseId: String!): Assignment
+    courseAssignments(courseId: String!): [Assignment]!
+    getAssignment(assignmentId: String!): Assignment
+    getCourse(courseId: String!): Course
+    getUser(userId: String!): User
+    instructorCourse(courseId: String!): Course
+    instructorCourses: [Course]!
+}
+
+type User {
+    _id: String!
+    account: String!
+    courses: [Course]
+    dateCreated: String!
+    dateEdited: String!
+    email: String!
+    firstname: String!
+    lastname: String!
+    password: String!
+    username: String!
+}

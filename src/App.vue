@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="$router.currentRoute.meta.requiresAuth">
+      <Navbar></Navbar>
+      <div class="grid-fluid">
+        <SideBar></SideBar>
+        <div class="mx-3" id="content-view">
+          <router-view></router-view>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from "@/components/Navbar"
+import SideBar from "@/components/Sidebar"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SideBar,
+    Navbar
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import './assets/custom.css';
+
+#content-view {
+  max-width: 1200px;
 }
 </style>
