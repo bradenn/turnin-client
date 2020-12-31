@@ -6,6 +6,7 @@ import Register from '@/views/auth/Register'
 import Profile from '@/views/Profile'
 import Privacy from '@/views/legal/Privacy'
 import Assignments from '@/views/instructor/Assignments'
+import Assignment from '@/views/instructor/Assignment'
 import Courses from '@/views/instructor/Courses'
 import Course from '@/views/instructor/Course'
 
@@ -32,8 +33,16 @@ let router = new Router({
         },
         {
             path: '/assignments',
-            name: 'Assignments',
+            name: 'assignments',
             component: Assignments,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/assignment/:assignmentId',
+            name: 'Assignment',
+            component: Assignment,
             meta: {
                 requiresAuth: true
             }

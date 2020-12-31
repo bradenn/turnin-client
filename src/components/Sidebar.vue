@@ -26,6 +26,20 @@
       <SidebarMenuItem name="Templates" link="/templates" icon="fas fa-file-archive"></SidebarMenuItem>
       <SidebarMenuItem name="Courses" link="/courses" icon="fas fa-users-cog"></SidebarMenuItem>
     </ul>
+    <hr>
+    <span class="navbar-text">My Courses</span>
+
+    <ul class="list-group menu-list" v-for="course in instructorCourses" :key="course._id">
+
+      <SidebarMenuItem :name="`${course.courseName}.${course.courseSection}`" link="/courses"
+                       icon="fas fa-users"></SidebarMenuItem>
+
+        <ul class="list-group menu-list pl-3" v-for="assignment in course.courseAssignments" :key="assignment._id">
+          <SidebarMenuItem :name="`${assignment.assignmentName}`" :link="`/assignment/${assignment._id}`"
+                           icon="fas fa-file"></SidebarMenuItem>
+        </ul>
+
+    </ul>
 
 
     <div class="menu-bottom">
@@ -53,16 +67,47 @@
 <script>
 
 import SidebarMenuItem from "@/components/SidebarMenuItem";
+import gql from "graphql-tag";
+
+const GET_COURSES = gql`
+query instructorCourses{
+    instructorCourses{
+        courseName,
+        courseSection,
+        courseAssignments {
+            _id,
+            assignmentName,
+            assignmentDueDate,
+            assignmentLateDate
+        },
+        courseIsLocked,
+        courseInstructor,
+        _id
+    }
+}`;
 
 export default {
   name: 'Sidebar',
   data() {
     return {
-      user: JSON.parse(localStorage.getItem("user"))
+      user: JSON.parse(localStorage.getItem("user")),
+      instructorCourses: [],
+      loading: 0,
     }
   },
   components: {
     SidebarMenuItem
+  },
+  apollo: {
+    instructorCourses: {
+      query: GET_COURSES,
+      loadingKey: 'loading',
+      variables() {
+        return {
+          userId: this.$user()._id,
+        }
+      }
+    },
   },
   props: {
     items: [

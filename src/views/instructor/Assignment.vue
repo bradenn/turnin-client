@@ -1,64 +1,98 @@
 <template>
   <div>
 
-    <Title :loading="loading" :titleOverride="instructorCourse.courseName" :subtitle="instructorCourse.courseSection
-    ?`Section ${instructorCourse.courseSection}`:''">
+    <Title
+        :loading="loading"
+        :titleOverride="getAssignment.assignmentName"
+        :subtitle="new Date().setDate(getAssignment.dateCreated).toLocaleString()">
     </Title>
-    <div v-if="error">
-      {{ error }}
-    </div>
-    <div v-else>
-      <b-card no-body>
-        <b-tabs card>
-          <b-tab title="Grades" active>
-            <div class="d-flex justify-content-between align-items-end">
-              <div>
-                <b-card-title>Student Grades</b-card-title>
-                <b-card-text>
-                  With supporting text below as a natural lead-in to additional content.
-                </b-card-text>
-              </div>
-              <div>
-                <b-button href="/assignments" variant="primary">Go to Assignments</b-button>
-              </div>
-            </div>
-          </b-tab>
-          <b-tab title="Students">
-            <b-card-text>Tab contents 2</b-card-text>
-          </b-tab>
-          <b-tab title="Course Settings">
-            <b-card-text>Tab contents 2</b-card-text>
-          </b-tab>
-        </b-tabs>
-      </b-card>
 
-    </div>
+    <b-form-row>
+      <b-col cols="8">
+        <t-card
+            title="Required Files"
+            subtitle="Students are expected to provide the following files."
+            align-top>
+          <template slot="button">
+            <b-input-group size="sm" class="mt-3">
+              <b-form-input placeholder="main.cpp"></b-form-input>
+              <b-input-group-append>
+                <b-button variant="secondary">Add File</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </template>
+          <template slot="body">
+            <div class="table-responsive mb-0">
+              <b-table :fields="['fileName', 'options']" striped class="px-4" small
+                       :items="[{fileName: 'main.cpp', options: 'Remove'}, {fileName: 'tree.cpp', options: 'Remove'}]"></b-table>
+            </div>
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="4">
+        <t-card
+            title="Assignment Settings"
+            subtitle="Change basic assignment settings.">
+          <template slot="body">
+            <div class="d-flex justify-content-between">
+              <div>Assigned</div>
+              <b-form-checkbox v-model="checked" name="check-button" switch></b-form-checkbox>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+              <div>Allow Late Work</div>
+              <b-form-checkbox v-model="getAssignment.assignmentIsAssigned" name="check-button" switch></b-form-checkbox>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+              <div>Due Date</div>
+              <b-link>{{ getAssignment.assingmentDueDate }}</b-link>
+            </div>
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="8">
+        <t-card
+            title="Required Files"
+            subtitle="Students are expected to provide the following files.">
+        </t-card>
+      </b-col>
+      <b-col cols="4">
+        <t-card
+            :title="getAssignment.assignmentIsAssigned?'Assigned':'Not Assigned'"
+            :subtitle="`Students can${getAssignment.assignmentIsAssigned?'':'not'} see this assignment.`">
+        </t-card>
+      </b-col>
+    </b-form-row>
+
   </div>
 </template>
 
 <script>
 import Title from "@/components/Title";
 import gql from 'graphql-tag'
+import tCard from "@/components/tCard";
 
 const GET_ASSIGNMENT =
-    gql`query instructorCourse($courseId: String!){
-          instructorCourse(courseId: $courseId){
-              courseName,
-              courseSection,
-              courseIsLocked
+    gql`query getAssignment($assignmentId: String!){
+          getAssignment(assignmentId: $assignmentId){
+              assignmentName,
+              assignmentCourse,
+              assignmentIsAssigned,
+              dateCreated
           }
         }`;
 
 export default {
   name: 'Courses',
   components: {
-    Title
+    Title,
+    tCard
   },
   data() {
     return {
-      instructorCourse: {},
+      getAssignment: {},
       loading: 0,
-      tab: 'students',
       error: "",
       show: false
     }
@@ -66,9 +100,20 @@ export default {
   mounted() {
     this.loadCourse();
   },
+  apollo: {
+    getAssignment: {
+      query: GET_ASSIGNMENT,
+      loadingKey: 'loading',
+      variables() {
+        return {
+          assignmentId: this.$route.params.assignmentId,
+        }
+      }
+    },
+  },
   methods: {
     loadCourse() {
-     return "";
+      return "";
     },
     createCourse() {
       this.$apollo.mutate({
@@ -87,17 +132,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-#card-tabs {
-  margin: 0;
-  padding: 0;
-}
 
-.card-header {
-  padding: 0 !important;
-  margin: 0;
-}
 
-.card {
-  padding: 0 0;
-}
 </style>

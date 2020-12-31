@@ -8,7 +8,7 @@ schema {
 type Assignment {
     _id: String!
     assignmentBrief: String!
-    assignmentCourse: Course!
+    assignmentCourse: String!
     assignmentDueDate: String!
     assignmentIsAssigned: Boolean!
     assignmentLateDate: String!

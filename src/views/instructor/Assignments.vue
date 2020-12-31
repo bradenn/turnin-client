@@ -1,33 +1,37 @@
 <template>
   <div>
-    <Title>
+    <Title title-override="Assignments">
       <b-link @click="show=true">New Assignment</b-link>
     </Title>
 
     <div v-for="course in instructorCourses" :key="course._id">
-      <h5>{{course.courseName}}.{{course.courseSection}}</h5>
-      <div class="table-responsive">
-        <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
-                          v-if="$apollo.loading">
-        </b-skeleton-table>
-        <b-table striped class="table" :items="course.courseAssignments"
-                 :fields="['assignmentName', 'dueDate', 'lateDate']"
-                 show-empty v-else>
+      <t-card :title="`${course.courseName}.${course.courseSection}`"
+            subtitle="You are the primary instructor of this course." :loading="true">
+        <template slot="body">
+          <div class="table-responsive mb-0 ">
+            <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
+                              v-if="$apollo.loading">
+            </b-skeleton-table>
+            <b-table striped class="table" :items="course.courseAssignments"
+                     :fields="['assignmentName', 'dueDate', 'lateDate']"
+                     show-empty v-else>
 
-          <template #cell(assignmentName)="data">
-            <b-link :to="`/assignments/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
-          </template>
-          <template #cell(dueDate)="data">
-            {{ new Date(data.item.assignmentDueDate) }}
-          </template>
-          <template #cell(lateDueDate)="data">
-            {{ new Date(data.item.assignmentLateDate) }}
-          </template>
-          <template #empty="">
-            <span>This course does not have any assignments.</span>
-          </template>
-        </b-table>
-      </div>
+              <template #cell(assignmentName)="data">
+                <b-link :to="`/assignment/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
+              </template>
+              <template #cell(dueDate)="data">
+                {{ new Date(data.item.assignmentDueDate) }}
+              </template>
+              <template #cell(lateDueDate)="data">
+                {{ new Date(data.item.assignmentLateDate) }}
+              </template>
+              <template #empty="">
+                <span>This course does not have any assignments.</span>
+              </template>
+            </b-table>
+          </div>
+        </template>
+      </t-card>
     </div>
 
     <b-modal
@@ -82,6 +86,7 @@
 
 <script>
 import Title from "@/components/Title";
+import tCard from "@/components/tCard";
 import gql from 'graphql-tag'
 
 const GET_COURSES = gql`
@@ -112,7 +117,8 @@ mutation createAssignment($assignmentName: String!, $assignmentCourse: String!, 
 export default {
   name: 'Courses',
   components: {
-    Title
+    Title,
+    tCard
   },
   data() {
     return {

@@ -7,7 +7,8 @@
         <b-card no-body id="loginForm">
           <b-form @submit="onSubmit">
             <div class="card-title">Register</div>
-            <div class="card-subtitle">Sign up for a turnin account.</div>
+            <div class="card-subtitle" v-if="error">Sign up for a turnin account.</div>
+            <div class="card-subtitle" v-else>Sign up for a turnin account.</div>
             <b-form-group class="mb-2 d-block">
               <b-form-input type="text" name="username" v-model="form.username" placeholder="Username"/>
               <small class="text-muted">Your Institution username</small>
@@ -48,6 +49,7 @@ export default {
   name: 'Register',
   data() {
     return {
+      error: "",
       form: {
         username: "",
         password: "",
