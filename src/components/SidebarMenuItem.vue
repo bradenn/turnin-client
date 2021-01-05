@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     isActive(){
-      return (this.$router.currentRoute.name === this.$props.name)?'active':'';
+      return (this.$router.currentRoute.path === this.$props.link)?'active':'';
     }
   }
 }

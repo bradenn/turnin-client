@@ -46,7 +46,7 @@ export default {
       event.preventDefault()
       if (this.form.password.length > 0) {
 
-        this.$http.post('http://localhost:3000/auth', {
+        this.$http.post('http://localhost:3000/auth/login', {
           username: this.form.username,
           password: this.form.password
         }).then(response => {

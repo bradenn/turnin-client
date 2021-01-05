@@ -1,5 +1,4 @@
 <template>
-
     <b-card no-body class="mb-3 px-3 pt-2 pb-3">
       <div class="d-flex justify-content-between" :class="top?'align-items-start':'align-items-end'">
         <div>
@@ -30,6 +29,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.card {
+  background-color: var(--bg);
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+}
 </style>

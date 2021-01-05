@@ -4,46 +4,13 @@
       <b-row class="pt-4">
         <b-col cols="2"></b-col>
         <b-col cols="8">
-          <Title title-override="Privacy Policy" subtitle="Policy is subject to change"></Title>
+          <Title title-override="Terms Of Service" subtitle="Terms are subject to change"></Title>
         </b-col>
         <b-col cols="2"></b-col>
       </b-row>
       <b-row class="pt-1">
         <b-col cols="2"></b-col>
         <b-col cols="8">
-          <h5>All you need to know</h5>
-          <ul>
-            <li>Personal data we collect</li>
-            <ul>
-              <li>Firstname</li>
-              <li>Lastname</li>
-              <li>Email</li>
-              <li>Username</li>
-              <li>Salted password hash</li>
-              <li>GitHub Link (Optional)</li>
-            </ul>
-          </ul>
-          <ul>
-            <li>Institutional Data Use Disclaimer</li>
-            <ul>
-              <li>Your institution is able to download your submission files.</li>
-              <li>Your institution may not adhere to our privacy policy.</li>
-              <li>Requests from an institution regarding personal data will be denied.</li>
-            </ul>
-          </ul>
-          <ul>
-            <li>Your personal information will not be sold.</li>
-            <li>Your personal information will not be shared with third-parties.</li>
-            <li>Your interactions will not be tracked.</li>
-            <li>Your preferences will not be tracked.</li>
-            <li>Your email will not be spammed.</li>
-            <li>Your submissions may be compared to other submissions to check for plagiarism.</li>
-            <li>Your credentials are encrypted and not readable by any member of Turnin Technologies LLC, or any
-              institution.
-            </li>
-            <li>Your institution cannot access your personal information.</li>
-          </ul>
-          <h5>In legal form</h5>
           <p>Your privacy is important to us. It is Turnin Technologies LLC's policy to respect your privacy regarding
             any information we may collect from you across our website, <a
                 href="https://www.turnin.co">https://www.turnin.co</a>, and other sites we own and operate.</p>
@@ -75,7 +42,7 @@
 import Title from "@/components/Title";
 
 export default {
-  name: 'Privacy',
+  name: 'Terms Of Service',
   components: {Title}
 }
 </script>

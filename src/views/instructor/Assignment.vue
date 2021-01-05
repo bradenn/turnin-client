@@ -3,8 +3,10 @@
 
     <Title
         :loading="loading"
-        :titleOverride="getAssignment.assignmentName"
-        :subtitle="new Date().setDate(getAssignment.dateCreated).toLocaleString()">
+        :titleOverride="getAssignment.assignmentName">
+      <template slot="breadcrumb">
+
+      </template>
     </Title>
 
     <b-form-row>
@@ -22,6 +24,7 @@
             </b-input-group>
           </template>
           <template slot="body">
+            <!--            <b-form-tags input-id="tags-basic" v-model="value"></b-form-tags>-->
             <div class="table-responsive mb-0">
               <b-table :fields="['fileName', 'options']" striped class="px-4" small
                        :items="[{fileName: 'main.cpp', options: 'Remove'}, {fileName: 'tree.cpp', options: 'Remove'}]"></b-table>
@@ -36,17 +39,18 @@
           <template slot="body">
             <div class="d-flex justify-content-between">
               <div>Assigned</div>
-              <b-form-checkbox v-model="checked" name="check-button" switch></b-form-checkbox>
+              <b-form-checkbox v-model="getAssignment.assignmentIsAssigned" name="check-button"
+                               switch></b-form-checkbox>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
               <div>Allow Late Work</div>
-              <b-form-checkbox v-model="getAssignment.assignmentIsAssigned" name="check-button" switch></b-form-checkbox>
+              <b-form-checkbox name="check-button" switch></b-form-checkbox>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
               <div>Due Date</div>
-              <b-link>{{ getAssignment.assingmentDueDate }}</b-link>
+              {{ getAssignment.assignmentDueDate }}
             </div>
           </template>
         </t-card>
@@ -59,8 +63,12 @@
       </b-col>
       <b-col cols="4">
         <t-card
-            :title="getAssignment.assignmentIsAssigned?'Assigned':'Not Assigned'"
-            :subtitle="`Students can${getAssignment.assignmentIsAssigned?'':'not'} see this assignment.`">
+            title="Due Date"
+            subtitle="">
+          <template slot="body">
+            <b-calendar value-as-date block label-help="" v-model="getAssignment.assignmentDueDate" locale="en">
+            </b-calendar>
+          </template>
         </t-card>
       </b-col>
     </b-form-row>
@@ -74,11 +82,12 @@ import gql from 'graphql-tag'
 import tCard from "@/components/tCard";
 
 const GET_ASSIGNMENT =
-    gql`query getAssignment($assignmentId: String!){
-          getAssignment(assignmentId: $assignmentId){
+    gql`query assignment($assignmentId: String!){
+          assignment(assignmentId: $assignmentId){
               assignmentName,
               assignmentCourse,
               assignmentIsAssigned,
+              assignmentDueDate,
               dateCreated
           }
         }`;
@@ -132,6 +141,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.b-form-tags-input {
+  color: var(--text-color)
+}
 
+.b-calendar-grid-help {
+  background-color: var(--background);
+}
+
+.btn-primary.dropdown-toggle {
+  background-color: var(--primary) !important;
+}
 
 </style>

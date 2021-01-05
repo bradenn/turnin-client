@@ -1,6 +1,10 @@
 <template>
   <div class="menu">
-
+    <div class="d-flex align-items-center pr-3">
+      <b-img src="/logo.png" width="36"></b-img>
+      <h4 class="sidebar-title mb-0 ml-3">Turnin</h4>
+    </div>
+    <hr>
     <a href="/profile" class="no-bs">
       <div class="d-flex align-items-center">
         <div class="mr-2 pl-0">
@@ -34,10 +38,10 @@
       <SidebarMenuItem :name="`${course.courseName}.${course.courseSection}`" link="/courses"
                        icon="fas fa-users"></SidebarMenuItem>
 
-        <ul class="list-group menu-list pl-3" v-for="assignment in course.courseAssignments" :key="assignment._id">
-          <SidebarMenuItem :name="`${assignment.assignmentName}`" :link="`/assignment/${assignment._id}`"
-                           icon="fas fa-file"></SidebarMenuItem>
-        </ul>
+      <ul class="list-group menu-list pl-3" v-for="assignment in course.courseAssignments" :key="assignment._id">
+        <SidebarMenuItem :name="`${assignment.assignmentName}`" :link="`/assignment/${assignment._id}`"
+                         icon="fas fa-file"></SidebarMenuItem>
+      </ul>
 
     </ul>
 
@@ -47,11 +51,13 @@
         <div>
           <div class="align-items-center">
                     <span data-toggle="tooltip" data-placement="top" title="Container: "><i
-                        class="fas fa-code"></i>&nbsp;Turnin v</span><br>
+                        class="fas fa-code"></i>&nbsp;Turnin v3.0.2</span><br>
             <span class="text-muted">Copyright &copy; <a href="https://www.bradenn.com"
-                                                         class="no-bs">BN Media</a> {{
+                                                         class="no-bs">BN Media</a> 2019 - {{
                 new Date().getFullYear()
-              }}</span>
+              }}</span><br>
+            <b-link href="/legal/privacy">privacy</b-link>&nbsp;
+            <b-link href="/legal/terms">terms</b-link>
           </div>
         </div>
         <div class="">
@@ -90,7 +96,7 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      user: JSON.parse(localStorage.getItem("user")),
+      user: this.$user(),
       instructorCourses: [],
       loading: 0,
     }
@@ -101,12 +107,7 @@ export default {
   apollo: {
     instructorCourses: {
       query: GET_COURSES,
-      loadingKey: 'loading',
-      variables() {
-        return {
-          userId: this.$user()._id,
-        }
-      }
+      loadingKey: 'loading'
     },
   },
   props: {
@@ -121,5 +122,11 @@ export default {
 </script>
 
 <style>
+.sidebar-title{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 1.75em;
+  line-height: 36px;
 
+}
 </style>

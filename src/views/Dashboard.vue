@@ -1,23 +1,30 @@
 <template>
   <div>
     <Title></Title>
-    <div class="d-flex justify-content-between">
-      <StatBox title="Assignments" subtitle="Currently assigned" large="4" units="assignments"></StatBox>
-      <StatBox></StatBox>
-      <StatBox></StatBox>
-    </div>
+    <b-form-row>
+      <b-col cols="8">
+        <t-card
+            title="Upcoming Assignments"
+            subtitle="Assignments due in the next two weeks.">
+          <template slot="body">
+
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="4">dd</b-col>
+    </b-form-row>
   </div>
 </template>
 
 <script>
 import Title from "@/components/Title";
-import StatBox from "@/components/StatBox";
+import TCard from "@/components/tCard";
 
 export default {
   name: 'Dashboard',
   components: {
-    Title,
-    StatBox
+    TCard,
+    Title
   },
   props: {}
 }

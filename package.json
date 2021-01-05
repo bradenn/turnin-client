@@ -23,6 +23,7 @@
     "core-js": "^3.6.5",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
+    "scss": "^0.2.4",
     "subscriptions-transport-ws": "^0.9.18",
     "vue": "^2.6.12",
     "vue-apollo": "^3.0.5",

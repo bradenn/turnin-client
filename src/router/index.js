@@ -5,6 +5,7 @@ import Login from '@/views/auth/Login'
 import Register from '@/views/auth/Register'
 import Profile from '@/views/Profile'
 import Privacy from '@/views/legal/Privacy'
+import Terms from '@/views/legal/Terms'
 import Assignments from '@/views/instructor/Assignments'
 import Assignment from '@/views/instructor/Assignment'
 import Courses from '@/views/instructor/Courses'
@@ -83,6 +84,14 @@ let router = new Router({
             path: '/legal/privacy',
             name: 'Privacy',
             component: Privacy,
+            meta: {
+                guest: true
+            }
+        },
+        {
+            path: '/legal/terms',
+            name: 'Terms Of Service',
+            component: Terms,
             meta: {
                 guest: true
             }

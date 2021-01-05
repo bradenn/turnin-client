@@ -6,7 +6,10 @@
 
     <div v-for="course in instructorCourses" :key="course._id">
       <t-card :title="`${course.courseName}.${course.courseSection}`"
-            subtitle="You are the primary instructor of this course." :loading="true">
+              subtitle="You are the primary instructor of this course." :loading="true">
+        <template slot="button">
+          <b-link :href="`/course/${course._id}`">Manage Course</b-link>
+        </template>
         <template slot="body">
           <div class="table-responsive mb-0 ">
             <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
@@ -20,7 +23,7 @@
                 <b-link :to="`/assignment/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
               </template>
               <template #cell(dueDate)="data">
-                {{ new Date(data.item.assignmentDueDate) }}
+                {{ new Date(data.item.assignmentDueDate).toLocaleString() }}
               </template>
               <template #cell(lateDueDate)="data">
                 {{ new Date(data.item.assignmentLateDate) }}
@@ -55,16 +58,18 @@
           </b-form-select>
         </b-form-group>
         <b-form-group
-            description="Provided an identifier if the course name is reused."
+            :description="form.assignmentDueDate.toString()"
             label="Assignment due date."
             label-for="assignmentDueDate">
-          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" class="mb-2"></b-form-datepicker>
+          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true"
+                             class="mb-2"></b-form-datepicker>
         </b-form-group>
         <b-form-group
             description="Provided an identifier if the course name is reused."
             label="Assignment late due date."
             label-for="assignmentLateDate">
-          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" class="mb-2"></b-form-datepicker>
+          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :value-as-date="true"
+                             class="mb-2"></b-form-datepicker>
         </b-form-group>
 
       </form>
@@ -157,8 +162,8 @@ export default {
         variables: {
           assignmentName: this.form.assignmentName,
           assignmentCourse: this.form.assignmentCourse,
-          assignmentDueDate: this.form.assignmentDueDate,
-          assignmentLateDate: this.form.assignmentLateDate
+          assignmentDueDate: this.form.assignmentDueDate.toString(),
+          assignmentLateDate: this.form.assignmentLateDate.toString()
         }
       }).then(response => {
         console.log(response)

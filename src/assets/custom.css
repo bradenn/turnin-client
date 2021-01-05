@@ -34,9 +34,9 @@ body {
     --bg: rgba(39, 43, 47, 1);
     /*--bg: #242526;*/
     /*--nav: #242526;*/
-    --nav: rgba(39, 43, 47, 1);
+    --nav: rgb(39, 43, 47);
     /*--background: #151515;*/
-    --background: rgba(33, 37, 41, 1);
+    --background: rgb(33, 37, 41);
     --bg-accent: #353639;
     --text-color: #fff;
     --nav-size: 48px;
@@ -167,7 +167,7 @@ html[data-theme='light'] {
 
 .grid-fluid {
     display: grid;
-    grid-template-columns: minmax(150px, 25%) 1fr;
+    grid-template-columns: minmax(150px, 20%) 1fr;
 }
 
 .navbar-text {
@@ -329,13 +329,14 @@ a {
 .menu {
     background-color: var(--bg);
     height: calc(100%);
-    min-height: calc(100vh - var(--nav-size)) !important;
+    min-height: calc(100vh) !important;
     /*border-right: var(--border);*/
     /*margin: 1em 1em;*/
     /*border-radius: var(--border-radius);*/
     padding: 1em 1em;
-    /*box-shadow: var(--box-shadow);*/
-    box-shadow: inset -3px 0px 7px -2px rgba(28, 27, 27, 0.2);
+    box-shadow: var(--box-shadow);
+    border-right: var(--border);
+    /*box-shadow: inset -3px 0px 7px -2px rgba(28, 27, 27, 0.2);*/
 }
 
 .menu-link {
@@ -389,7 +390,7 @@ a {
 
 .menu-bottom {
     width: inherit;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     position: absolute;
     bottom: 0;
 }
@@ -695,11 +696,7 @@ td {
 
 
 .card {
-    border-radius: var(--border-radius);
-    padding: 16px;
-    background-color: var(--bg);
-    border: var(--border);
-    box-shadow: var(--box-shadow);
+
 }
 
 .sub-header {
