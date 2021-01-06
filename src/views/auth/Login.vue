@@ -4,25 +4,27 @@
       <b-col cols="4"></b-col>
       <b-col cols="4">
         <h1 class="text-center pb-2"><i class="fas fa-code"></i>Turnin</h1>
-        <b-card no-body id="loginForm">
-          <b-form @submit="onSubmit">
-            <div class="card-title">Login</div>
-            <div class="card-subtitle">Sign in with your username and password.</div>
-            <b-form-group class="mb-2 d-block">
-              <b-form-input type="text" v-model="form.username" placeholder="Username"/>
-              <small class="text-muted">Your CSU Chico username</small>
-            </b-form-group>
-            <b-form-group class="mb-2 d-block">
-              <b-form-input type="password" v-model="form.password" placeholder="Password"/>
-            </b-form-group>
-            <div class="d-flex justify-content-between">
-              <a href="/register">Create account</a>
-              <div>
-                <b-button type="submit" class="btn btn-primary">Login</b-button>
+        <t-card
+        title="Login"
+        subtitle="Sign in with your username and password.">
+          <template slot="body">
+            <b-form @submit="onSubmit">
+              <b-form-group class="mb-2 d-block">
+                <b-form-input type="text" v-model="form.username" placeholder="Username"/>
+                <small class="text-muted">Your CSU Chico username</small>
+              </b-form-group>
+              <b-form-group class="mb-2 d-block">
+                <b-form-input type="password" v-model="form.password" placeholder="Password"/>
+              </b-form-group>
+              <div class="d-flex justify-content-between">
+                <a href="/register">Create account</a>
+                <div>
+                  <b-button type="submit" class="btn btn-primary">Login</b-button>
+                </div>
               </div>
-            </div>
-          </b-form>
-        </b-card>
+            </b-form>
+          </template>
+        </t-card>
       </b-col>
       <b-col cols="4"></b-col>
     </b-row>
@@ -31,7 +33,9 @@
 
 <script>
 
+import TCard from "@/components/tCard";
 export default {
+  components: {TCard},
   data() {
     return {
       form: {

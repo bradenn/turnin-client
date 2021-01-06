@@ -26,7 +26,7 @@
             </a>
           </li>
           <li class="nav-item d-flex">
-            <a data-toggle="modal" href="#joinClass" class="nav-link"> <span class="fa-stack nav-stack"
+            <a @click="show = true" class="nav-link"> <span class="fa-stack nav-stack"
                                                                              style="vertical-align: top;">
                                   <i class="fas fa-circle fa-stack-2x"></i>
                                   <i class="fas fa-plus fa-stack-1x fa-inverse"></i>

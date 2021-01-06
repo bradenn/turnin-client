@@ -8,8 +8,8 @@
                 class="bold">{{ current }}</span></span>
             <div class="card-subtitle mb-0">{{subtitle}}</div>
           </div>
-          <div class="align-self-end d-flex">
-
+          <div class="align-self-end">
+            <component :is="button"></component>
           </div>
         </div>
         <b-nav tabs>
@@ -31,13 +31,15 @@ export default {
     loading: Boolean,
     previous: String,
     current: String,
+    button: Object,
     subtitle: String,
     items: Array,
     parent: String
   },
   data() {
     return {
-      title: this.$router.currentRoute.name
+      title: this.$router.currentRoute.name,
+      comp: this.$route.meta.button,
     }
   },
   methods: {}

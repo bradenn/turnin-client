@@ -15,13 +15,14 @@ import Course from '@/views/instructor/Course'
 import AssignmentOverview from "@/views/instructor/assignment/AssignmentOverview";
 import DashboardStudents from "@/views/instructor/dashboard/DashboardStudents";
 import DashboardSettings from "@/views/instructor/dashboard/DashboardSettings";
+import DashboardNewCourse from "@/views/instructor/dashboard/DashboardNewCourse";
 
 Vue.use(Router)
 
 let router = new Router({
     mode: 'history',
     routes: [
-        { path: '/', redirect: '/dashboard' },
+        {path: '/', redirect: '/dashboard'},
         {
             path: '/dashboard',
             component: Dashboard,
@@ -50,7 +51,8 @@ let router = new Router({
                     name: 'Courses',
                     component: Courses,
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        button: DashboardNewCourse,
                     }
                 },
                 {
@@ -150,6 +152,10 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+    if(to.fullPath === '/logout') {
+        localStorage.clear();
+        next({path: '/login'})
+    }
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('token') !== 'undefined') {
             const user = JSON.parse(localStorage.getItem('user'))

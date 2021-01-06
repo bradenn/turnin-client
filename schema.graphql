@@ -2,6 +2,7 @@
 
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type Assignment {
@@ -38,6 +39,10 @@ type File {
     fileName: String!
     fileOwner: User!
     fileReference: String!
+}
+
+type Mutation {
+    createCourse(courseInput: CourseInput!): Course!
 }
 
 type Query {
@@ -81,6 +86,11 @@ type User {
     lastname: String!
     password: String!
     username: String!
+}
+
+input CourseInput {
+    courseName: String!
+    courseSection: Float!
 }
 
 

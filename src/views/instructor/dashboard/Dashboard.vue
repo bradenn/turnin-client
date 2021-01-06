@@ -6,6 +6,7 @@
         :current="this.$route.name"
         subtitle=""
         :parent="parent"
+        :button="this.$route.meta.button"
         :items="navItems">
     </t-header>
     <b-container>
@@ -16,6 +17,7 @@
 
 <script>
 import THeader from "@/components/tHeader";
+
 
 export default {
   name: 'Dashboard',
