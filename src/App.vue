@@ -1,12 +1,11 @@
 <template>
   <div id="app">
     <div v-if="$router.currentRoute.meta.requiresAuth">
-      <div class="grid-fluid">
-        <SideBar></SideBar>
-        <div class="d-flex justify-content-start">
-          <div class="mx-3" id="content-view">
-            <router-view></router-view>
-          </div>
+      <Navbar></Navbar>
+      <div class="container-fluid no-gutters">
+        <div class="" id="content-view">
+          <router-view></router-view>
+
         </div>
       </div>
     </div>
@@ -18,24 +17,40 @@
 
 <script>
 /*import Navbar from "@/components/Navbar"*/
-import SideBar from "@/components/Sidebar"
+import Navbar from "@/components/Navbar";
 
 export default {
   name: 'App',
   components: {
-    SideBar
+    Navbar,
+  },
+  data() {
+    return {
+
+    }
+  },
+  mounted() {
+    let localTheme = localStorage.getItem('theme'); //gets stored theme value if any
+    document.documentElement.setAttribute('data-theme', localTheme); // updates the data-theme attribute
   }
+
 }
 </script>
 
 <style>
-@import './assets/custom.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+/*@import './assets/custom.css';*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
 html, body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
 }
+
 #content-view {
   width: 100%;
-  max-width: 1600px;
+}
+
+.no-gutters{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 </style>

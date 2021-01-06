@@ -31,7 +31,7 @@ export default {
 
 <style scoped>
 .card {
-  background-color: var(--bg);
+  background-color: var(--foreground);
   border: var(--border);
   box-shadow: var(--box-shadow);
 }

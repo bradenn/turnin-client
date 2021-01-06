@@ -1,42 +1,38 @@
 <template>
   <div>
-    <Title title-override="Courses">
-      <b-button variant="primary"  class="mr-2" size="sm">New Course</b-button>
-      <b-button variant="primary" size="sm" @click="show=true">New Assignment</b-button>
-    </Title>
 
-    <div v-for="course in instructorCourses" :key="course._id">
-      <t-card :title="`${course.courseName}.${course.courseSection}`"
-              subtitle="You are the primary instructor of this course." :loading="true">
-        <template slot="button">
-          <b-link :href="`/course/${course._id}`">Manage Course</b-link>
-        </template>
-        <template slot="body">
-          <div class="table-responsive mb-0 ">
-            <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
-                              v-if="$apollo.loading">
-            </b-skeleton-table>
-            <b-table striped class="table" :items="course.courseAssignments"
-                     :fields="['assignmentName', 'dueDate', 'lateDate']"
-                     show-empty v-else>
+      <div v-for="course in instructorCourses" :key="course._id">
+        <t-card :title="`${course.courseName}.${course.courseSection}`"
+                subtitle="You are the primary instructor of this course." :loading="true">
+          <template slot="button">
+            <b-link :href="`/course/${course._id}`">Manage Course</b-link>
+          </template>
+          <template slot="body">
+            <div class="table-responsive mb-0 ">
+              <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
+                                v-if="$apollo.loading">
+              </b-skeleton-table>
+              <b-table hover class="table" :items="course.courseAssignments"
+                       :fields="['assignmentName', 'dueDate', 'lateDate']"
+                       show-empty v-else>
 
-              <template #cell(assignmentName)="data">
-                <b-link :to="`/assignment/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
-              </template>
-              <template #cell(dueDate)="data">
-                {{ new Date(data.item.assignmentDueDate).toLocaleString() }}
-              </template>
-              <template #cell(lateDueDate)="data">
-                {{ new Date(data.item.assignmentLateDate) }}
-              </template>
-              <template #empty="">
-                <span>This course does not have any assignments.</span>
-              </template>
-            </b-table>
-          </div>
-        </template>
-      </t-card>
-    </div>
+                <template #cell(assignmentName)="data">
+                  <b-link :to="`/assignment/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
+                </template>
+                <template #cell(dueDate)="data">
+                  {{ new Date(data.item.assignmentDueDate).toLocaleString() }}
+                </template>
+                <template #cell(lateDueDate)="data">
+                  {{ new Date(data.item.assignmentLateDate) }}
+                </template>
+                <template #empty="">
+                  <span>This course does not have any assignments.</span>
+                </template>
+              </b-table>
+            </div>
+          </template>
+        </t-card>
+      </div>
 
     <b-modal
         v-model="show"
@@ -62,13 +58,15 @@
             :description="form.assignmentDueDate.toString()"
             label="Assignment due date."
             label-for="assignmentDueDate">
-          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
+          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true"
+                             class="mb-2"></b-form-datepicker>
         </b-form-group>
         <b-form-group
             description="Provided an identifier if the course name is reused."
             label="Assignment late due date."
             label-for="assignmentLateDate">
-          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
+          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :value-as-date="true"
+                             class="mb-2"></b-form-datepicker>
         </b-form-group>
 
       </form>
@@ -89,7 +87,6 @@
 </template>
 
 <script>
-import Title from "@/components/Title";
 import tCard from "@/components/tCard";
 import gql from 'graphql-tag'
 
@@ -105,7 +102,9 @@ query instructorCourses{
             assignmentLateDate
         },
         courseIsLocked,
-        courseInstructor,
+        courseInstructor {
+        _id
+        },
         _id
     }
 }`;
@@ -121,7 +120,6 @@ mutation createAssignment($assignmentName: String!, $assignmentCourse: String!, 
 export default {
   name: 'Courses',
   components: {
-    Title,
     tCard
   },
   data() {
@@ -209,7 +207,7 @@ export default {
 
 .custom-control-label::before {
   background-color: var(--background) !important;
-  border: var(--bg-accent) solid 1px !important;
+  border: var(--foreground-accent) solid 1px !important;
 }
 
 .custom-control-input:checked ~ .custom-control-label::before {
@@ -228,13 +226,8 @@ export default {
 .clr {
   padding: 1em;
   margin: 1em;
-  background-color: var(--bg);
+  background-color: var(--foreground);
   border: var(--border);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--bs);
 }
-
-.btn.btn-primary.btn-sm {
-  padding: 0.25em 0.5em;
-}
-
 </style>

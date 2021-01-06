@@ -1,28 +1,75 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/views/Dashboard'
 import Login from '@/views/auth/Login'
 import Register from '@/views/auth/Register'
 import Profile from '@/views/Profile'
 import Privacy from '@/views/legal/Privacy'
 import Terms from '@/views/legal/Terms'
-import Assignments from '@/views/instructor/Assignments'
-import Assignment from '@/views/instructor/Assignment'
-import Courses from '@/views/instructor/Courses'
+import Dashboard from '@/views/instructor/dashboard/Dashboard'
+import DashboardOverview from '@/views/instructor/dashboard/DashboardOverview'
+import Assignments from '@/views/instructor/dashboard/Assignments'
+import Assignment from '@/views/instructor/assignment/Assignment'
+import AssignmentRequirements from '@/views/instructor/assignment/AssignmentRequirements'
+import Courses from '@/views/instructor/dashboard/Courses'
 import Course from '@/views/instructor/Course'
+import AssignmentOverview from "@/views/instructor/assignment/AssignmentOverview";
+import DashboardStudents from "@/views/instructor/dashboard/DashboardStudents";
+import DashboardSettings from "@/views/instructor/dashboard/DashboardSettings";
 
 Vue.use(Router)
 
 let router = new Router({
     mode: 'history',
     routes: [
+        { path: '/', redirect: '/dashboard' },
         {
             path: '/dashboard',
-            name: 'Dashboard',
             component: Dashboard,
             meta: {
                 requiresAuth: true
-            }
+            },
+            children: [
+                {
+                    path: '',
+                    name: 'Overview',
+                    component: DashboardOverview,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'assignments',
+                    name: 'Assignments',
+                    component: Assignments,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'courses',
+                    name: 'Courses',
+                    component: Courses,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'students',
+                    name: 'Students',
+                    component: DashboardStudents,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'settings',
+                    name: 'Settings',
+                    component: DashboardSettings,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+            ]
         },
         {
             path: '/profile',
@@ -32,30 +79,33 @@ let router = new Router({
                 requiresAuth: true
             }
         },
-        {
-            path: '/assignments',
-            name: 'assignments',
-            component: Assignments,
-            meta: {
-                requiresAuth: true
-            }
-        },
+
         {
             path: '/assignment/:assignmentId',
-            name: 'Assignment',
             component: Assignment,
             meta: {
                 requiresAuth: true
-            }
+            },
+            children: [
+                {
+                    path: '',
+                    name: 'Overview',
+                    component: AssignmentOverview,
+                    meta: {
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'requirements',
+                    name: 'Requirements',
+                    component: AssignmentRequirements,
+                    meta: {
+                        requiresAuth: true
+                    }
+                }
+            ]
         },
-        {
-            path: '/courses',
-            name: 'Courses',
-            component: Courses,
-            meta: {
-                requiresAuth: true
-            }
-        },
+
         {
             path: '/course/:courseId',
             name: 'Course',

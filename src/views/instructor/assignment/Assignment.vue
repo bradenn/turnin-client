@@ -1,0 +1,91 @@
+<template>
+  <div>
+
+    <t-header
+        :loading="loading"
+        :previous="assignment.assignmentCourse.courseName"
+        :current="assignment.assignmentName"
+        :subtitle="assignment.assignmentIsAssigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
+        :parent="parent"
+        :items="navItems">
+    </t-header>
+    <b-container>
+      <router-view></router-view>
+    </b-container>
+  </div>
+</template>
+
+<script>
+import gql from 'graphql-tag'
+import tHeader from "@/components/tHeader";
+
+const GET_ASSIGNMENT =
+    gql`query assignment($assignmentId: ObjectId!){
+          assignment(assignmentId: $assignmentId){
+              assignmentName,
+              assignmentCourse {
+                courseName
+              },
+              assignmentIsAssigned,
+              assignmentDueDate,
+              dateCreated
+          }
+        }`;
+
+export default {
+  name: 'Assignment',
+  components: {
+    tHeader
+  },
+  data() {
+    return {
+      assignment: {assignmentCourse: {}},
+      loading: !!0,
+      error: "",
+      show: false,
+      parent: `/assignment/${this.$route.params.assignmentId}/`,
+      navItems: [
+        {name: "Overview", path: '', icon: "fas fa-layer-group"},
+        {name: "Grades", path: 'grades', icon: "fas fa-book"},
+        {name: "Requirements", path: 'requirements', icon: "fas fa-asterisk"},
+        {name: "Tests", path: 'tests', icon: "fas fa-vial"},
+        {name: "Settings", path: 'settings', icon: "fas fa-cog"}
+      ]
+    }
+  },
+  mounted() {
+    this.loadCourse();
+  },
+  apollo: {
+    assignment: {
+      query: GET_ASSIGNMENT,
+      loadingKey: 'loading',
+      variables() {
+        return {
+          assignmentId: this.$route.params.assignmentId,
+        }
+      }
+    },
+  },
+  methods: {
+    loadCourse() {
+      return "";
+    },
+    createCourse() {
+      this.$apollo.mutate({
+        mutation: GET_ASSIGNMENT,
+        variables: {
+          sessionId: this.$user()._id,
+          courseName: this.form.courseName,
+          courseSection: this.form.courseSection
+        }
+      }).then(response => this.$router.push(`/course/${response.data.createCourse._id}`))
+          .catch(doc => console.log(doc));
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+</style>
