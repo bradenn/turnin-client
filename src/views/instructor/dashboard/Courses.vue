@@ -1,8 +1,14 @@
 <template>
   <div>
-
     <b-form-row>
+      <b-col cols="12">
+        <div class="mb-3">
+          <h3>Your Courses</h3>
+          <span>The courses below belong to you, or have been shared with you.</span>
+        </div>
+      </b-col>
       <b-col cols="8">
+
         <div class="table-responsive mb-0 ">
           <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
                             v-if="$apollo.loading">
@@ -65,7 +71,6 @@ query instructorCourses{
 }`;
 
 
-
 export default {
   name: 'Courses',
   components: {TCard},
@@ -75,7 +80,7 @@ export default {
       items: [],
       instructorCourses: [],
       loading: 0,
-
+      courseList: []
     }
   },
   apollo: {
@@ -90,11 +95,15 @@ export default {
     },
   },
   mounted() {
-
+    this.courseList = this.instructorCourses.map(course => {
+      return {
+        name: `${course.courseName}.${course.courseSection}`,
+        link: `/course/${course._id}`,
+        key: course._id
+      }
+    });
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 

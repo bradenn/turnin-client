@@ -1,6 +1,15 @@
 <template>
   <div>
-
+    <b-form-row>
+      <b-col cols="12">
+        <div class="mb-3">
+          <h3>Recent Assignments</h3>
+          <span>The Assignments below belong to you, or have been shared with you.</span>
+        </div>
+      </b-col>
+    </b-form-row>
+    <b-form-row>
+      <b-col cols="12">
       <div v-for="course in instructorCourses" :key="course._id">
         <t-card :title="`${course.courseName}.${course.courseSection}`"
                 subtitle="You are the primary instructor of this course." :loading="true">
@@ -33,6 +42,8 @@
           </template>
         </t-card>
       </div>
+      </b-col>
+    </b-form-row>
 
     <b-modal
         v-model="show"
