@@ -22,4 +22,10 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# CSS
+/src/assets/turnin.css
+/src/assets/colors.css
+
+# Config
 .graphqlconfig
