@@ -8,7 +8,14 @@
         </div>
       </b-col>
       <b-col cols="8">
-
+        <b-card v-for="course in instructorCourses" :key="course._id" class="mb-3">
+          <div class="courseName">{{ course.courseName }}.{{ course.courseSection }}</div>
+          <div class="mb-2">{{ course.courseDescription }}</div>
+          <div class="d-flex justify-content-start">
+            <div class="mr-1 bold mr-2"><i class="fas fa-user fa-fw mr-1"></i>{{ course.courseStudentCount }} Students</div>
+            <div class="mr-1 bold"><i class="fas fa-book fa-fw mr-1"></i>{{ course.courseAssignmentCount }} assignments</div>
+          </div>
+        </b-card>
         <div class="table-responsive mb-0 ">
           <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
                             v-if="$apollo.loading">
@@ -56,12 +63,9 @@ query instructorCourses{
     instructorCourses{
         courseName,
         courseSection,
-        courseAssignments {
-            _id,
-            assignmentName,
-            assignmentDueDate,
-            assignmentLateDate
-        },
+        courseDescription,
+        courseStudentCount,
+        courseAssignmentCount,
         courseIsLocked,
         courseInstructor{
             _id
@@ -168,6 +172,18 @@ export default {
 
 .btn.btn-primary.btn-sm {
   padding: 0.25em 0.5em;
+}
+
+.courseName {
+  font-weight: bold;
+  font-size: 1.15em;
+  color: var(--primary);
+}
+
+.bold {
+  font-weight: bold;
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 </style>

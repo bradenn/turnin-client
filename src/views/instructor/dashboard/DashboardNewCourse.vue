@@ -17,13 +17,26 @@
             label-for="input-1">
           <b-form-spinbutton id="demo-sb" v-model="form.courseSection" min="0" max="100"></b-form-spinbutton>
         </b-form-group>
+        <b-form-group
+            description="Write a brief description of the course"
+            label="Course Description"
+            label-for="input-1">
+          <b-form-textarea
+              id="textarea-no-auto-shrink"
+              placeholder="Briefly describe the course..."
+              rows="3"
+              v-model="form.courseDescription"
+              max-rows="8"
+              no-auto-shrink
+          ></b-form-textarea>
+        </b-form-group>
       </form>
       <template #modal-footer>
         <div class="d-flex justify-content-between align-items-baseline" style="width: 100%;">
-          <div class="text-muted" v-if="form.courseName === ''">A course name is required.</div>
+          <div class="text-muted" v-if="formIsNotValid()">A course name is required.</div>
           <div></div>
           <div>
-            <b-button type="submit" @click="createCourse" variant="primary" :disabled="form.courseName === ''">
+            <b-button type="submit" @click="createCourse" variant="primary" :disabled="formIsNotValid()">
               Create Course
             </b-button>
           </div>
@@ -45,29 +58,31 @@ mutation createCourse($courseInput: CourseInput!){
 }`;
 
 
-
 export default {
   name: 'Courses',
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       show: false,
 
       form: {
         courseName: "",
+        courseDescription: "",
         courseSection: 0
       }
     }
   },
   methods: {
+    formIsNotValid() {
+      return (this.form.courseDescription === '') || (this.form.courseName === '')
+    },
     createCourse() {
       this.$apollo.mutate({
         mutation: CREATE_COURSE,
         variables: {
           courseInput: {
             courseName: this.form.courseName,
+            courseDescription: this.form.courseDescription,
             courseSection: this.form.courseSection
           }
         }

@@ -7,10 +7,10 @@ import Privacy from '@/views/legal/Privacy'
 import Terms from '@/views/legal/Terms'
 import Dashboard from '@/views/instructor/dashboard/Dashboard'
 import DashboardOverview from '@/views/instructor/dashboard/DashboardOverview'
-import Assignments from '@/views/instructor/dashboard/Assignments'
+import Assignments from '@/views/instructor/dashboard/DashboardAssignments'
 import Assignment from '@/views/instructor/assignment/Assignment'
 import AssignmentRequirements from '@/views/instructor/assignment/AssignmentRequirements'
-import Courses from '@/views/instructor/dashboard/Courses'
+import Courses from '@/views/instructor/dashboard/DashboardCourses'
 import Course from '@/views/instructor/Course'
 import AssignmentOverview from "@/views/instructor/assignment/AssignmentOverview";
 import DashboardStudents from "@/views/instructor/dashboard/DashboardStudents";
