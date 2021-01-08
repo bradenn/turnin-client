@@ -1,53 +1,34 @@
 <template>
   <div>
+    <t-header
+        :loading="loading"
+        :previous="course.courseName"
+        :current="this.$route.meta.title"
+        subtitle=""
+        :parent="parent"
+        :items="navItems">
 
-    <Title :loading="loading" :titleOverride="instructorCourse.courseName" :subtitle="instructorCourse.courseSection
-    ?`Section ${instructorCourse.courseSection}`:''">
-    </Title>
-    <div v-if="error">
-      {{ error }}
-    </div>
-    <div v-else>
-      <b-card no-body>
-        <b-tabs card>
-          <b-tab title="Grades" active>
-            <div class="d-flex justify-content-between align-items-end">
-              <div>
-                <b-card-title>Student Grades</b-card-title>
-                <b-card-text>
-                  With supporting text below as a natural lead-in to additional content.
-                </b-card-text>
-              </div>
-              <div>
-                <b-button href="/assignments" variant="primary">Go to Assignments</b-button>
-              </div>
-            </div>
-          </b-tab>
-          <b-tab title="Students">
-            <b-card-text>Tab contents 2</b-card-text>
-          </b-tab>
-          <b-tab title="Course Settings">
-            <b-card-text>Tab contents 2</b-card-text>
-          </b-tab>
-        </b-tabs>
-      </b-card>
-
-    </div>
+    </t-header>
+    <b-container>
+      <router-view></router-view>
+    </b-container>
   </div>
+
 </template>
 
 <script>
-import Title from "@/components/Title";
 import gql from 'graphql-tag'
+import THeader from "@/components/tHeader";
 
 const GET_COURSE =
-    gql`query instructorCourse($courseId: String!){
-          instructorCourse(courseId: $courseId){
+    gql`query course($courseId: ObjectId!){
+          course(courseId: $courseId){
               courseName,
               courseSection,
               courseIsLocked
           }
         }`;
+
 const CREATE_COURSE =
     gql`mutation createCourse($sessionId: String!, $courseName: String!, $courseSection: Int!){
           createCourse(sessionId: $sessionId, courseName: $courseName, courseSection: $courseSection){
@@ -58,16 +39,31 @@ const CREATE_COURSE =
 export default {
   name: 'Courses',
   components: {
-    Title
+    THeader
   },
   data() {
     return {
-      instructorCourse: {},
+      course: {},
       loading: 0,
-      tab: 'students',
-      error: "",
-      show: false
+      parent: `/course/${this.$route.params.courseId}/`,
+      navItems: [
+        {name: "Overview", path: '', icon: "fas fa-layer-group"},
+        {name: "Grades", path: 'grades', icon: "fas fa-book"},
+        {name: "Students", path: 'students', icon: "fas fa-users"},
+        {name: "Settings", path: 'settings', icon: "fas fa-cog"}
+      ]
     }
+  },
+  apollo: {
+    course: {
+      query: GET_COURSE,
+      loadingKey: 'loading',
+      variables() {
+        return {
+          courseId: this.$route.params.courseId,
+        }
+      }
+    },
   },
   mounted() {
     this.loadCourse();

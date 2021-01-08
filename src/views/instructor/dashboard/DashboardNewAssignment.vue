@@ -1,30 +1,42 @@
 <template>
   <div>
-    <b-button variant="primary" size="sm" @click="show = true">New Course</b-button>
+    <b-button variant="primary" size="sm" @click="show = true">New Assignment</b-button>
     <b-modal
         v-model="show"
-        title="Create Course">
+        title="Create An Assignment">
       <form>
         <b-form-group
+            label="Assignment Name"
             description="Students will see this name."
-            label="Course Name"
-            label-for="input-1">
-          <b-form-input id="input-1" v-model="form.courseName" placeholder="Lab 1" trim></b-form-input>
+            label-for="assignmentName">
+          <b-form-input id="assignmentName" v-model="form.assignmentName" placeholder="Lab 1" trim></b-form-input>
         </b-form-group>
         <b-form-group
-            description="Use a section number to differentiate between duplicate classes."
-            label="Course Section"
-            label-for="input-1">
-          <b-form-spinbutton id="demo-sb" v-model="form.courseSection" min="0" max="100"></b-form-spinbutton>
+            label="Assignment Course"
+            description="Which course should be assigned this assignment?"
+            label-for="assignmentCourse">
+          <b-form-select id="assignmentCourse" v-model="form.assignmentCourse" :options="instructorCourses"></b-form-select>
+        </b-form-group>
+        <b-form-group
+            label="Due Date"
+            :description="form.assignmentDueDate.toString()"
+            label-for="assignmentDueDate">
+          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
+        </b-form-group>
+        <b-form-group
+            label="Late Date"
+            :description="form.assignmentLateDate.toString()"
+            label-for="assignmentLateDate">
+          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :min="form.assignmentDueDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
         </b-form-group>
       </form>
       <template #modal-footer>
         <div class="d-flex justify-content-between align-items-baseline" style="width: 100%;">
-          <div class="text-muted" v-if="form.courseName === ''">A course name is required.</div>
+          <div class="text-muted" v-if="form.assignmentName === ''">An assignment name is required.</div>
           <div></div>
           <div>
-            <b-button type="submit" @click="createCourse" variant="primary" :disabled="form.courseName === ''">
-              Create Course
+            <b-button type="submit" @click="createCourse" variant="primary" :disabled="form.assignmentName === ''">
+              Create Assignment
             </b-button>
           </div>
         </div>
@@ -36,35 +48,58 @@
 <script>
 import gql from "graphql-tag";
 
+const GET_COURSES = gql`
+query instructorCourses{
+    instructorCourses{
+        text: courseFullName,
+        value: _id
+    }
+}`;
 
-const CREATE_COURSE = gql`
-mutation createCourse($courseInput: CourseInput!){
-    createCourse(courseInput: $courseInput){
+const CREATE_ASSIGNMENT = gql`
+mutation createAssignment($assignmentInput: AssignmentInput!){
+    createAssignment(assignmentInput: $assignmentInput){
       _id
     }
 }`;
 
-
-
 export default {
-  name: 'Courses',
+  name: 'DashboardNewAssignment',
   components: {
 
   },
   data() {
     return {
       show: false,
-
+      instructorCourses: {},
       form: {
-        courseName: "",
-        courseSection: 0
+        assignmentName: "",
+        assignmentCourse: 0,
+        assignmentDueDate: new Date(),
+        assignmentLateDate: new Date()
       }
     }
   },
+  apollo: {
+    instructorCourses: {
+      query: GET_COURSES,
+      loadingKey: 'loading',
+      variables() {
+        return {
+          userId: this.$user()._id,
+        }
+      }
+    },
+  },
   methods: {
+    addDates: (a, b) => {
+      let date = new Date(a)
+      /* I was severely unsolder while writing the below line. It looks weird but works :) */
+      return date.setHours(...b.split(':').map(x => parseInt(x)));
+    },
     createCourse() {
       this.$apollo.mutate({
-        mutation: CREATE_COURSE,
+        mutation: CREATE_ASSIGNMENT,
         variables: {
           courseInput: {
             courseName: this.form.courseName,

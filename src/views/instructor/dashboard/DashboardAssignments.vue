@@ -3,45 +3,34 @@
     <b-form-row>
       <b-col cols="12">
         <div class="mb-3">
-          <h3>Recent Assignments</h3>
-          <span>The Assignments below belong to you, or have been shared with you.</span>
+          <h3>Your Assignments</h3>
+          <span>The assignments below belong to you, or have been shared with you.</span>
         </div>
       </b-col>
-    </b-form-row>
-    <b-form-row>
-      <b-col cols="12">
-      <div v-for="course in instructorCourses" :key="course._id">
-        <t-card :title="`${course.courseName}.${course.courseSection}`"
-                subtitle="You are the primary instructor of this course." :loading="true">
-          <template slot="button">
-            <b-link :href="`/course/${course._id}`">Manage Course</b-link>
-          </template>
-          <template slot="body">
-            <div class="table-responsive mb-0 ">
-              <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
-                                v-if="$apollo.loading">
-              </b-skeleton-table>
-              <b-table hover class="table" :items="course.courseAssignments"
-                       :fields="['assignmentName', 'dueDate', 'lateDate']"
-                       show-empty v-else>
+      <b-col cols="8">
+        <div v-for="course in instructorCourses" :key="course._id">
+          <h5>{{course.courseName}}.{{course.courseSection}}</h5>
+          <div v-for="assignment in course.courseAssignments" :key="assignment._id">
+            <b-link :to="`/assignment/${assignment._id}`">
+              <b-card no-body class="mb-3 px-3 py-3">
+                <div class="d-flex justify-content-between">
+                  <div class="courseName">{{ assignment.assignmentName }}</div>
+                  <div class="d-flex justify-content-start mr-n2">
+                    <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
+                      <b-badge pill variant="primary" class="badge-top-right">12</b-badge>
+                    </div>
+                    <div class="mr-1"><i class="fas fa-book fa-fw mr-1"></i>
+                      <b-badge pill variant="primary" class="badge-top-right">16</b-badge>
+                    </div>
+                  </div>
+                </div>
 
-                <template #cell(assignmentName)="data">
-                  <b-link :to="`/assignment/${data.item._id}`">{{ data.item.assignmentName }}</b-link>
-                </template>
-                <template #cell(dueDate)="data">
-                  {{ new Date(data.item.assignmentDueDate).toLocaleString() }}
-                </template>
-                <template #cell(lateDueDate)="data">
-                  {{ new Date(data.item.assignmentLateDate) }}
-                </template>
-                <template #empty="">
-                  <span>This course does not have any assignments.</span>
-                </template>
-              </b-table>
-            </div>
-          </template>
-        </t-card>
-      </div>
+                <div class="mb-2">{{ assignment.assignmentDescription }}</div>
+
+              </b-card>
+            </b-link>
+          </div>
+        </div>
       </b-col>
     </b-form-row>
 
@@ -98,7 +87,7 @@
 </template>
 
 <script>
-import tCard from "@/components/tCard";
+
 import gql from 'graphql-tag'
 
 const GET_COURSES = gql`
@@ -130,9 +119,7 @@ mutation createAssignment($assignmentName: String!, $assignmentCourse: String!, 
 
 export default {
   name: 'Courses',
-  components: {
-    tCard
-  },
+  components: {},
   data() {
     return {
       fields: ['courseName'],

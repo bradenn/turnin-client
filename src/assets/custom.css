@@ -25,7 +25,7 @@
     --nav-size: 48px;
     --border-radius: 8px;
     --speed: 500ms;
-    --primary-dim: rgba(0, 122, 255, 0.15);
+    --primary-dim: rgba(0, 122, 255, 0.08);
     --success: rgba(52, 199, 89, 1);
     --success-dim: rgba(52, 199, 89, 0.15);
     --danger: rgba(255, 59, 48, 1);
@@ -50,7 +50,7 @@
     --border-radius: 8px;
     --speed: 500ms;
     --primary: rgb(88, 166, 255);
-    --primary-dim: rgba(88, 166, 255, 0.50);
+    --primary-dim: rgba(88, 166, 255, 0.90);
     --success: rgba(48, 209, 88, 1);
     --success-dim: rgba(48, 209, 88, 0.50);
     --danger: rgba(255, 69, 58, 1);
@@ -307,8 +307,18 @@ body {
 .notifications {
     padding: 4px 6px !important;
     position: relative;
+    border-radius: 100%;
+    background-color: transparent !important;
+    border: 1px solid var(--primary);
     bottom: 8px;
-    right: 10px;
+    right: 12px;
+}
+
+.badge-top-right{
+    bottom: 8px;
+    background-color: var(--primary);
+    right: 8px;
+    position: relative;
 }
 
 :not(pre) > code[class*="language-"], pre[class*="language-"] {
@@ -632,6 +642,10 @@ a.text-success:hover {
     border-bottom: 2px solid var(--primary);
 }
 
+.card {
+    background-color: var(--foreground) !important;
+    border: var(--border);
+}
 
 
 .dropdown-menu {
@@ -662,9 +676,9 @@ a.text-success:hover {
     text-decoration: none;
 }
 
-.badge .badge {
+/*.badge .badge {
     border: 1px solid #fff;
-}
+}*/
 
 
 .no-bs {
@@ -677,9 +691,9 @@ a.text-success:hover {
     color: inherit;
 }
 
-.badge {
+/*.badge {
     margin: 0.15em;
-}
+}*/
 
 .table-responsive {
     border: var(--border);
@@ -881,12 +895,12 @@ code {
     padding: 5px 10px;
 }
 
-.badge.badge-primary {
+/*.badge.badge-primary {
     color: var(--primary);
     background-color: var(--primary-dim);
     font-size: 11px;
     padding: 5px 10px;
-}
+}*/
 
 .badge.badge-secondary {
     color: var(--muted);

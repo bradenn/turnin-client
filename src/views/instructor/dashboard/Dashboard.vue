@@ -3,7 +3,7 @@
     <t-header
         :loading="false"
         previous="Dashboard"
-        :current="this.$route.name"
+        :current="this.$route.meta.title"
         subtitle=""
         :parent="parent"
         :button="this.$route.meta.button"

@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/dashboard">
-        <b-img src="/logo.png" width="36"></b-img>
+      <a class="navbar-brand mr-0" href="/dashboard">
+        <b-img src="/logo.png" height="36"></b-img>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

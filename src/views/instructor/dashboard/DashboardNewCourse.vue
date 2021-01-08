@@ -9,7 +9,7 @@
             description="Students will see this name."
             label="Course Name"
             label-for="input-1">
-          <b-form-input id="input-1" v-model="form.courseName" placeholder="Lab 1" trim></b-form-input>
+          <b-form-input id="input-1" v-model="form.courseName" placeholder="CSCI 221" trim></b-form-input>
         </b-form-group>
         <b-form-group
             description="Use a section number to differentiate between duplicate classes."
@@ -72,6 +72,7 @@ export default {
       }
     }
   },
+
   methods: {
     formIsNotValid() {
       return (this.form.courseDescription === '') || (this.form.courseName === '')

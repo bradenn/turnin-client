@@ -8,30 +8,25 @@
         </div>
       </b-col>
       <b-col cols="8">
-        <b-card v-for="course in instructorCourses" :key="course._id" class="mb-3">
-          <div class="courseName">{{ course.courseName }}.{{ course.courseSection }}</div>
-          <div class="mb-2">{{ course.courseDescription }}</div>
-          <div class="d-flex justify-content-start">
-            <div class="mr-1 bold mr-2"><i class="fas fa-user fa-fw mr-1"></i>{{ course.courseStudentCount }} Students</div>
-            <div class="mr-1 bold"><i class="fas fa-book fa-fw mr-1"></i>{{ course.courseAssignmentCount }} assignments</div>
-          </div>
-        </b-card>
-        <div class="table-responsive mb-0 ">
-          <b-skeleton-table class="table " :rows="2" :columns="4" animation="fade" :table-props="{ striped: true }"
-                            v-if="$apollo.loading">
-          </b-skeleton-table>
-          <b-table small class="table" :items="instructorCourses"
-                   :fields="['courseName']"
-                   show-empty v-else>
+        <div v-for="course in instructorCourses" :key="course._id">
+          <b-link :to="`/course/${course._id}`">
+            <b-card no-body class="mb-3 px-3 py-3">
+              <div class="d-flex justify-content-between">
+                <div class="courseName">{{ course.courseName }}.{{ course.courseSection }}</div>
+                <div class="d-flex justify-content-start mr-n2">
+                  <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
+                    <b-badge pill variant="primary" class="badge-top-right">{{ course.courseStudentCount }}</b-badge>
+                  </div>
+                  <div class="mr-1"><i class="fas fa-book fa-fw mr-1"></i>
+                    <b-badge pill variant="primary" class="badge-top-right">{{ course.courseAssignmentCount }}</b-badge>
+                  </div>
+                </div>
+              </div>
 
-            <template #cell(courseName)="data">
-              <b-link :to="`/course/${data.item._id}`">{{ data.item.courseName }}.{{ data.item.courseSection }}</b-link>
-            </template>
+              <div class="mb-2">{{ course.courseDescription }}</div>
 
-            <template #empty="">
-              <span>This course does not have any assignments.</span>
-            </template>
-          </b-table>
+            </b-card>
+          </b-link>
         </div>
       </b-col>
       <b-col cols="4">
@@ -184,6 +179,11 @@ export default {
   font-weight: bold;
   color: var(--text-color);
   opacity: 0.8;
+}
+
+a:hover{
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 </style>

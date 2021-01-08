@@ -1,30 +1,33 @@
 <template>
   <div>
-    <t-header
-        :loading="loading"
-        :previous="this.$route.meta.title"
-        :current="assignment.assignmentName"
-        :subtitle="assignment.assignmentIsAssigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
-        :parent="parent"
-        :items="navItems">
-    </t-header>
-    <b-container>
-      <router-view></router-view>
-    </b-container>
+    <div>
+      <b-form-row>
+        <b-col cols="4">
+          <t-card
+              title="Assignment Statistics"
+              subtitle="See how students are responding to your assignment"
+              align-top>
+            <template slot="body">
+              <b-progress class="mt-2" :max="100" animated show-value height="1rem">
+                <b-progress-bar :value="73" :label="`73%`"></b-progress-bar>
+              </b-progress>
+              <hr>
+            </template>
+          </t-card>
+        </b-col>
+      </b-form-row>
+    </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import tHeader from "@/components/tHeader";
+import tCard from "@/components/tCard";
 
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
               assignmentName,
-              assignmentCourse {
-                courseName
-              },
               assignmentIsAssigned,
               assignmentDueDate,
               dateCreated
@@ -32,24 +35,16 @@ const GET_ASSIGNMENT =
         }`;
 
 export default {
-  name: 'Assignment',
+  name: 'AssignmentOverview',
   components: {
-    tHeader
+    tCard
   },
   data() {
     return {
-      assignment: {assignmentCourse: {}},
-      loading: !!0,
+      assignment: {},
+      loading: 0,
       error: "",
-      show: false,
-      parent: `/assignment/${this.$route.params.assignmentId}/`,
-      navItems: [
-        {name: "Overview", path: '', icon: "fas fa-layer-group"},
-        {name: "Grades", path: 'grades', icon: "fas fa-book"},
-        {name: "Requirements", path: 'requirements', icon: "fas fa-asterisk"},
-        {name: "Tests", path: 'tests', icon: "fas fa-vial"},
-        {name: "Settings", path: 'settings', icon: "fas fa-cog"}
-      ]
+      show: false
     }
   },
   mounted() {
@@ -87,4 +82,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.progress-bar {
+  height: 100% !important;
+}
+
 </style>
