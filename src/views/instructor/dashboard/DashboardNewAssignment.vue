@@ -35,7 +35,7 @@
           <div class="text-muted" v-if="form.assignmentName === ''">An assignment name is required.</div>
           <div></div>
           <div>
-            <b-button type="submit" @click="createCourse" variant="primary" :disabled="form.assignmentName === ''">
+            <b-button type="submit" @click="createAssignment" variant="primary" :disabled="form.assignmentName === ''">
               Create Assignment
             </b-button>
           </div>
@@ -97,17 +97,19 @@ export default {
       /* I was severely unsolder while writing the below line. It looks weird but works :) */
       return date.setHours(...b.split(':').map(x => parseInt(x)));
     },
-    createCourse() {
+    createAssignment() {
       this.$apollo.mutate({
         mutation: CREATE_ASSIGNMENT,
         variables: {
-          courseInput: {
-            courseName: this.form.courseName,
-            courseSection: this.form.courseSection
+          assignmentInput: {
+            assignmentName: this.form.assignmentName,
+            assignmentCourse: this.form.assignmentCourse,
+            assignmentDueDate: this.form.assignmentDueDate,
+            assignmentLateDate: this.form.assignmentLateDate
           }
         }
       }).then(response => {
-        this.$router.push(`/course/${response.data.createCourse._id}`)
+        this.$router.push(`/assignment/${response.data.createAssignment._id}`)
       }).catch(doc => console.log(doc));
     }
   }

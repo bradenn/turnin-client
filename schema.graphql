@@ -13,8 +13,8 @@ type Assignment {
     assignmentIsAssigned: Boolean!
     assignmentLateDate: String!
     assignmentName: String!
-    assignmentSpecifications: StdIOAssignment!
-    dateCreated: String!
+    assignmentSpecification: StdIOSpecification!
+    dateCreated: String
 }
 
 type Brief {
@@ -26,11 +26,15 @@ type Brief {
 
 type Course {
     _id: ObjectId!
+    courseAssignmentCount: Float!
     courseAssignments: [Assignment!]!
+    courseDescription: String!
+    courseFullName: String!
     courseInstructor: User!
     courseIsLocked: Boolean!
     courseName: String!
     courseSection: Float!
+    courseStudentCount: Float!
     dateCreated: String!
 }
 
@@ -42,7 +46,12 @@ type File {
 }
 
 type Mutation {
+    addProvidedFile(fileUpload: Upload!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
+    addRequiredFile(file: String!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
+    createAssignment(assignmentInput: AssignmentInput!): Assignment!
     createCourse(courseInput: CourseInput!): Course!
+    removeRequiredFile(file: String!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
+    updateStdIOSpecification(stdIOSpecificationId: ObjectId!, stdIOSpecificationInput: StdIOSpecificationInput!): StdIOSpecification!
 }
 
 type Query {
@@ -50,17 +59,20 @@ type Query {
     course(courseId: ObjectId!): Course!
     instructorCourse(courseId: ObjectId!): Course!
     instructorCourses: [Course!]!
+    stdIOSpecification(stdIOSpecificationId: ObjectId!): StdIOSpecification!
     user(targetId: ObjectId!): User!
     userSelf: User!
 }
 
-type StdIOAssignment {
-    assignmentProvidedFiles: [File!]!
-    assignmentRequiredFiles: [String!]!
-    assignmentTests: [StdIOTestSpecification!]!
-    compilationCommand: String!
-    compilationTimeout: Float!
+type StdIOSpecification {
+    _id: ObjectId!
+    assignmentCourse: Course!
     dateCreated: String!
+    specificationCompilationCommand: String!
+    specificationCompilationTimeout: Float!
+    specificationProvidedFiles: [File!]!
+    specificationRequiredFiles: [String!]!
+    specificationTests: [StdIOTestSpecification!]!
 }
 
 type StdIOTestSpecification {
@@ -88,11 +100,28 @@ type User {
     username: String!
 }
 
+input AssignmentInput {
+    assignmentCourse: String!
+    assignmentDueDate: String!
+    assignmentLateDate: String!
+    assignmentName: String!
+}
+
 input CourseInput {
+    courseDescription: String!
     courseName: String!
     courseSection: Float!
+}
+
+input StdIOSpecificationInput {
+    specificationCompilationCommand: String!
+    specificationCompilationTimeout: Float!
+    specificationRequiredFiles: [String!]!
 }
 
 
 "Mongo object id scalar type"
 scalar ObjectId
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload

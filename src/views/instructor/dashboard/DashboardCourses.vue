@@ -175,12 +175,6 @@ export default {
   color: var(--primary);
 }
 
-.bold {
-  font-weight: bold;
-  color: var(--text-color);
-  opacity: 0.8;
-}
-
 a:hover{
   text-decoration: none !important;
   color: inherit !important;

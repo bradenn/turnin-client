@@ -340,6 +340,10 @@ a {
     color: var(--text-color);
 }
 
+table a {
+    text-decoration: underline;
+}
+
 a:hover {
     color: var(--primary);
 }

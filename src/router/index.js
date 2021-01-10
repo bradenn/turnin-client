@@ -18,6 +18,7 @@ import CourseOverview from "@/views/instructor/course/CourseOverview";
 import DashboardAssignments from "@/views/instructor/dashboard/DashboardAssignments";
 import DashboardCourses from "@/views/instructor/dashboard/DashboardCourses";
 import DashboardNewAssignment from "@/views/instructor/dashboard/DashboardNewAssignment";
+import AssignmentBrief from "@/views/instructor/assignment/AssignmentBrief";
 
 Vue.use(Router)
 
@@ -107,6 +108,15 @@ let router = new Router({
                     }
                 },
                 {
+                    path: 'brief',
+                    name: 'AssignmentBrief',
+                    component: AssignmentBrief,
+                    meta: {
+                        title: 'Brief',
+                        requiresAuth: true
+                    }
+                },
+                {
                     path: 'requirements',
                     name: 'AssignmentRequirements',
                     component: AssignmentRequirements,
@@ -120,7 +130,6 @@ let router = new Router({
 
         {
             path: '/course/:courseId',
-            name: 'Course',
             component: Course,
             meta: {
                 requiresAuth: true
@@ -208,7 +217,7 @@ router.beforeEach((to, from, next) => {
         if (localStorage.getItem('token') !== 'undefined') {
             const user = JSON.parse(localStorage.getItem('user'))
 
-            if (to.matched.some(record => record.meta.isAdmin))
+            if (to.matched.some(record => record.meta.isAdmin)) /* Deal with this at some point */
                 next(user.account !== "student" ? {} : {name: 'Dashboard'})
             else
                 next()

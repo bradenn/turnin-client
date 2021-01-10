@@ -25,7 +25,7 @@
                   </div>
                 </div>
 
-                <div class="mb-2">{{ assignment.assignmentDescription }}</div>
+                <div class="mb-2">{{ assignment.assignmentDescription || 'No Description' }}</div>
 
               </b-card>
             </b-link>
