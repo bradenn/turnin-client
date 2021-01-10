@@ -44,16 +44,16 @@
 
         </div>
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.assignmentSpecification.specificationRequiredFiles"
+          <b-table :items="assignment.assignmentSpecification.specificationProvidedFiles"
                    :fields="['fileName', 'options']" small show-empty>
             <template #empty>
               No files specified.
             </template>
             <template #cell(fileName)="data">
-              {{ data.item }}
+              <b-link :href="`https://swfs.turnin.co${data.item.fileReference}`">{{ data.item.fileName }}</b-link>
             </template>
             <template #cell(options)="data">
-              <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
+              <b-link @click="removeProvidedFile(data.item._id)">Remove</b-link>
             </template>
           </b-table>
         </div>
@@ -73,6 +73,13 @@ const ADD_FILE =
           }
         }`;
 
+const REMOVE_FILE =
+    gql`mutation removeRequiredFile($stdIOSpecificationId: ObjectId!, $file: String!){
+          removeRequiredFile(stdIOSpecificationId: $stdIOSpecificationId, file: $file){
+               _id
+          }
+        }`;
+
 const UPLOAD_PROVIDED_FILE =
     gql`mutation addProvidedFile($stdIOSpecificationId: ObjectId!, $fileUpload: Upload!){
           addProvidedFile(stdIOSpecificationId: $stdIOSpecificationId, fileUpload: $fileUpload){
@@ -80,12 +87,13 @@ const UPLOAD_PROVIDED_FILE =
           }
         }`;
 
-const REMOVE_FILE =
-    gql`mutation removeRequiredFile($stdIOSpecificationId: ObjectId!, $file: String!){
-          removeRequiredFile(stdIOSpecificationId: $stdIOSpecificationId, file: $file){
+const DELETE_PROVIDED_FILE =
+    gql`mutation removeProvidedFile($stdIOSpecificationId: ObjectId!, $fileId: ObjectId!){
+          removeProvidedFile(stdIOSpecificationId: $stdIOSpecificationId, fileId: $fileId){
                _id
           }
         }`;
+
 
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
@@ -96,7 +104,11 @@ const GET_ASSIGNMENT =
               assignmentSpecification {
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
-
+                  specificationProvidedFiles {
+                    fileName,
+                    fileReference,
+                    _id
+                  },
                   specificationRequiredFiles,
                   _id
               },
@@ -195,6 +207,19 @@ export default {
         variables: {
           stdIOSpecificationId: this.assignment.assignmentSpecification._id,
           file: fileName
+        }
+      }).then(() => {
+        this.$apollo.queries.assignment.refresh();
+      }).catch(doc => {
+        this.error = doc;
+      });
+    },
+    removeProvidedFile(fileId) {
+      this.$apollo.mutate({
+        mutation: DELETE_PROVIDED_FILE,
+        variables: {
+          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          fileId: fileId
         }
       }).then(() => {
         this.$apollo.queries.assignment.refresh();
