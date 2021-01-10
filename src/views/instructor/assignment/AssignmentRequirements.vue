@@ -2,7 +2,7 @@
   <div>
     <b-form-row>
       <b-col cols="8">
-        {{error.errors}}
+        {{ error.errors }}
         <div class="py-3 d-flex justify-content-between align-items-end">
           <div>
             <h3>Required File Names</h3>
@@ -17,6 +17,7 @@
           </div>
 
         </div>
+
         <div class="table-responsive mb-0">
           <b-table :items="assignment.assignmentSpecification.specificationRequiredFiles"
                    :fields="['fileName', 'options']" small show-empty>
@@ -31,15 +32,16 @@
             </template>
           </b-table>
         </div>
-      </b-col>
-      <b-col cols="8">
+
         <div class="py-3 d-flex justify-content-between align-items-end">
           <div>
             <h3>Provided Files</h3>
             <span>These files will be included with the required file during compilation.</span>
           </div>
           <div>
-            <b-form-file accept="*" @change="addProvidedFile" type="file" size="sm"></b-form-file>
+            <b-form-file accept="*" :busy="loading.addProvidedFile" @change="addProvidedFile" type="file" size="sm">
+
+            </b-form-file>
           </div>
 
         </div>
@@ -55,6 +57,23 @@
             <template #cell(options)="data">
               <b-link @click="removeProvidedFile(data.item._id)">Remove</b-link>
             </template>
+            <template slot="custom-foot" v-if="loading.addProvidedFile">
+              <b-th>
+                <strong>Uploading...</strong>
+              </b-th>
+              <b-th>
+                <b-spinner class="ml-auto" variant="primary" small></b-spinner>
+              </b-th>
+            </template>
+            <template slot="custom-foot" v-if="loading.removeProvidedFile">
+              <b-th>
+                <strong>Removing...</strong>
+              </b-th>
+              <b-th>
+                <b-spinner class="ml-auto" variant="primary" small></b-spinner>
+              </b-th>
+            </template>
+
           </b-table>
         </div>
       </b-col>
@@ -127,7 +146,12 @@ export default {
           _id: ""
         }
       },
-      loading: 0,
+      loading: {
+        page: false,
+        addRequiredFile: false,
+        addProvidedFile: false,
+        removeProvidedFile: false
+      },
       form: {
         addFileName: "",
         addProvidedFile: File
@@ -141,7 +165,7 @@ export default {
   apollo: {
     assignment: {
       query: GET_ASSIGNMENT,
-      loadingKey: 'loading',
+      loadingKey: 'loading.page',
       fetchPolicy: "cache-and-network",
       nextFetchPolicy: "cache-first",
       variables() {
@@ -169,8 +193,8 @@ export default {
       }).then(response => this.$router.push(`/course/${response.data.createCourse._id}`))
           .catch(doc => console.log(doc));
     },
-    addProvidedFile({ target: { files = [] } }) {
-      console.log(files[0])
+    addProvidedFile({target: {files = []}}) {
+      this.loading.addProvidedFile = true;
       this.$apollo.mutate({
         mutation: UPLOAD_PROVIDED_FILE,
         variables: {
@@ -180,8 +204,8 @@ export default {
         context: {
           hasUpload: true
         }
-      }).then((dat) => {
-        console.log(dat)
+      }).then(() => {
+        this.loading.addProvidedFile = false;
         this.$apollo.queries.assignment.refresh();
       }).catch(doc => {
         this.error = doc;
@@ -215,6 +239,7 @@ export default {
       });
     },
     removeProvidedFile(fileId) {
+      this.loading.removeProvidedFile = true;
       this.$apollo.mutate({
         mutation: DELETE_PROVIDED_FILE,
         variables: {
@@ -222,6 +247,7 @@ export default {
           fileId: fileId
         }
       }).then(() => {
+        this.loading.removeProvidedFile = false;
         this.$apollo.queries.assignment.refresh();
       }).catch(doc => {
         this.error = doc;
