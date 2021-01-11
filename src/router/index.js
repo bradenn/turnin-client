@@ -8,7 +8,7 @@ import Terms from '@/views/legal/Terms'
 import Dashboard from '@/views/instructor/dashboard/Dashboard'
 import DashboardOverview from '@/views/instructor/dashboard/DashboardOverview'
 import Assignment from '@/views/instructor/assignment/Assignment'
-import AssignmentRequirements from '@/views/instructor/assignment/AssignmentRequirements'
+import AssignmentFiles from '@/views/instructor/assignment/AssignmentFiles'
 import Course from '@/views/instructor/course/Course'
 import AssignmentOverview from "@/views/instructor/assignment/AssignmentOverview";
 import DashboardStudents from "@/views/instructor/dashboard/DashboardStudents";
@@ -19,6 +19,8 @@ import DashboardAssignments from "@/views/instructor/dashboard/DashboardAssignme
 import DashboardCourses from "@/views/instructor/dashboard/DashboardCourses";
 import DashboardNewAssignment from "@/views/instructor/dashboard/DashboardNewAssignment";
 import AssignmentBrief from "@/views/instructor/assignment/AssignmentBrief";
+import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings";
+import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
 
 Vue.use(Router)
 
@@ -117,11 +119,29 @@ let router = new Router({
                     }
                 },
                 {
-                    path: 'requirements',
-                    name: 'AssignmentRequirements',
-                    component: AssignmentRequirements,
+                    path: 'files',
+                    name: 'AssignmentFiles',
+                    component: AssignmentFiles,
                     meta: {
-                        title: 'Requirements',
+                        title: 'Files',
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'settings',
+                    name: 'AssignmentSettings',
+                    component: AssignmentSettings,
+                    meta: {
+                        title: 'Settings',
+                        requiresAuth: true
+                    }
+                },
+                {
+                    path: 'tests',
+                    name: 'AssignmentTests',
+                    component: AssignmentTests,
+                    meta: {
+                        title: 'Tests',
                         requiresAuth: true
                     }
                 }
@@ -147,7 +167,7 @@ let router = new Router({
                 {
                     path: 'grades',
                     name: 'CourseGrades',
-                    component: AssignmentRequirements,
+                    component: CourseOverview,
                     meta: {
                         title: 'Grades',
                         requiresAuth: true
@@ -156,7 +176,7 @@ let router = new Router({
                 {
                     path: 'students',
                     name: 'CourseStudents',
-                    component: AssignmentRequirements,
+                    component: CourseOverview,
                     meta: {
                         title: 'Students',
                         requiresAuth: true
@@ -165,7 +185,7 @@ let router = new Router({
                 {
                     path: 'settings',
                     name: 'CourseSettings',
-                    component: AssignmentRequirements,
+                    component: CourseOverview,
                     meta: {
                         title: 'Settings',
                         requiresAuth: true

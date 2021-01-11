@@ -18,6 +18,7 @@ type Assignment {
 }
 
 type Brief {
+    _id: ObjectId!
     briefDesc: String!
     briefMarkdownFile: File!
     briefTitle: String!
@@ -47,6 +48,7 @@ type File {
 }
 
 type Mutation {
+    addCompressedTests(fileUpload: Upload!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
     addProvidedFile(fileUpload: Upload!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
     addRequiredFile(file: String!, stdIOSpecificationId: ObjectId!): StdIOSpecification!
     createAssignment(assignmentInput: AssignmentInput!): Assignment!
@@ -79,6 +81,7 @@ type StdIOSpecification {
 }
 
 type StdIOTestSpecification {
+    _id: ObjectId!
     dateCreated: String!
     testArguments: [String!]!
     testError: File!
@@ -119,7 +122,6 @@ input CourseInput {
 input StdIOSpecificationInput {
     specificationCompilationCommand: String!
     specificationCompilationTimeout: Float!
-    specificationRequiredFiles: [String!]!
 }
 
 

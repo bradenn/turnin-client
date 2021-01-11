@@ -45,9 +45,9 @@ export default {
       parent: `/assignment/${this.$route.params.assignmentId}/`,
       navItems: [
         {name: "Overview", path: '', icon: "fas fa-layer-group"},
-        {name: "Brief", path: 'brief', icon: "fas fa-list"},
         {name: "Grades", path: 'grades', icon: "fas fa-book"},
-        {name: "Requirements", path: 'requirements', icon: "fas fa-asterisk"},
+        {name: "Brief", path: 'brief', icon: "fas fa-list"},
+        {name: "Files", path: 'files', icon: "fas fa-file"},
         {name: "Tests", path: 'tests', icon: "fas fa-vial"},
         {name: "Settings", path: 'settings', icon: "fas fa-cog"}
       ]

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-row>
+    <b-row>
       <b-col cols="8">
         {{ error.errors }}
         <div class="py-3 d-flex justify-content-between align-items-end">
@@ -77,13 +77,15 @@
           </b-table>
         </div>
       </b-col>
-    </b-form-row>
+
+    </b-row>
 
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+
 
 const ADD_FILE =
     gql`mutation addRequiredFile($stdIOSpecificationId: ObjectId!, $file: String!){
@@ -136,7 +138,7 @@ const GET_ASSIGNMENT =
         }`;
 
 export default {
-  name: 'AssignmentRequirements',
+  name: 'AssignmentFiles',
   components: {},
   data() {
     return {
@@ -150,11 +152,12 @@ export default {
         page: false,
         addRequiredFile: false,
         addProvidedFile: false,
-        removeProvidedFile: false
+        removeProvidedFile: false,
       },
       form: {
         addFileName: "",
-        addProvidedFile: File
+        addProvidedFile: File,
+        compilationCommand: ""
       },
       error: "",
       show: false
@@ -176,23 +179,7 @@ export default {
     },
   },
   methods: {
-    getRequiredFiles() {
-      const files = this.assignment.assignmentSpecification.specificationRequiredFiles;
-      return files.map(fileName => {
-        return {fileName}
-      });
-    },
-    createCourse() {
-      this.$apollo.mutate({
-        mutation: GET_ASSIGNMENT,
-        variables: {
-          sessionId: this.$user()._id,
-          courseName: this.form.courseName,
-          courseSection: this.form.courseSection
-        }
-      }).then(response => this.$router.push(`/course/${response.data.createCourse._id}`))
-          .catch(doc => console.log(doc));
-    },
+
     addProvidedFile({target: {files = []}}) {
       this.loading.addProvidedFile = true;
       this.$apollo.mutate({
@@ -205,8 +192,8 @@ export default {
           hasUpload: true
         }
       }).then(() => {
-        this.loading.addProvidedFile = false;
         this.$apollo.queries.assignment.refresh();
+        this.loading.addProvidedFile = false;
       }).catch(doc => {
         this.error = doc;
       });
