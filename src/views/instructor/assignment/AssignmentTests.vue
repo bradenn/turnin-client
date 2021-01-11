@@ -8,8 +8,8 @@
         {{ error.errors }}
         <div class="py-3 d-flex justify-content-between align-items-end">
           <div>
-            <h3>StandardIO Tests</h3>
-            <span>These files will be included with the required file during compilation.</span>
+            <h4 class="mb-1">StandardIO Tests</h4>
+            <span class="mt-0 text-muted">These files will be included with the required file during compilation.</span>
           </div>
           <div>
 
