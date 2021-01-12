@@ -21,6 +21,7 @@ import DashboardNewAssignment from "@/views/instructor/dashboard/DashboardNewAss
 import AssignmentBrief from "@/views/instructor/assignment/AssignmentBrief";
 import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings";
 import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
+import Submit from "@/views/student/Submit";
 
 Vue.use(Router)
 
@@ -192,6 +193,15 @@ let router = new Router({
                     }
                 }
             ]
+        },
+        {
+            path: '/submit',
+            name: 'Submit',
+            component: Submit,
+            meta: {
+                title: 'Submit',
+                requiresAuth: true
+            }
         },
         {
             path: '/login',

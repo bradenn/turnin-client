@@ -13,6 +13,9 @@
           <li class="nav-item">
             <b-link to="/dashboard" active-class="active" exact class="nav-link">Dashboard</b-link>
           </li>
+          <li class="nav-item">
+            <b-link to="/submit" active-class="active" exact class="nav-link">Submit</b-link>
+          </li>
         </ul>
         <ul class="navbar-nav mr-0">
           <li class="nav-item">

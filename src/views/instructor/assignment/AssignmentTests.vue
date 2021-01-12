@@ -17,17 +17,48 @@
 
         </div>
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.assignmentSpecification.specificationTests"
-                   :fields="['testName', '_id']" small show-empty>
+          <b-table :items="assignment.assignmentSpecification.specificationTests" sort-by="testName"
+                   :fields="['tests']" class="justify-content-between" small show-empty>
             <template #empty>
               No tests specified.
             </template>
-            <template #cell(fileName)="data">
-              <b-link :href="`https://swfs.turnin.co/csuchico/${data.item.fileReference}`">{{ data.item.fileName }}</b-link>
+            <template #cell(tests)="row">
+              <b-link size="sm" variant="primary" @click="row.toggleDetails">
+                <div class="d-flex justify-content-between">
+                  <div>{{ row.item.testName }}</div>
+                  <div>
+                    <i class="fas" :class="row.detailsShowing?'fa-chevron-down':'fa-chevron-left'"></i>
+                  </div>
+                </div>
+              </b-link>
             </template>
-            <template #cell(options)="">
-              <b-link>Remove</b-link>
+
+            <template #row-details="row">
+              <b-card>
+
+                <b-form-row>
+                  <b-col cols="8">
+                    <b-form-checkbox v-model="row.item.testMemoryLeaks" style="line-height: 1.75em;" name="check-button"
+                                     switch>
+                      Check for Memory Leaks <i class="fas fa-info-circle" v-b-tooltip.hover
+                                                title="This will add significant time to the submission."></i>
+                    </b-form-checkbox>
+                    <b-form-checkbox v-model="checked" style="line-height: 1.75em;" name="check-button" switch>
+                      Hide Test
+                    </b-form-checkbox>
+                  </b-col>
+                  <b-col cols="4">
+
+                  </b-col>
+                  <b-col cols="12">
+
+                  </b-col>
+
+                </b-form-row>
+
+              </b-card>
             </template>
+
             <template slot="custom-foot" v-if="loading.addProvidedFile">
               <b-th>
                 <strong>Uploading...</strong>
@@ -50,13 +81,13 @@
       </b-col>
       <b-col cols="4">
         <b-card>
-          <b-form-file type="file" @change="uploadCompressedTests" >
+          <b-form-file type="file" @change="uploadCompressedTests">
           </b-form-file>
           <div v-if="loading.uploadTests">
-            <b-spinner small variant="primary" class="mr-2"></b-spinner> <strong>Uploading...</strong>
+            <b-spinner small variant="primary" class="mr-2"></b-spinner>
+            <strong>Uploading...</strong>
           </div>
         </b-card>
-
 
 
       </b-col>
@@ -87,7 +118,9 @@ const GET_ASSIGNMENT =
                   specificationTests {
                     testName,
                     testIsHidden,
-                    testInput { _id },
+                    testInput { _id, fileReference, fileName },
+                    testOutput { _id, fileReference, fileName },
+                    testArguments,
                     _id
                   },
                   _id
@@ -159,8 +192,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.progress-bar {
-  height: 100% !important;
-}
 
 </style>

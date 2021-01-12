@@ -139,15 +139,7 @@ export default {
   color: var(--text-color) !important;
 }
 
-.custom-control-label::before {
-  background-color: var(--background) !important;
-  border: var(--foreground-accent) solid 1px !important;
-}
 
-.custom-control-input:checked ~ .custom-control-label::before {
-  background-color: var(--primary-dim) !important;
-  border: var(--primary) solid 1px !important;
-}
 
 .custom-select {
   background-color: var(--background) !important;

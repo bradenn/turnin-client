@@ -2,6 +2,18 @@
   <div>
     <div>
       <b-form-row>
+        <b-col cols="12">
+          <b-alert show variant="primary" class="d-flex justify-content-between align-items-center">
+            {{ assignment.assignmentName }} is not assigned. Would you like to assign it
+            to {{ assignment.assignmentCourse.courseFullName }}?
+            <b-button variant="primary" size="md">Assign</b-button>
+          </b-alert>
+        </b-col>
+        <b-col cols="8">
+          <b-card>
+
+          </b-card>
+        </b-col>
         <b-col cols="4">
           <t-card
               title="Assignment Statistics"
@@ -28,6 +40,9 @@ const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
               assignmentName,
+              assignmentCourse {
+                courseFullName
+              },
               assignmentIsAssigned,
               assignmentDueDate,
               dateCreated

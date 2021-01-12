@@ -4,8 +4,9 @@
       <b-form-row>
         <b-col cols="12">
           <div class="mb-3">
-            <h3>Assignment Brief</h3>
-            <span>The full instructions for the assignment. Upload a markup file, pdf, or docx file.</span>
+
+            <h4 class="mb-1">Assignment Brief</h4>
+            <span class="mt-0 text-muted">The full instructions for the assignment. Upload a markup file, pdf, or docx file.</span>
           </div>
         </b-col>
         <b-col cols="8">
