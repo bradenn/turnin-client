@@ -65,7 +65,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_SUBMISSION,
         variables: {
-          assignmentId: "5ff8d1e8dc0d1314fbd2aae6",
+          assignmentId: "5ffe25681d6e3315e6f148dd",
           submissionUpload: files
         }
       }).then((res) => {
