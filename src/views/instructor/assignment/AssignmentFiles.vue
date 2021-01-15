@@ -90,29 +90,29 @@ import gql from 'graphql-tag'
 
 
 const ADD_FILE =
-    gql`mutation addRequiredFile($stdIOSpecificationId: ObjectId!, $file: String!){
-          addRequiredFile(stdIOSpecificationId: $stdIOSpecificationId, file: $file){
+    gql`mutation addRequiredFile($SpecificationId: ObjectId!, $file: String!){
+          addRequiredFile(SpecificationId: $SpecificationId, file: $file){
                _id
           }
         }`;
 
 const REMOVE_FILE =
-    gql`mutation removeRequiredFile($stdIOSpecificationId: ObjectId!, $file: String!){
-          removeRequiredFile(stdIOSpecificationId: $stdIOSpecificationId, file: $file){
+    gql`mutation removeRequiredFile($SpecificationId: ObjectId!, $file: String!){
+          removeRequiredFile(SpecificationId: $SpecificationId, file: $file){
                _id
           }
         }`;
 
 const UPLOAD_PROVIDED_FILE =
-    gql`mutation addProvidedFile($stdIOSpecificationId: ObjectId!, $fileUpload: Upload!){
-          addProvidedFile(stdIOSpecificationId: $stdIOSpecificationId, fileUpload: $fileUpload){
+    gql`mutation addProvidedFile($SpecificationId: ObjectId!, $fileUpload: Upload!){
+          addProvidedFile(SpecificationId: $SpecificationId, fileUpload: $fileUpload){
                _id
           }
         }`;
 
 const DELETE_PROVIDED_FILE =
-    gql`mutation removeProvidedFile($stdIOSpecificationId: ObjectId!, $fileId: ObjectId!){
-          removeProvidedFile(stdIOSpecificationId: $stdIOSpecificationId, fileId: $fileId){
+    gql`mutation removeProvidedFile($SpecificationId: ObjectId!, $fileId: ObjectId!){
+          removeProvidedFile(SpecificationId: $SpecificationId, fileId: $fileId){
                _id
           }
         }`;
@@ -187,7 +187,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_PROVIDED_FILE,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.assignmentSpecification._id,
           fileUpload: files[0]
         },
         context: {
@@ -205,7 +205,7 @@ export default {
       this.$apollo.mutate({
         mutation: ADD_FILE,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.assignmentSpecification._id,
           file: this.form.addFileName
         }
       }).then(() => {
@@ -218,7 +218,7 @@ export default {
       this.$apollo.mutate({
         mutation: REMOVE_FILE,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.assignmentSpecification._id,
           file: fileName
         }
       }).then(() => {
@@ -232,7 +232,7 @@ export default {
       this.$apollo.mutate({
         mutation: DELETE_PROVIDED_FILE,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.assignmentSpecification._id,
           fileId: fileId
         }
       }).then(() => {

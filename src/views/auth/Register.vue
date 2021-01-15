@@ -4,7 +4,7 @@
       <b-col cols="4"></b-col>
       <b-col cols="4">
         <h1 class="text-center pb-2"><i class="fas fa-code"></i>Turnin</h1>
-        <b-card no-body id="loginForm">
+        <b-card id="loginForm">
           <b-form @submit="onSubmit">
             <div class="card-title">Register</div>
             <div class="card-subtitle" v-if="error">Sign up for a turnin account.</div>
@@ -63,7 +63,7 @@ export default {
     onSubmit(event) {
       event.preventDefault()
       if (this.form.password.length > 0) {
-        this.$http.post('http://localhost:3000/register', {
+        this.$http.post('http://localhost:3000/auth/register', {
           username: this.form.username,
           password: this.form.password,
           email: this.form.email,

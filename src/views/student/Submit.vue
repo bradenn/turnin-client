@@ -26,6 +26,12 @@
           </b-card>
         </b-col>
 
+        <b-col cols="8">
+          <b-card>
+            <code>{{ error }}</code>
+          </b-card>
+        </b-col>
+
       </b-row>
     </b-container>
   </div>
@@ -38,7 +44,7 @@ import gql from 'graphql-tag'
 const UPLOAD_SUBMISSION =
     gql`mutation uploadSubmission($assignmentId: ObjectId!, $submissionUpload: [Upload!]!){
           uploadSubmission(assignmentId: $assignmentId, submissionUpload: $submissionUpload){
-            assignmentName
+            _id
           }
         }`;
 
@@ -65,14 +71,15 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_SUBMISSION,
         variables: {
-          assignmentId: "5ffe25681d6e3315e6f148dd",
+          assignmentId: "6000a25ec2a42f066ff66b63",
           submissionUpload: files
         }
       }).then((res) => {
-        console.log(res)
         this.loading.uploadFiles = false;
+        this.$router.push(`/submission/${res.data.uploadSubmission._id}`)
       }).catch(doc => {
         this.error = doc;
+        console.log(doc)
         this.loading.uploadFiles = false;
       });
     }

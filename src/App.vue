@@ -39,11 +39,14 @@ export default {
 
 <style>
 /*@import './assets/custom.css';*/
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
 
 html, body {
   font-family: 'Roboto Condensed', sans-serif;
 }
+
 
 #content-view {
   width: 100%;

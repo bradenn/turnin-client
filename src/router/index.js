@@ -22,6 +22,7 @@ import AssignmentBrief from "@/views/instructor/assignment/AssignmentBrief";
 import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings";
 import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
 import Submit from "@/views/student/Submit";
+import Submission from "@/views/student/Submission";
 
 Vue.use(Router)
 
@@ -93,7 +94,14 @@ let router = new Router({
                 requiresAuth: true
             }
         },
-
+        {
+            path: '/submission/:submissionId',
+            name: 'Submission',
+            component: Submission,
+            meta: {
+                requiresAuth: true
+            }
+        },
         {
             path: '/assignment/:assignmentId',
             component: Assignment,
@@ -239,7 +247,7 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if(to.fullPath === '/logout') {
+    if (to.fullPath === '/logout') {
         localStorage.clear();
         next({path: '/login'})
     }
