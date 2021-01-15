@@ -102,8 +102,8 @@ import gql from 'graphql-tag'
 
 
 const UPLOAD_TESTS =
-    gql`mutation addCompressedTests($stdIOSpecificationId: ObjectId!, $fileUpload: Upload!){
-          addCompressedTests(stdIOSpecificationId: $stdIOSpecificationId, fileUpload: $fileUpload){
+    gql`mutation addCompressedTests($SpecificationId: ObjectId!, $fileUpload: Upload!){
+          addCompressedTests(SpecificationId: $SpecificationId, fileUpload: $fileUpload){
                _id
           }
         }`;
@@ -175,7 +175,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_TESTS,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.assignmentSpecification._id,
           fileUpload: files[0]
         }
       }).then(() => {

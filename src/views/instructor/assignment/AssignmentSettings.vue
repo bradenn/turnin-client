@@ -60,8 +60,8 @@
 import gql from 'graphql-tag'
 
 const UPDATE_SETTINGS =
-    gql`mutation updateStdIOSpecification($stdIOSpecificationId: ObjectId!, $stdIOSpecificationInput: StdIOSpecificationInput!){
-          updateStdIOSpecification(stdIOSpecificationId: $stdIOSpecificationId, stdIOSpecificationInput: $stdIOSpecificationInput){
+    gql`mutation updateSpecification($SpecificationId: ObjectId!, $SpecificationInput: SpecificationInput!){
+          updateSpecification(SpecificationId: $SpecificationId, SpecificationInput: $SpecificationInput){
                _id
           }
         }`;
@@ -130,8 +130,8 @@ export default {
       this.$apollo.mutate({
         mutation: UPDATE_SETTINGS,
         variables: {
-          stdIOSpecificationId: this.assignment.assignmentSpecification._id,
-          stdIOSpecificationInput: {
+          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationInput: {
             specificationCompilationCommand: this.assignment.assignmentSpecification.specificationCompilationCommand,
             specificationCompilationTimeout: this.assignment.assignmentSpecification.specificationCompilationTimeout
           }

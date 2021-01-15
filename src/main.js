@@ -2,25 +2,29 @@ import Vue from 'vue'
 import App from './App.vue'
 import Axios from 'axios'
 import router from './router'
-import BV from 'bootstrap-vue'
+import {BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
 import {ApolloClient} from 'apollo-client'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import {ApolloLink} from 'apollo-link'
 import VueApollo from 'vue-apollo'
 import {createUploadLink} from 'apollo-upload-client'
+import hljs from 'highlight.js'
 
 
 import './assets/turnin.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import './assets/custom.css'
+import './assets/highlight.min.css'
 
 Vue.config.productionTip = false
 
 Vue.prototype.$http = Axios;
 Vue.prototype.$user = () => JSON.parse(localStorage.getItem("user"));
 Vue.prototype.$token = () => localStorage.getItem("token");
-Vue.use(BV)
+
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 document.title = "Turnin"
 
@@ -63,10 +67,35 @@ const client = new ApolloClient({
 
 Vue.use(VueApollo)
 
-
 const apolloProvider = new VueApollo({
     defaultClient: client
 })
+
+Vue.directive('highlightjs', {
+    deep: true,
+    bind: function (el, binding) {
+        // on first bind, highlight all targets
+        let targets = el.querySelectorAll('code')
+        targets.forEach((target) => {
+            // if a value is directly assigned to the directive, use this
+            // instead of the element content.
+            if (binding.value) {
+                target.textContent = binding.value
+            }
+            hljs.highlightBlock(target)
+        })
+    },
+    componentUpdated: function (el, binding) {
+        // after an update, re-fill the content and then highlight
+        let targets = el.querySelectorAll('code')
+        targets.forEach((target) => {
+            if (binding.value) {
+                target.textContent = binding.value
+                hljs.highlightBlock(target)
+            }
+        })
+    }
+});
 
 new Vue({
     render: h => h(App),
