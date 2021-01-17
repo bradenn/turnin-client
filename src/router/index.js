@@ -23,6 +23,7 @@ import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings
 import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
 import Submit from "@/views/student/Submit";
 import Submission from "@/views/student/Submission";
+import AssignmentSubmissions from "@/views/instructor/assignment/AssignmentSubmissions";
 
 Vue.use(Router)
 
@@ -146,6 +147,15 @@ let router = new Router({
                     }
                 },
                 {
+                    path: 'submissions',
+                    name: 'AssignmentSubmissions',
+                    component: AssignmentSubmissions,
+                    meta: {
+                        title: 'Submissions',
+                        requiresAuth: true
+                    }
+                },
+                {
                     path: 'tests',
                     name: 'AssignmentTests',
                     component: AssignmentTests,
@@ -203,7 +213,7 @@ let router = new Router({
             ]
         },
         {
-            path: '/submit',
+            path: '/submit/:assignmentId',
             name: 'Submit',
             component: Submit,
             meta: {

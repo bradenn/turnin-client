@@ -2,7 +2,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand mr-0" href="/dashboard">
-        <b-img src="/logo.png" height="36"></b-img>
+        <span class="text-light ml-2 " style="font-family: JetBrainsMonoBold, monospace;">
+        &lt;&#47;&gt;Turnin</span>
+        <span class="text-muted ml-2" style="font-family: JetBrainsMono, monospace;">BNM University</span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,12 +12,12 @@
       </button>
       <div class="collapse navbar-collapse justify-content-between" id="navbarText">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <b-link to="/dashboard" active-class="active" exact class="nav-link">Dashboard</b-link>
-          </li>
-          <li class="nav-item">
-            <b-link to="/submit" active-class="active" exact class="nav-link">Submit</b-link>
-          </li>
+          <!--          <li class="nav-item">
+                      <b-link to="/dashboard" active-class="active" exact class="nav-link">Dashboard</b-link>
+                    </li>
+                    <li class="nav-item">
+                      <b-link to="/submit" active-class="active" exact class="nav-link">Submit</b-link>
+                    </li>-->
         </ul>
         <ul class="navbar-nav mr-0">
           <li class="nav-item">

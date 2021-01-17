@@ -20,7 +20,7 @@
           <b-card>
             <b-form-file multiple @change="uploadSubmission">Upload</b-form-file>
             <div v-if="loading.uploadFiles">
-              <b-spinner small variant="primary" class="mr-2"></b-spinner>
+              <b-spinner small variant="primary" class="mr-2 mt-1"></b-spinner>
               <strong>Working on it...</strong>
             </div>
           </b-card>
@@ -71,7 +71,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_SUBMISSION,
         variables: {
-          assignmentId: "6000a25ec2a42f066ff66b63",
+          assignmentId: this.$route.params.assignmentId,
           submissionUpload: files
         }
       }).then((res) => {

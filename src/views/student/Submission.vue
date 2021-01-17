@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container>
+    <b-container class="mt-3">
       <b-row>
 
         <b-col cols="8">
@@ -8,6 +8,18 @@
           <div class="py-3 d-flex justify-content-between align-items-end">
             <div>
               <h4 class="mb-1">Submission Results</h4>
+              <span class="mt-0 text-muted">The following results to your previous submission</span>
+            </div>
+            <div>
+            </div>
+          </div>
+        </b-col>
+
+        <b-col cols="4">
+          {{ error }}
+          <div class="py-3 d-flex justify-content-between align-items-end">
+            <div>
+              <h4 class="mb-1">Compilation Details</h4>
               <span class="mt-0 text-muted">The following results to your previous submission</span>
             </div>
             <div>
@@ -44,18 +56,18 @@
               <template #row-details="row">
                 <b-card>
                   <b-form-row>
-                    <b-col cols="12">
-
-                      <pre v-highlightjs>
-                        <code class="shell">
-                          {{ row.item.testOutput.join("\n") }}
-                        </code>
-                      </pre>
+                    <b-col cols="6">
+                      <h5>Standard Output</h5>
+                      <code>
+                        {{ row.item.testOutput.join("\n") || "" }}
+                      </code>
 
                     </b-col>
                     <b-col cols="4">
-                      StdErr Diff<br>
-
+                      <h5>Standard Error</h5>
+                      <code>
+                        {{ row.item.testError.join("\n") || "" }}
+                      </code>
                     </b-col>
                     <b-col cols="4">
                       Exit Code<br>
@@ -71,19 +83,20 @@
             </b-table>
           </div>
         </b-col>
-        <b-col cols="8 mt-3">
-          <b-card>
-            <span>Compilation Time: {{ submission.submissionCompilationTime }}</span><br>
-            <pre v-highlightjs>
-                <code class="shell">
-                  {{ submission.submissionCompilationOutput.join("\n") || "FUCK" }}
-                </code>
-            </pre>
-            <div>
-            </div>
-          </b-card>
+        <b-col cols="4">
+          <hr class="mt-1">
+          <div class="d-flex justify-content-between">
+            <span class="bold">Elapsed Time</span>
+            <code>{{ submission.submissionCompilationTime }}</code>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <span>Standard Output/Error</span>
+            <code>3 lines</code>
+          </div>
+          <code>{{ submission.submissionCompilationOutput.join('\n') }}</code>
+          <hr>
         </b-col>
-
       </b-row>
     </b-container>
   </div>
@@ -182,6 +195,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
+<style scoped>
+hr {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
 </style>

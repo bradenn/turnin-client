@@ -45,6 +45,7 @@ export default {
 
 html, body {
   font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400 !important;
 }
 
 

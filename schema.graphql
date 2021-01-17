@@ -14,6 +14,7 @@ type Assignment {
     assignmentLateDate: String!
     assignmentName: String!
     assignmentSpecification: Specification!
+    assignmentSubmissions: [Submission!]!
     dateCreated: String
 }
 
@@ -42,6 +43,7 @@ type Course {
 type File {
     _id: ObjectId!
     dateCreated: String!
+    fileLink: String!
     fileName: String!
     fileOwner: User!
     fileReference: String!
@@ -66,6 +68,8 @@ type Query {
     file(fileId: ObjectId!): File!
     instructorCourse(courseId: ObjectId!): Course!
     instructorCourses: [Course!]!
+    self: User!
+    studentAssignments: [Assignment!]!
     submission(submissionId: ObjectId!): Submission!
     user(targetId: ObjectId!): User!
     userSelf: User!
@@ -90,6 +94,7 @@ type Submission {
     submissionCompilationTime: String!
     submissionFiles: [File!]!
     submissionOwner: User!
+    submissionPassedTest: Boolean!
     submissionResults: [SubmissionResult!]!
 }
 
@@ -126,6 +131,7 @@ type User {
     dateCreated: String!
     email: String!
     firstname: String!
+    fullName: String!
     lastname: String!
     password: String!
     username: String!

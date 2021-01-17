@@ -2,8 +2,8 @@
     <b-card no-body class="mb-3 px-3 pt-2 pb-3">
       <div class="d-flex justify-content-between" :class="top?'align-items-start':'align-items-end'">
         <div>
-          <div class="card-title">{{ title }}</div>
-          <div class="card-subtitle mb-2">{{ subtitle }}</div>
+          <div class="card-title mt-1">{{ title }}</div>
+          <div class="card-subtitle mb-2"></div>
         </div>
         <div>
           <div class="mb-2">
@@ -12,6 +12,7 @@
         </div>
       </div>
       <slot name="body"></slot>
+      <slot name="table"></slot>
     </b-card>
 </template>
 
@@ -30,9 +31,15 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  background-color: var(--foreground);
-  border: var(--border);
-  box-shadow: var(--box-shadow);
+.card-title {
+  font-size: 1.25em;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+}
+
+.card-subtitle {
+  font-size: 1em;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
 }
 </style>
