@@ -913,12 +913,19 @@ code {
     padding: 5px 10px;
 }
 
-/*.badge.badge-primary {
+.badge.badge-primary {
     color: var(--primary);
     background-color: var(--primary-dim);
     font-size: 11px;
     padding: 5px 10px;
-}*/
+}
+
+.badge.badge-light {
+
+
+    font-size: 11px;
+    padding: 5px 10px;
+}
 
 .badge.badge-secondary {
     color: var(--muted);

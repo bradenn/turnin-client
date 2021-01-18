@@ -11,7 +11,7 @@
         </b-col>
         <b-col cols="8">
           <b-card>
-
+            // Todo
           </b-card>
         </b-col>
         <b-col cols="4">

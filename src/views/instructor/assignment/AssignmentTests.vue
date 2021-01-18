@@ -4,71 +4,111 @@
       <b-col cols="8">
       </b-col>
       <b-col cols="8">
-        <t-card title="StandardIO Tests"
+        <t-card title="Submission Tests"
                 subtitle="All of the following tests will be run and evaluated on all assignment submissions.">
           <template slot="table">
 
             <b-table :items="assignment.assignmentSpecification.specificationTests" sort-by="testName"
-                     :fields="['tests']" class="justify-content-between" small show-empty>
+                     :fields="['name']" class="justify-content-between"
+                     show-empty>
               <template #empty>
                 No tests specified.
               </template>
-              <template #cell(tests)="row">
-                <b-link size="sm" variant="primary" @click="row.toggleDetails">
-                  <div class="d-flex justify-content-between">
-                    <div>{{ row.item.testName }}</div>
-                    <div>
-                      <i class="fas" :class="row.detailsShowing?'fa-chevron-down':'fa-chevron-left'"></i>
-                    </div>
+              <template #cell(name)="row">
+                <div class="d-flex justify-content-between">
+                  <div>{{ row.item.testName }}</div>
+                  <div class="d-flex justify-content-start">
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('in')?'primary':'light'">IN
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('args')?'primary':'light'">ARGS
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('args')?'primary':'light'">ENV
+                    </b-badge>
+                    <div class="v-sep"></div>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('out')?'primary':'light'">OUT
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('err')?'primary':'light'">ERR
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('exit')?'primary':'light'">EXIT
+                    </b-badge>
+                    <div class="v-sep"></div>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('timeout')?'primary':'light'">TIME
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('leaks')?'primary':'light'">LEAK
+                    </b-badge>
+                    <b-badge class="mr-1" :variant="row.item.testContext.includes('hidden')?'primary':'light'">HIDE
+                    </b-badge>
                   </div>
+                  <b-icon icon="chevron-down" @click="row.toggleDetails"></b-icon>
+                </div>
+                <b-link size="sm" variant="primary">
                 </b-link>
               </template>
 
               <template #row-details="row">
-                <b-card>
-                  <b-form-row class="">
-                    <b-col cols="6" class="border-right" style="border-color: var(--muted) !important;">
-                      <strong class="mb-2">Runtime Options</strong>
-                      <b-form-checkbox v-model="row.item.testMemoryLeaks" style="line-height: 1.75em;"
-                                       name="check-button"
-                                       switch>
-                        Check for Memory Leaks
-                      </b-form-checkbox>
-                      <b-form-checkbox v-model="checked" style="line-height: 1.75em;" name="check-button" switch>
-                        Log program heap
-                      </b-form-checkbox>
-                      <b-form-checkbox v-model="checked" style="line-height: 1.75em;" name="check-button" switch>
-                        Hide test from students
-                      </b-form-checkbox>
-                    </b-col>
-                    <b-col cols="6" class="pl-3">
-                      <b>Test Files</b>
-                      <div class="d-flex justify-content-between">
-                        <div>{{ row.item.testInput.fileName }}</div>
-                        <b-link :href="`${row.item.testInput.fileLink}`" v-if="row.item.testInput" target="_blank">view
-                          raw
-                        </b-link>
-                      </div>
-                      <div class="d-flex justify-content-between" v-if="row.item.testOutput">
-                        <div>{{ row.item.testOutput.fileName }}</div>
-                        <div>
-                          <b-link :href="`${row.item.testOutput.fileLink}`" target="_blank">view
-                            raw
-                          </b-link>
-                        </div>
-                      </div>
-                      <div class="d-flex justify-content-between" v-if="row.item.testError">
-                        <div>{{ row.item.testError.fileName }}</div>
-                        <div>
-                          <b-link :href="`${row.item.testError.fileLink}`" target="_blank">view
-                            raw/""""
-                          </b-link>
-                        </div>
-                      </div>
-                    </b-col>
 
-                  </b-form-row>
-                </b-card>
+                <b-form-row class="mb-3">
+                  <b-col cols="6" class="d-flex flex-column justify-content-between">
+                    <b-form>
+                      <b-form-group
+                          label="Input File"
+                          description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
+                        <b-form-file type="number" size="sm" :placeholder="row.item.testInput.fileName"></b-form-file>
+                      </b-form-group>
+                      <b-form-group
+                          label="Memory Leaks"
+                          description="Checks should be run on tests that provide wide code coverage.">
+                        <b-form-select size="sm" value="false">
+                          <b-select-option value="false">Ignore</b-select-option>
+                          <b-select-option value="true">Check for leaks</b-select-option>
+                          <b-form-select-option-group label="">
+                            <b-select-option value="true">Log Heap</b-select-option>
+                            <b-select-option value="true">Deep leak check</b-select-option>
+                          </b-form-select-option-group>
+                        </b-form-select>
+                      </b-form-group>
+                      <b-form-group
+                          label="Hide results from student"
+                          description="The test will be visibly hidden">
+                        <b-form-select size="sm" value="false">
+                          <b-select-option value="false">Show results</b-select-option>
+                          <b-select-option value="true">Hide results</b-select-option>
+                        </b-form-select>
+                      </b-form-group>
+                    </b-form>
+                  </b-col>
+                  <b-col cols="6" class="d-flex flex-column justify-content-between"
+                         style="border-color: var(--muted) !important;">
+                    <b-form>
+                      <b-form-group
+                          label="Program Timeout"
+                          description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
+                        <b-form-input type="number" size="sm" v-model="row.item.testTimeout"></b-form-input>
+                      </b-form-group>
+                      <b-form-group
+                          label="Memory Leaks"
+                          description="Checks should be run on tests that provide wide code coverage.">
+                        <b-form-select size="sm" value="false">
+                          <b-select-option value="false">Ignore</b-select-option>
+                          <b-select-option value="true">Check for leaks</b-select-option>
+                          <b-form-select-option-group label="">
+                            <b-select-option value="true">Log Heap</b-select-option>
+                            <b-select-option value="true">Deep leak check</b-select-option>
+                          </b-form-select-option-group>
+                        </b-form-select>
+                      </b-form-group>
+                      <b-form-group
+                          label="Hide results from student"
+                          description="The test will be visibly hidden">
+                        <b-form-select size="sm" value="false">
+                          <b-select-option value="false">Show results</b-select-option>
+                          <b-select-option value="true">Hide results</b-select-option>
+                        </b-form-select>
+                      </b-form-group>
+                    </b-form>
+                  </b-col>
+                </b-form-row>
+
               </template>
 
               <template slot="custom-foot" v-if="loading.addProvidedFile">
@@ -93,14 +133,17 @@
         </t-card>
       </b-col>
       <b-col cols="4">
-        <b-card>
-          <b-form-file type="file" @change="uploadCompressedTests">
-          </b-form-file>
-          <div v-if="loading.uploadTests">
-            <b-spinner small variant="primary" class="mr-2"></b-spinner>
-            <strong>Uploading...</strong>
-          </div>
-        </b-card>
+        <t-card title="Upload Tests"
+                subtitle="Upload a *.tar.gz file containing tests, or upload a turnin assignment manifest.">
+          <template slot="body">
+            <b-form-file type="file" @change="uploadCompressedTests">
+            </b-form-file>
+            <div v-if="loading.uploadTests">
+              <b-spinner small variant="primary" class="mr-2"></b-spinner>
+              <strong>Uploading...</strong>
+            </div>
+          </template>
+        </t-card>
       </b-col>
 
     </b-row>
@@ -132,6 +175,8 @@ const GET_ASSIGNMENT =
                     testInput { _id, fileReference, fileName, fileLink },
                     testOutput { _id, fileReference, fileName, fileLink },
                     testArguments,
+                    testContext,
+testTimeout,
                     _id
                   },
                   _id
@@ -217,5 +262,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+
+.v-sep {
+  width: 1px;
+  margin: 0.25em 1.25em;
+  height: 1em;
+  vertical-align: center;
+  background-color: var(--muted);
+  opacity: 0.5;
+}
 
 </style>

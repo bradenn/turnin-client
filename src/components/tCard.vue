@@ -3,7 +3,7 @@
       <div class="d-flex justify-content-between" :class="top?'align-items-start':'align-items-end'">
         <div>
           <div class="card-title mt-1">{{ title }}</div>
-          <div class="card-subtitle mb-2"></div>
+          <div class="card-subtitle mb-2">{{ subtitle }}</div>
         </div>
         <div>
           <div class="mb-2">
@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .card-title {
-  font-size: 1.25em;
+  font-size: 1.5em;
   font-family: Roboto, sans-serif;
   font-weight: 500;
 }

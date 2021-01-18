@@ -63,6 +63,7 @@ type Mutation {
 
 type Query {
     Specification(SpecificationId: ObjectId!): Specification!
+    TestSpecification(TestSpecificationId: ObjectId!): TestSpecification!
     assignment(assignmentId: ObjectId!): Assignment!
     course(courseId: ObjectId!): Course!
     file(fileId: ObjectId!): File!
@@ -114,6 +115,8 @@ type TestSpecification {
     _id: ObjectId!
     dateCreated: String!
     testArguments: [String!]!
+    testContext: [String!]!
+    testCriteria: [String!]!
     testError: File
     testExitCode: Float!
     testInput: File
@@ -121,6 +124,7 @@ type TestSpecification {
     testMemoryLeaks: Boolean
     testName: String!
     testOutput: File
+    testSource: [String!]!
     testTimeout: Float!
 }
 
