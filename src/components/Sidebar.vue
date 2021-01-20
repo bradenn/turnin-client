@@ -35,7 +35,7 @@
 
     <ul class="list-group menu-list" v-for="course in instructorCourses" :key="course._id">
 
-      <SidebarMenuItem :name="`${course.courseName}.${course.courseSection}`" link="/courses"
+      <SidebarMenuItem :name="`${course.name}.${course.section}`" link="/courses"
                        icon="fas fa-users"></SidebarMenuItem>
 
       <ul class="list-group menu-list pl-3" v-for="assignment in course.courseAssignments" :key="assignment._id">
@@ -78,16 +78,16 @@ import gql from "graphql-tag";
 const GET_COURSES = gql`
 query instructorCourses{
     instructorCourses{
-        courseName,
-        courseSection,
+        name,
+        section,
         courseAssignments {
             _id,
             name,
             due,
             late
         },
-        courseIsLocked,
-        courseInstructor,
+        locked,
+        instructor,
         _id
     }
 }`;

@@ -12,7 +12,7 @@
           <b-link :to="`/course/${course._id}`">
             <b-card no-body class="mb-3 px-3 py-3">
               <div class="d-flex justify-content-between">
-                <div class="courseName">{{ course.courseName }}.{{ course.courseSection }}</div>
+                <div class="name">{{ course.name }}.{{ course.section }}</div>
                 <div class="d-flex justify-content-start mr-n2">
                   <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
                     <b-badge pill variant="primary" class="badge-top-right">{{ course.courseStudentCount }}</b-badge>
@@ -23,7 +23,7 @@
                 </div>
               </div>
 
-              <div class="mb-2">{{ course.courseDescription }}</div>
+              <div class="mb-2">{{ course.description }}</div>
 
             </b-card>
           </b-link>
@@ -56,13 +56,13 @@ import TCard from "@/components/tCard";
 const GET_COURSES = gql`
 query instructorCourses{
     instructorCourses{
-        courseName,
-        courseSection,
-        courseDescription,
+        name,
+        section,
+        description,
         courseStudentCount,
         courseAssignmentCount,
-        courseIsLocked,
-        courseInstructor{
+        locked,
+        instructor{
             _id
         },
         _id
@@ -75,7 +75,7 @@ export default {
   components: {TCard},
   data() {
     return {
-      fields: ['courseName'],
+      fields: ['name'],
       items: [],
       instructorCourses: [],
       loading: 0,
@@ -96,7 +96,7 @@ export default {
   mounted() {
     this.courseList = this.instructorCourses.map(course => {
       return {
-        name: `${course.courseName}.${course.courseSection}`,
+        name: `${course.name}.${course.section}`,
         link: `/course/${course._id}`,
         key: course._id
       }
@@ -161,7 +161,7 @@ export default {
   padding: 0.25em 0.5em;
 }
 
-.courseName {
+.name {
   font-weight: bold;
   font-size: 1.15em;
   color: var(--primary);

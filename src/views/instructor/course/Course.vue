@@ -2,7 +2,7 @@
   <div>
     <t-header
         :loading="loading"
-        :previous="course.courseName"
+        :previous="course.name"
         :current="this.$route.meta.title"
         subtitle=""
         :parent="parent"
@@ -23,15 +23,15 @@ import THeader from "@/components/tHeader";
 const GET_COURSE =
     gql`query course($courseId: ObjectId!){
           course(courseId: $courseId){
-              courseName,
-              courseSection,
-              courseIsLocked
+              name,
+              section,
+              locked
           }
         }`;
 
 const CREATE_COURSE =
     gql`mutation createCourse($sessionId: String!, $courseName: String!, $courseSection: Int!){
-          createCourse(sessionId: $sessionId, courseName: $courseName, courseSection: $courseSection){
+          createCourse(sessionId: $sessionId, name: $courseName, section: $courseSection){
             _id
           }
         }`;
@@ -87,8 +87,8 @@ export default {
         mutation: CREATE_COURSE,
         variables: {
           sessionId: this.$user()._id,
-          courseName: this.form.courseName,
-          courseSection: this.form.courseSection
+          name: this.form.name,
+          section: this.form.section
         }
       }).then(response => this.$router.push(`/course/${response.data.createCourse._id}`))
           .catch(doc => console.log(doc));

@@ -9,12 +9,12 @@
       </b-col>
       <b-col cols="8">
         <div v-for="course in instructorCourses" :key="course._id">
-          <h5>{{course.courseName}}.{{course.courseSection}}</h5>
+          <h5>{{ course.name }}.{{ course.section }}</h5>
           <div v-for="assignment in course.courseAssignments" :key="assignment._id">
             <b-link :to="`/assignment/${assignment._id}`">
               <b-card no-body class="mb-3 px-3 py-3">
                 <div class="d-flex justify-content-between">
-                  <div class="courseName">{{ assignment.name }}</div>
+                  <div class="name">{{ assignment.name }}</div>
                   <div class="d-flex justify-content-start mr-n2">
                     <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
                       <b-badge pill variant="primary" class="badge-top-right">12</b-badge>
@@ -50,7 +50,7 @@
             label-for="input-1">
           <b-form-select v-model="form.course">
             <b-form-select-option v-for="course in instructorCourses" :key="course._id" :value="course._id">
-              {{ course.courseName }}.{{ course.courseSection }}
+              {{ course.name }}.{{ course.section }}
             </b-form-select-option>
           </b-form-select>
         </b-form-group>
@@ -72,10 +72,10 @@
       </form>
       <template #modal-footer>
         <div class="d-flex justify-content-between align-items-baseline" style="width: 100%;">
-          <div class="text-muted" v-if="form.courseName === ''">A course name is required.</div>
+          <div class="text-muted" v-if="form.name === ''">A course name is required.</div>
           <div></div>
           <div>
-            <b-button type="submit" @click="createAssignment" variant="primary" :disabled="form.courseName === ''">
+            <b-button type="submit" @click="createAssignment" variant="primary" :disabled="form.name === ''">
               Create
               Course
             </b-button>
@@ -93,16 +93,16 @@ import gql from 'graphql-tag'
 const GET_COURSES = gql`
 query instructorCourses{
     instructorCourses{
-        courseName,
-        courseSection,
+        name,
+        section,
         courseAssignments {
             _id,
             name,
             due,
             late
         },
-        courseIsLocked,
-        courseInstructor {
+        locked,
+        instructor {
         _id
         },
         _id
@@ -122,7 +122,7 @@ export default {
   components: {},
   data() {
     return {
-      fields: ['courseName'],
+      fields: ['name'],
       items: [],
       instructorCourses: [],
       loading: 0,

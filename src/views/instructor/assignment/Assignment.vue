@@ -23,7 +23,7 @@ const GET_ASSIGNMENT =
           assignment(assignmentId: $assignmentId){
               name,
               course {
-                courseName
+                name
               },
               assigned,
               due,
@@ -76,8 +76,8 @@ export default {
         mutation: GET_ASSIGNMENT,
         variables: {
           sessionId: this.$user()._id,
-          courseName: this.form.courseName,
-          courseSection: this.form.courseSection
+          name: this.form.name,
+          section: this.form.section
         }
       }).then(response => this.$router.push(`/course/${response.data.createCourse._id}`))
           .catch(doc => console.log(doc));
