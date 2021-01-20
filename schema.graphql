@@ -20,9 +20,9 @@ type Assignment {
 
 type Brief {
     _id: ObjectId!
-    briefDesc: String!
-    briefMarkdownFile: File!
-    briefTitle: String!
+    description: String!
+    markdown: File!
+    title: String!
     created: String!
 }
 
