@@ -9,46 +9,47 @@
       </b-col>
       <b-col cols="8">
 
-            <b-form @submit="pushUpdates">
-              <h5>General Settings</h5>
-              <b-form-group
-                  label="Assignment Course"
-                  label-for="input-formatter"
-                  description="Once assigned, this course will be responsible for completing this assignment. This cannot be changed.">
-                <b-form-input type="text"
-                              v-model="assignment.course.courseFullName" disabled></b-form-input>
-              </b-form-group>
+        <b-form @submit="pushUpdates">
+          <h5>General Settings</h5>
+          <b-form-group
+              label="Assignment Course"
+              label-for="input-formatter"
+              description="Once assigned, this course will be responsible for completing this assignment. This cannot be changed.">
+            <b-form-input type="text"
+                          v-model="assignment.course.courseFullName" disabled></b-form-input>
+          </b-form-group>
 
-              <h5>Compilation Settings</h5>
-              <b-form-group
-                  label="Compilation Command"
-                  label-for="input-formatter"
-                  description="This command will be used to compile the submitted project."
-                  >
-                <b-form-input type="text"
-                              v-model="assignment.specification.command"></b-form-input>
-              </b-form-group>
+          <h5>Compilation Settings</h5>
+          <b-form-group
+              label="Compilation Command"
+              label-for="input-formatter"
+              description="This command will be used to compile the submitted project."
+          >
+            <b-form-input type="text"
+                          v-model="assignment.specification.command"></b-form-input>
+          </b-form-group>
 
-              <b-form-group
-                  label="Compilation Timeout"
-                  label-for="input-formatter"
-                  description="The compilation will timeout after 5000ms by default."
-                  >
-                <b-form-spinbutton id="demo-sb"
-                                   v-model="assignment.specification.timeout"
-                                   min="200" step="500" max="20000"></b-form-spinbutton>
-              </b-form-group>
-              <div class="d-flex justify-content-between align-items-center mt-2">
-                <div>
-                  <div v-if="loading.updateSettings">
-                    <b-spinner small variant="primary" class="mr-2"></b-spinner> <strong>Updating...</strong>
-                  </div>
-                </div>
-                <b-button variant="primary" type="submit">
-                  Update
-                </b-button>
+          <b-form-group
+              label="Compilation Timeout"
+              label-for="input-formatter"
+              description="The compilation will timeout after 5000ms by default."
+          >
+            <b-form-spinbutton id="demo-sb"
+                               v-model="assignment.specification.timeout"
+                               min="200" step="500" max="20000"></b-form-spinbutton>
+          </b-form-group>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div>
+              <div v-if="loading.updateSettings">
+                <b-spinner small variant="primary" class="mr-2"></b-spinner>
+                <strong>Updating...</strong>
               </div>
-            </b-form>
+            </div>
+            <b-button variant="primary" type="submit">
+              Update
+            </b-button>
+          </div>
+        </b-form>
 
       </b-col>
     </b-row>

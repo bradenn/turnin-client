@@ -6,24 +6,24 @@ import Profile from '@/views/Profile'
 import Privacy from '@/views/legal/Privacy'
 import Terms from '@/views/legal/Terms'
 import Dashboard from '@/views/instructor/dashboard/Dashboard'
-import DashboardOverview from '@/views/instructor/dashboard/DashboardOverview'
+import DashboardOverview from '@/views/instructor/dashboard/Overview'
 import Assignment from '@/views/instructor/assignment/Assignment'
-import AssignmentFiles from '@/views/instructor/assignment/AssignmentFiles'
+import AssignmentFiles from '@/views/instructor/assignment/Files'
 import Course from '@/views/instructor/course/Course'
-import AssignmentOverview from "@/views/instructor/assignment/AssignmentOverview";
-import DashboardStudents from "@/views/instructor/dashboard/DashboardStudents";
-import DashboardSettings from "@/views/instructor/dashboard/DashboardSettings";
-import DashboardNewCourse from "@/views/instructor/dashboard/DashboardNewCourse";
+import AssignmentOverview from "@/views/instructor/assignment/Overview";
+import DashboardStudents from "@/views/instructor/dashboard/Students";
+import DashboardSettings from "@/views/instructor/dashboard/Settings";
+import DashboardNewCourse from "@/views/instructor/dashboard/NewCourse";
 import CourseOverview from "@/views/instructor/course/CourseOverview";
-import DashboardAssignments from "@/views/instructor/dashboard/DashboardAssignments";
-import DashboardCourses from "@/views/instructor/dashboard/DashboardCourses";
-import DashboardNewAssignment from "@/views/instructor/dashboard/DashboardNewAssignment";
-import brief from "@/views/instructor/assignment/brief";
-import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings";
-import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
+import DashboardAssignments from "@/views/instructor/dashboard/Assignments";
+import DashboardCourses from "@/views/instructor/dashboard/Courses";
+import DashboardNewAssignment from "@/views/instructor/dashboard/NewAssignment";
+import AssignmentBrief from "@/views/instructor/assignment/Brief";
+import AssignmentSettings from "@/views/instructor/assignment/Settings";
+import AssignmentTests from "@/views/instructor/assignment/Tests";
 import Submit from "@/views/student/Submit";
 import Submission from "@/views/student/Submission";
-import AssignmentSubmissions from "@/views/instructor/assignment/AssignmentSubmissions";
+import AssignmentSubmissions from "@/views/instructor/assignment/Submissions";
 
 Vue.use(Router)
 
@@ -122,7 +122,7 @@ let router = new Router({
                 {
                     path: 'brief',
                     name: 'brief',
-                    component: brief,
+                    component: AssignmentBrief,
                     meta: {
                         title: 'Brief',
                         requiresAuth: true
@@ -259,7 +259,7 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
     if (to.fullPath === '/logout') {
         localStorage.clear();
-        next({path: '/login'})
+        return next({path: '/login'})
     }
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('token') !== 'undefined') {

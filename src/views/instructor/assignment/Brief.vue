@@ -39,9 +39,7 @@ const GET_ASSIGNMENT =
 
 export default {
   name: 'AssignmentOverview',
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       assignment: {},

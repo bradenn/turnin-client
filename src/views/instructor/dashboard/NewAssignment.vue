@@ -66,9 +66,7 @@ mutation createAssignment($assignmentInput: AssignmentInput!){
 
 export default {
   name: 'DashboardNewAssignment',
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       show: false,

@@ -140,7 +140,6 @@ export default {
 }
 
 
-
 .custom-select {
   background-color: var(--background) !important;
   border: var(--border) !important;
@@ -167,7 +166,7 @@ export default {
   color: var(--primary);
 }
 
-a:hover{
+a:hover {
   text-decoration: none !important;
   color: inherit !important;
 }
