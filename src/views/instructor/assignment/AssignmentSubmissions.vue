@@ -53,8 +53,8 @@ const GET_ASSIGNMENT =
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
                   specificationProvidedFiles {
-                    fileName,
-                    fileReference,
+                    name,
+                    reference,
                     _id
                   },
                   specificationRequiredFiles,

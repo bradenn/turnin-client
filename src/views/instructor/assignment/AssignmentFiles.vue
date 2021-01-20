@@ -21,11 +21,11 @@
 
         <div class="table-responsive mb-0">
           <b-table :items="assignment.specification.specificationRequiredFiles"
-                   :fields="['fileName', 'options']" small show-empty>
+                   :fields="['name', 'options']" small show-empty>
             <template #empty>
               No files specified.
             </template>
-            <template #cell(fileName)="data">
+            <template #cell(name)="data">
               {{ data.item }}
             </template>
             <template #cell(options)="data">
@@ -49,12 +49,12 @@
         </div>
         <div class="table-responsive mb-0">
           <b-table :items="assignment.specification.specificationProvidedFiles"
-                   :fields="['fileName', 'options']" small show-empty>
+                   :fields="['name', 'options']" small show-empty>
             <template #empty>
               No files specified.
             </template>
-            <template #cell(fileName)="data">
-              <b-link :href="`https://swfs.turnin.co${data.item.fileReference}`">{{ data.item.fileName }}</b-link>
+            <template #cell(name)="data">
+              <b-link :href="`https://swfs.turnin.co${data.item.reference}`">{{ data.item.name }}</b-link>
             </template>
             <template #cell(options)="data">
               <b-link @click="removeProvidedFile(data.item._id)">Remove</b-link>
@@ -128,8 +128,8 @@ const GET_ASSIGNMENT =
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
                   specificationProvidedFiles {
-                    fileName,
-                    fileReference,
+                    name,
+                    reference,
                     _id
                   },
                   specificationRequiredFiles,
@@ -214,12 +214,12 @@ export default {
         this.error = doc;
       });
     },
-    removeRequiredFile(fileName) {
+    removeRequiredFile(name) {
       this.$apollo.mutate({
         mutation: REMOVE_FILE,
         variables: {
           SpecificationId: this.assignment.specification._id,
-          file: fileName
+          file: name
         }
       }).then(() => {
         this.$apollo.queries.assignment.refresh();

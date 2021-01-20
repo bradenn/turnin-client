@@ -53,7 +53,7 @@
                       <b-form-group
                           label="Input File"
                           description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
-                        <b-form-file type="number" size="sm" :placeholder="row.item.testInput.fileName"></b-form-file>
+                        <b-form-file type="number" size="sm" :placeholder="row.item.testInput.name"></b-form-file>
                       </b-form-group>
                       <b-form-group
                           label="Memory Leaks"
@@ -172,8 +172,8 @@ const GET_ASSIGNMENT =
                   specificationTests {
                     testName,
                     testIsHidden,
-                    testInput { _id, fileReference, fileName, fileLink },
-                    testOutput { _id, fileReference, fileName, fileLink },
+                    testInput { _id, reference, name, fileLink },
+                    testOutput { _id, reference, name, fileLink },
                     testArguments,
                     testContext,
 testTimeout,

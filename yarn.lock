@@ -2331,7 +2331,7 @@ cacache@^12.0.2, cacache@^12.0.3:
     promise-inflight "^1.0.1"
     rimraf "^2.6.3"
     ssri "^6.0.1"
-    unique-filename "^1.1.1"
+    unique-name "^1.1.1"
     y18n "^4.0.0"
 
 cacache@^13.0.1:
@@ -2356,7 +2356,7 @@ cacache@^13.0.1:
     promise-inflight "^1.0.1"
     rimraf "^2.7.1"
     ssri "^7.0.0"
-    unique-filename "^1.1.1"
+    unique-name "^1.1.1"
 
 cache-base@^1.0.1:
   version "1.0.1"
@@ -7151,9 +7151,9 @@ require-directory@^2.1.1:
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz"
   integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
 
-require-main-filename@^2.0.0:
+require-main-name@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-2.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/require-main-name/-/require-main-name-2.0.0.tgz"
   integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
 
 requires-port@^1.0.0:
@@ -8244,9 +8244,9 @@ uniqs@^2.0.0:
   resolved "https://registry.yarnpkg.com/uniqs/-/uniqs-2.0.0.tgz"
   integrity sha1-/+3ks2slKQaW5uFl1KWe25mOawI=
 
-unique-filename@^1.1.1:
+unique-name@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/unique-filename/-/unique-filename-1.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/unique-name/-/unique-name-1.1.1.tgz"
   integrity sha512-Vmp0jIp2ln35UTXuryvjzkjGdRyf9b2lTXuSYUiPmzRcl3FDtYqAwOnTJkAngD9SWhnoJzDbTKwaOrZ+STtxNQ==
   dependencies:
     unique-slug "^2.0.0"
@@ -8836,7 +8836,7 @@ yargs@^13.3.2:
     find-up "^3.0.0"
     get-caller-file "^2.0.1"
     require-directory "^2.1.1"
-    require-main-filename "^2.0.0"
+    require-main-name "^2.0.0"
     set-blocking "^2.0.0"
     string-width "^3.0.0"
     which-module "^2.0.0"
@@ -8853,7 +8853,7 @@ yargs@^15.0.0:
     find-up "^4.1.0"
     get-caller-file "^2.0.1"
     require-directory "^2.1.1"
-    require-main-filename "^2.0.0"
+    require-main-name "^2.0.0"
     set-blocking "^2.0.0"
     string-width "^4.2.0"
     which-module "^2.0.0"
