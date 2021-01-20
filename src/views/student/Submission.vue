@@ -29,20 +29,20 @@
 
         <b-col cols="8">
           <div class="table-responsive mb-0">
-            <b-table :items="submission.submissionResults" sort-by="resultTest.testName"
-                     :fields="['testName', 'memoryUsed', 'testElapsedTime', 'options']" class="justify-content-between"
+            <b-table :items="submission.submissionResults" sort-by="test.name"
+                     :fields="['name', 'memory', 'testElapsedTime', 'options']" class="justify-content-between"
                      small show-empty>
               <template #empty>
                 No tests specified.
               </template>
-              <template #cell(testName)="data">
+              <template #cell(name)="data">
                 <b-icon-patch-check-fll variant="success" class="mr-2"
-                                        v-if="data.item.testPassed"></b-icon-patch-check-fll>
+                                        v-if="data.item.passed"></b-icon-patch-check-fll>
                 <b-icon-patch-exclamation-fll variant="danger" class="mr-2" v-else></b-icon-patch-exclamation-fll>
-                {{ data.item.resultTest.testName }}
+                {{ data.item.test.name }}
               </template>
-              <template #cell(memoryUsed)="data">
-                {{ parseSize(data.item.memoryUsed) }}
+              <template #cell(memory)="data">
+                {{ parseSize(data.item.memory) }}
               </template>
               <template #cell(options)="row">
                 <b-link size="sm" class="no-bs" variant="primary" @click="row.toggleDetails">
@@ -59,21 +59,21 @@
                     <b-col cols="6">
                       <h5>Standard Output</h5>
                       <code>
-                        {{ row.item.testOutput.join("\n") || "" }}
+                        {{ row.item.stdout.join("\n") || "" }}
                       </code>
 
                     </b-col>
                     <b-col cols="4">
                       <h5>Standard Error</h5>
                       <code>
-                        {{ row.item.testError.join("\n") || "" }}
+                        {{ row.item.stderr.join("\n") || "" }}
                       </code>
                     </b-col>
                     <b-col cols="4">
                       Exit Code<br>
-                      <code>{{ row.item.exitCode }}</code><br>
+                      <code>{{ row.item.exit }}</code><br>
                       Expected Code<br>
-                      <code>{{ row.item.resultTest.testExitCode }}</code>
+                      <code>{{ row.item.test.exit }}</code>
                     </b-col>
 
                   </b-form-row>
@@ -119,15 +119,15 @@ const GET_SUBMISSION =
             submissionCompilationOutput,
             submissionCompilationTime,
             submissionResults {
-                testPassed,
-                memoryUsed,
-                exitCode,
+                passed,
+                memory,
+                exit,
                 testElapsedTime,
-                testOutput,
-                testError,
-                resultTest {
-                    testExitCode,
-                  testName,
+                stdout,
+                stderr,
+                test {
+                    exit,
+                  name,
                       _id
                 }
             }

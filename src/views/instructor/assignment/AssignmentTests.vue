@@ -8,7 +8,7 @@
                 subtitle="All of the following tests will be run and evaluated on all assignment submissions.">
           <template slot="table">
 
-            <b-table :items="assignment.specification.tests" sort-by="testName"
+            <b-table :items="assignment.specification.tests" sort-by="name"
                      :fields="['name']" class="justify-content-between"
                      show-empty>
               <template #empty>
@@ -16,7 +16,7 @@
               </template>
               <template #cell(name)="row">
                 <div class="d-flex justify-content-between">
-                  <div>{{ row.item.testName }}</div>
+                  <div>{{ row.item.name }}</div>
                   <div class="d-flex justify-content-start">
                     <b-badge class="mr-1" :variant="row.item.testContext.includes('in')?'primary':'light'">IN
                     </b-badge>
@@ -53,7 +53,7 @@
                       <b-form-group
                           label="Input File"
                           description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
-                        <b-form-file type="number" size="sm" :placeholder="row.item.testInput.name"></b-form-file>
+                        <b-form-file type="number" size="sm" :placeholder="row.item.stdin.name"></b-form-file>
                       </b-form-group>
                       <b-form-group
                           label="Memory Leaks"
@@ -83,7 +83,7 @@
                       <b-form-group
                           label="Program Timeout"
                           description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
-                        <b-form-input type="number" size="sm" v-model="row.item.testTimeout"></b-form-input>
+                        <b-form-input type="number" size="sm" v-model="row.item.timeout"></b-form-input>
                       </b-form-group>
                       <b-form-group
                           label="Memory Leaks"
@@ -170,13 +170,13 @@ const GET_ASSIGNMENT =
               due,
               specification {
                   tests {
-                    testName,
-                    testIsHidden,
-                    testInput { _id, reference, name, fileLink },
-                    testOutput { _id, reference, name, fileLink },
-                    testArguments,
+                    name,
+                    hidden,
+                    stdin { _id, reference, name, fileLink },
+                    stdout { _id, reference, name, fileLink },
+                    args,
                     testContext,
-testTimeout,
+timeout,
                     _id
                   },
                   _id

@@ -102,30 +102,30 @@ type Submission {
 type SubmissionResult {
     _id: ObjectId!
     created: String!
-    exitCode: Float!
-    memoryUsed: Float!
-    resultTest: TestSpecification!
+    exit: Float!
+    memory: Float!
+    test: TestSpecification!
     testElapsedTime: String!
-    testError: [String!]
-    testOutput: [String!]
-    testPassed: Boolean!
+    stderr: [String!]
+    stdout: [String!]
+    passed: Boolean!
 }
 
 type TestSpecification {
     _id: ObjectId!
     created: String!
-    testArguments: [String!]!
+    args: [String!]!
     testContext: [String!]!
     testCriteria: [String!]!
-    testError: File
-    testExitCode: Float!
-    testInput: File
-    testIsHidden: Boolean
-    testMemoryLeaks: Boolean
-    testName: String!
-    testOutput: File
+    stderr: File
+    exit: Float!
+    stdin: File
+    hidden: Boolean
+    leaks: Boolean
+    name: String!
+    stdout: File
     testSource: [String!]!
-    testTimeout: Float!
+    timeout: Float!
 }
 
 type User {
