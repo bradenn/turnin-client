@@ -8,7 +8,7 @@
                 subtitle="All of the following tests will be run and evaluated on all assignment submissions.">
           <template slot="table">
 
-            <b-table :items="assignment.assignmentSpecification.specificationTests" sort-by="testName"
+            <b-table :items="assignment.specification.specificationTests" sort-by="testName"
                      :fields="['name']" class="justify-content-between"
                      show-empty>
               <template #empty>
@@ -165,10 +165,10 @@ const UPLOAD_TESTS =
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentIsAssigned,
-              assignmentDueDate,
-              assignmentSpecification {
+              name,
+              assigned,
+              due,
+              specification {
                   specificationTests {
                     testName,
                     testIsHidden,
@@ -181,7 +181,7 @@ testTimeout,
                   },
                   _id
               },
-              dateCreated
+              created
           }
         }`;
 
@@ -191,7 +191,7 @@ export default {
   data() {
     return {
       assignment: {
-        assignmentSpecification: {
+        specification: {
           specificationRequiredFiles: [],
           _id: ""
         }
@@ -245,7 +245,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_TESTS,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           fileUpload: files[0]
         }
       }).then(() => {

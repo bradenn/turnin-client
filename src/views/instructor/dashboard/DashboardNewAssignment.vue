@@ -8,34 +8,35 @@
         <b-form-group
             label="Assignment Name"
             description="Students will see this name."
-            label-for="assignmentName">
-          <b-form-input id="assignmentName" v-model="form.assignmentName" placeholder="Lab 1" trim></b-form-input>
+            label-for="name">
+          <b-form-input id="name" v-model="form.name" placeholder="Lab 1" trim></b-form-input>
         </b-form-group>
         <b-form-group
             label="Assignment Course"
             description="Which course should be assigned this assignment?"
-            label-for="assignmentCourse">
-          <b-form-select id="assignmentCourse" v-model="form.assignmentCourse" :options="instructorCourses"></b-form-select>
+            label-for="course">
+          <b-form-select id="course" v-model="form.course" :options="instructorCourses"></b-form-select>
         </b-form-group>
         <b-form-group
             label="Due Date"
-            :description="form.assignmentDueDate.toString()"
-            label-for="assignmentDueDate">
-          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
+            :description="form.due.toString()"
+            label-for="due">
+          <b-form-datepicker id="due" v-model="form.due" :value-as-date="true" class="mb-2"></b-form-datepicker>
         </b-form-group>
         <b-form-group
             label="Late Date"
-            :description="form.assignmentLateDate.toString()"
-            label-for="assignmentLateDate">
-          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :min="form.assignmentDueDate" :value-as-date="true" class="mb-2"></b-form-datepicker>
+            :description="form.late.toString()"
+            label-for="late">
+          <b-form-datepicker id="late" v-model="form.late" :min="form.due" :value-as-date="true"
+                             class="mb-2"></b-form-datepicker>
         </b-form-group>
       </form>
       <template #modal-footer>
         <div class="d-flex justify-content-between align-items-baseline" style="width: 100%;">
-          <div class="text-muted" v-if="form.assignmentName === ''">An assignment name is required.</div>
+          <div class="text-muted" v-if="form.name === ''">An assignment name is required.</div>
           <div></div>
           <div>
-            <b-button type="submit" @click="createAssignment" variant="primary" :disabled="form.assignmentName === ''">
+            <b-button type="submit" @click="createAssignment" variant="primary" :disabled="form.name === ''">
               Create Assignment
             </b-button>
           </div>
@@ -73,10 +74,10 @@ export default {
       show: false,
       instructorCourses: {},
       form: {
-        assignmentName: "",
-        assignmentCourse: 0,
-        assignmentDueDate: new Date(),
-        assignmentLateDate: new Date()
+        name: "",
+        course: 0,
+        due: new Date(),
+        late: new Date()
       }
     }
   },
@@ -102,10 +103,10 @@ export default {
         mutation: CREATE_ASSIGNMENT,
         variables: {
           assignmentInput: {
-            assignmentName: this.form.assignmentName,
-            assignmentCourse: this.form.assignmentCourse,
-            assignmentDueDate: this.form.assignmentDueDate,
-            assignmentLateDate: this.form.assignmentLateDate
+            name: this.form.name,
+            course: this.form.course,
+            due: this.form.due,
+            late: this.form.late
           }
         }
       }).then(response => {

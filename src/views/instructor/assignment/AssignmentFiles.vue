@@ -20,7 +20,7 @@
         </div>
 
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.assignmentSpecification.specificationRequiredFiles"
+          <b-table :items="assignment.specification.specificationRequiredFiles"
                    :fields="['fileName', 'options']" small show-empty>
             <template #empty>
               No files specified.
@@ -48,7 +48,7 @@
 
         </div>
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.assignmentSpecification.specificationProvidedFiles"
+          <b-table :items="assignment.specification.specificationProvidedFiles"
                    :fields="['fileName', 'options']" small show-empty>
             <template #empty>
               No files specified.
@@ -121,10 +121,10 @@ const DELETE_PROVIDED_FILE =
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentIsAssigned,
-              assignmentDueDate,
-              assignmentSpecification {
+              name,
+              assigned,
+              due,
+              specification {
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
                   specificationProvidedFiles {
@@ -135,7 +135,7 @@ const GET_ASSIGNMENT =
                   specificationRequiredFiles,
                   _id
               },
-              dateCreated
+              created
           }
         }`;
 
@@ -145,7 +145,7 @@ export default {
   data() {
     return {
       assignment: {
-        assignmentSpecification: {
+        specification: {
           specificationRequiredFiles: [],
           _id: ""
         }
@@ -187,7 +187,7 @@ export default {
       this.$apollo.mutate({
         mutation: UPLOAD_PROVIDED_FILE,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           fileUpload: files[0]
         },
         context: {
@@ -205,7 +205,7 @@ export default {
       this.$apollo.mutate({
         mutation: ADD_FILE,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           file: this.form.addFileName
         }
       }).then(() => {
@@ -218,7 +218,7 @@ export default {
       this.$apollo.mutate({
         mutation: REMOVE_FILE,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           file: fileName
         }
       }).then(() => {
@@ -232,7 +232,7 @@ export default {
       this.$apollo.mutate({
         mutation: DELETE_PROVIDED_FILE,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           fileId: fileId
         }
       }).then(() => {

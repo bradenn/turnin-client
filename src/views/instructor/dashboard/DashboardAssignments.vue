@@ -14,7 +14,7 @@
             <b-link :to="`/assignment/${assignment._id}`">
               <b-card no-body class="mb-3 px-3 py-3">
                 <div class="d-flex justify-content-between">
-                  <div class="courseName">{{ assignment.assignmentName }}</div>
+                  <div class="courseName">{{ assignment.name }}</div>
                   <div class="d-flex justify-content-start mr-n2">
                     <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
                       <b-badge pill variant="primary" class="badge-top-right">12</b-badge>
@@ -42,30 +42,30 @@
             description="Students will see this name."
             label="Assignment Name"
             label-for="input-1">
-          <b-form-input id="input-1" v-model="form.assignmentName" placeholder="Lab 1" trim></b-form-input>
+          <b-form-input id="input-1" v-model="form.name" placeholder="Lab 1" trim></b-form-input>
         </b-form-group>
         <b-form-group
             description="Choose a course to assign to."
             label="Assignment Course"
             label-for="input-1">
-          <b-form-select v-model="form.assignmentCourse">
+          <b-form-select v-model="form.course">
             <b-form-select-option v-for="course in instructorCourses" :key="course._id" :value="course._id">
               {{ course.courseName }}.{{ course.courseSection }}
             </b-form-select-option>
           </b-form-select>
         </b-form-group>
         <b-form-group
-            :description="form.assignmentDueDate.toString()"
+            :description="form.due.toString()"
             label="Assignment due date."
-            label-for="assignmentDueDate">
-          <b-form-datepicker id="assignmentDueDate" v-model="form.assignmentDueDate" :value-as-date="true"
+            label-for="due">
+          <b-form-datepicker id="due" v-model="form.due" :value-as-date="true"
                              class="mb-2"></b-form-datepicker>
         </b-form-group>
         <b-form-group
             description="Provided an identifier if the course name is reused."
             label="Assignment late due date."
-            label-for="assignmentLateDate">
-          <b-form-datepicker id="assignmentLateDate" v-model="form.assignmentLateDate" :value-as-date="true"
+            label-for="late">
+          <b-form-datepicker id="late" v-model="form.late" :value-as-date="true"
                              class="mb-2"></b-form-datepicker>
         </b-form-group>
 
@@ -97,9 +97,9 @@ query instructorCourses{
         courseSection,
         courseAssignments {
             _id,
-            assignmentName,
-            assignmentDueDate,
-            assignmentLateDate
+            name,
+            due,
+            late
         },
         courseIsLocked,
         courseInstructor {
@@ -111,9 +111,9 @@ query instructorCourses{
 
 const CREATE_ASSIGNMENT = gql`
 mutation createAssignment($assignmentName: String!, $assignmentCourse: String!, $assignmentDueDate: String!, $assignmentLateDate: String!){
-    createAssignment(assignmentName: $assignmentName, assignmentCourse: $assignmentCourse, assignmentDueDate: $assignmentDueDate, assignmentLateDate: $assignmentLateDate){
+    createAssignment(name: $assignmentName, course: $assignmentCourse, due: $assignmentDueDate, late: $assignmentLateDate){
       _id,
-      assignmentCourse
+      course
     }
 }`;
 
@@ -128,10 +128,10 @@ export default {
       loading: 0,
       show: false,
       form: {
-        assignmentName: "",
-        assignmentCourse: "",
-        assignmentDueDate: "",
-        assignmentLateDate: "",
+        name: "",
+        course: "",
+        due: "",
+        late: "",
         acceptLateWork: true
       }
     }
@@ -155,10 +155,10 @@ export default {
       this.$apollo.mutate({
         mutation: CREATE_ASSIGNMENT,
         variables: {
-          assignmentName: this.form.assignmentName,
-          assignmentCourse: this.form.assignmentCourse,
-          assignmentDueDate: this.form.assignmentDueDate.toString(),
-          assignmentLateDate: this.form.assignmentLateDate.toString()
+          name: this.form.name,
+          course: this.form.course,
+          due: this.form.due.toString(),
+          late: this.form.late.toString()
         }
       }).then(response => {
         console.log(response)

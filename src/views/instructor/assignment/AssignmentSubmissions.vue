@@ -39,9 +39,9 @@ import gql from 'graphql-tag'
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentIsAssigned,
-              assignmentDueDate,
+              name,
+              assigned,
+              due,
               assignmentSubmissions {
                  _id,
                  submissionOwner {
@@ -49,7 +49,7 @@ const GET_ASSIGNMENT =
                     fullName
                  }
               },
-              assignmentSpecification {
+              specification {
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
                   specificationProvidedFiles {
@@ -60,7 +60,7 @@ const GET_ASSIGNMENT =
                   specificationRequiredFiles,
                   _id
               },
-              dateCreated
+              created
           }
         }`;
 
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       assignment: {
-        assignmentSpecification: {
+        specification: {
           specificationRequiredFiles: [],
           _id: ""
         }

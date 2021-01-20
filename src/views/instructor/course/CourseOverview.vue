@@ -27,10 +27,10 @@ import tCard from "@/components/tCard";
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentIsAssigned,
-              assignmentDueDate,
-              dateCreated
+              name,
+              assigned,
+              due,
+              created
           }
         }`;
 

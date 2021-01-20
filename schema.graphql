@@ -7,15 +7,15 @@ schema {
 
 type Assignment {
     _id: ObjectId!
-    assignmentBrief: Brief!
-    assignmentCourse: Course!
-    assignmentDueDate: String!
-    assignmentIsAssigned: Boolean!
-    assignmentLateDate: String!
-    assignmentName: String!
-    assignmentSpecification: Specification!
+    brief: Brief!
+    course: Course!
+    due: String!
+    assigned: Boolean!
+    late: String!
+    name: String!
+    specification: Specification!
     assignmentSubmissions: [Submission!]!
-    dateCreated: String
+    created: String
 }
 
 type Brief {
@@ -23,7 +23,7 @@ type Brief {
     briefDesc: String!
     briefMarkdownFile: File!
     briefTitle: String!
-    dateCreated: String!
+    created: String!
 }
 
 type Course {
@@ -37,12 +37,12 @@ type Course {
     courseName: String!
     courseSection: Float!
     courseStudentCount: Float!
-    dateCreated: String!
+    created: String!
 }
 
 type File {
     _id: ObjectId!
-    dateCreated: String!
+    created: String!
     fileLink: String!
     fileName: String!
     fileOwner: User!
@@ -78,8 +78,8 @@ type Query {
 
 type Specification {
     _id: ObjectId!
-    assignmentCourse: Course!
-    dateCreated: String!
+    course: Course!
+    created: String!
     specificationCompilationCommand: String!
     specificationCompilationTimeout: Float!
     specificationProvidedFiles: [File!]!
@@ -89,7 +89,7 @@ type Specification {
 
 type Submission {
     _id: ObjectId!
-    dateCreated: String!
+    created: String!
     submissionAssignment: Assignment!
     submissionCompilationOutput: [String!]
     submissionCompilationTime: String!
@@ -101,7 +101,7 @@ type Submission {
 
 type SubmissionResult {
     _id: ObjectId!
-    dateCreated: String!
+    created: String!
     exitCode: Float!
     memoryUsed: Float!
     resultTest: TestSpecification!
@@ -113,7 +113,7 @@ type SubmissionResult {
 
 type TestSpecification {
     _id: ObjectId!
-    dateCreated: String!
+    created: String!
     testArguments: [String!]!
     testContext: [String!]!
     testCriteria: [String!]!
@@ -132,7 +132,7 @@ type User {
     _id: ObjectId!
     account: String!
     courses: [Course!]
-    dateCreated: String!
+    created: String!
     email: String!
     firstname: String!
     fullName: String!
@@ -142,10 +142,10 @@ type User {
 }
 
 input AssignmentInput {
-    assignmentCourse: String!
-    assignmentDueDate: String!
-    assignmentLateDate: String!
-    assignmentName: String!
+    course: String!
+    due: String!
+    late: String!
+    name: String!
 }
 
 input CourseInput {

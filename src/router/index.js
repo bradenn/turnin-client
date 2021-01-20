@@ -18,7 +18,7 @@ import CourseOverview from "@/views/instructor/course/CourseOverview";
 import DashboardAssignments from "@/views/instructor/dashboard/DashboardAssignments";
 import DashboardCourses from "@/views/instructor/dashboard/DashboardCourses";
 import DashboardNewAssignment from "@/views/instructor/dashboard/DashboardNewAssignment";
-import AssignmentBrief from "@/views/instructor/assignment/AssignmentBrief";
+import brief from "@/views/instructor/assignment/brief";
 import AssignmentSettings from "@/views/instructor/assignment/AssignmentSettings";
 import AssignmentTests from "@/views/instructor/assignment/AssignmentTests";
 import Submit from "@/views/student/Submit";
@@ -121,8 +121,8 @@ let router = new Router({
                 },
                 {
                     path: 'brief',
-                    name: 'AssignmentBrief',
-                    component: AssignmentBrief,
+                    name: 'brief',
+                    component: brief,
                     meta: {
                         title: 'Brief',
                         requiresAuth: true

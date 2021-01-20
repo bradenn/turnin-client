@@ -16,7 +16,7 @@
       <b-col cols="12">
         <div class="table-responsive mb-0">
           <b-table :items="studentAssignments" sort-by="resultTest.testName"
-                   :fields="['name', 'brief', 'submissions', 'assignmentDueDate', 'assignmentLateDate', 'options']"
+                   :fields="['name', 'brief', 'submissions', 'due', 'late', 'options']"
                    class="justify-content-between"
                    small show-empty>
             <template #empty>
@@ -24,10 +24,10 @@
             </template>
             <template #cell(name)="data">
               <b-icon-patch-check-fll variant="success" class="mr-2"></b-icon-patch-check-fll>
-              {{ data.item.assignmentName }}
+              {{ data.item.name }}
             </template>
             <!--            <template #cell(breif)="data">
-                          {{ data.item.assignmentBrief }}
+                          {{ data.item.brief }}
                         </template>-->
             <template #cell(submissions)="data">
               <b-dropdown text="Submissions" size="sm" data-boundary="viewport" variant="primary">
@@ -64,14 +64,14 @@ import gql from 'graphql-tag'
 const GET_ASSIGNMENTS =
     gql`query studentAssignments {
         studentAssignments {
-            assignmentName,
-            assignmentDueDate,
-            assignmentLateDate,
-            assignmentBrief {
+            name,
+            due,
+            late,
+            brief {
                 _id
             },
             assignmentSubmissions {
-            dateCreated,
+            created,
                 _id
             },
             _id

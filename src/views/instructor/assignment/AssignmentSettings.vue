@@ -16,7 +16,7 @@
                   label-for="input-formatter"
                   description="Once assigned, this course will be responsible for completing this assignment. This cannot be changed.">
                 <b-form-input type="text"
-                              v-model="assignment.assignmentCourse.courseFullName" disabled></b-form-input>
+                              v-model="assignment.course.courseFullName" disabled></b-form-input>
               </b-form-group>
 
               <h5>Compilation Settings</h5>
@@ -26,7 +26,7 @@
                   description="This command will be used to compile the submitted project."
                   >
                 <b-form-input type="text"
-                              v-model="assignment.assignmentSpecification.specificationCompilationCommand"></b-form-input>
+                              v-model="assignment.specification.specificationCompilationCommand"></b-form-input>
               </b-form-group>
 
               <b-form-group
@@ -35,7 +35,7 @@
                   description="The compilation will timeout after 5000ms by default."
                   >
                 <b-form-spinbutton id="demo-sb"
-                                   v-model="assignment.assignmentSpecification.specificationCompilationTimeout"
+                                   v-model="assignment.specification.specificationCompilationTimeout"
                                    min="200" step="500" max="20000"></b-form-spinbutton>
               </b-form-group>
               <div class="d-flex justify-content-between align-items-center mt-2">
@@ -69,13 +69,13 @@ const UPDATE_SETTINGS =
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentIsAssigned,
-              assignmentDueDate,
-              assignmentCourse {
+              name,
+              assigned,
+              due,
+              course {
                 courseFullName
               },
-              assignmentSpecification {
+              specification {
                   specificationCompilationCommand,
                   specificationCompilationTimeout,
                   specificationProvidedFiles {
@@ -86,7 +86,7 @@ const GET_ASSIGNMENT =
                   specificationRequiredFiles,
                   _id
               },
-              dateCreated
+              created
           }
         }`;
 
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       assignment: {
-        assignmentSpecification: {
+        specification: {
           specificationRequiredFiles: [],
           _id: ""
         }
@@ -130,10 +130,10 @@ export default {
       this.$apollo.mutate({
         mutation: UPDATE_SETTINGS,
         variables: {
-          SpecificationId: this.assignment.assignmentSpecification._id,
+          SpecificationId: this.assignment.specification._id,
           SpecificationInput: {
-            specificationCompilationCommand: this.assignment.assignmentSpecification.specificationCompilationCommand,
-            specificationCompilationTimeout: this.assignment.assignmentSpecification.specificationCompilationTimeout
+            specificationCompilationCommand: this.assignment.specification.specificationCompilationCommand,
+            specificationCompilationTimeout: this.assignment.specification.specificationCompilationTimeout
           }
         }
       }).then(() => {

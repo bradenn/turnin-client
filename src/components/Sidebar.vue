@@ -39,7 +39,7 @@
                        icon="fas fa-users"></SidebarMenuItem>
 
       <ul class="list-group menu-list pl-3" v-for="assignment in course.courseAssignments" :key="assignment._id">
-        <SidebarMenuItem :name="`${assignment.assignmentName}`" :link="`/assignment/${assignment._id}`"
+        <SidebarMenuItem :name="`${assignment.name}`" :link="`/assignment/${assignment._id}`"
                          icon="fas fa-file"></SidebarMenuItem>
       </ul>
 
@@ -82,9 +82,9 @@ query instructorCourses{
         courseSection,
         courseAssignments {
             _id,
-            assignmentName,
-            assignmentDueDate,
-            assignmentLateDate
+            name,
+            due,
+            late
         },
         courseIsLocked,
         courseInstructor,

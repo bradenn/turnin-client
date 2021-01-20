@@ -2,9 +2,9 @@
   <div>
     <t-header
         :loading="loading"
-        :previous="assignment.assignmentName"
+        :previous="assignment.name"
         :current="this.$route.meta.title"
-        :subtitle="assignment.assignmentIsAssigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
+        :subtitle="assignment.assigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
         :parent="parent"
         :items="navItems">
     </t-header>
@@ -21,13 +21,13 @@ import tHeader from "@/components/tHeader";
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
           assignment(assignmentId: $assignmentId){
-              assignmentName,
-              assignmentCourse {
+              name,
+              course {
                 courseName
               },
-              assignmentIsAssigned,
-              assignmentDueDate,
-              dateCreated
+              assigned,
+              due,
+              created
           }
         }`;
 
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      assignment: {assignmentCourse: {}},
+      assignment: {course: {}},
       loading: !!0,
       error: "",
       show: false,
