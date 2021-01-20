@@ -1,40 +1,40 @@
 <template>
   <div>
-    <b-row>
+    <b-form-row>
       <b-col cols="8">
         {{ error.errors }}
-        <div class="py-3 d-flex justify-content-between align-items-end">
-          <div>
-            <h4 class="mb-1">Student Submissions</h4>
-            <span
-                class="mt-0 text-muted">Student's must submit all required files for their submission to be validated.</span>
-          </div>
 
-        </div>
+        <t-card title="Assignment Settings"
+                subtitle="The full instructions for the assignment. Upload a markup file, pdf, or docx file.">
+          <template slot="body">
 
-        <div class="table-responsive mb-0">
-          <b-table :items="assignment.assignmentSubmissions"
-                   :fields="['student', 'options']" small show-empty>
-            <template #empty>
-              No files specified.
-            </template>
-            <template #cell(student)="data">
-              {{ data.item.submissionOwner.fullName }}
-            </template>
-            <template #cell(options)="data">
-              <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
-            </template>
-          </b-table>
-        </div>
+            <b-table :items="assignment.submission"
+                     :fields="['student', 'options']" small show-empty>
+              <template #empty>
+                No files specified.
+              </template>
+              <template #cell(student)="data">
+                {{ data.item.owner.fullName }}
+              </template>
+              <template #cell(options)="data">
+                <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
+              </template>
+            </b-table>
+
+          </template>
+        </t-card>
       </b-col>
 
-    </b-row>
+
+    </b-form-row>
 
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import TCard from "@/components/tCard";
+
 
 const GET_ASSIGNMENT =
     gql`query assignment($assignmentId: ObjectId!){
@@ -44,7 +44,7 @@ const GET_ASSIGNMENT =
               due,
               assignmentSubmissions {
                  _id,
-                 submissionOwner {
+                 owner {
                     _id,
                     fullName
                  }
@@ -66,7 +66,7 @@ const GET_ASSIGNMENT =
 
 export default {
   name: 'AssignmentSubmissions',
-  components: {},
+  components: {TCard},
   data() {
     return {
       assignment: {

@@ -16,7 +16,7 @@
       <b-col cols="12">
         <div class="table-responsive mb-0">
           <b-table :items="studentAssignments" sort-by="test.name"
-                   :fields="['name', 'brief', 'submissions', 'due', 'late', 'options']"
+                   :fields="['name', 'submissions', 'due', 'late', 'options']"
                    class="justify-content-between"
                    small show-empty>
             <template #empty>
@@ -34,7 +34,7 @@
                 <b-dropdown-item v-for="(submission, index) in data.item.assignmentSubmissions" :key="submission._id"
                                  :href="`/submission/${submission._id}`">
                   <b-icon-patch-check-fll variant="success" class="mr-2"
-                                          v-if="submission.submissionPassedTests"></b-icon-patch-check-fll>
+                                          v-if="submission.passed"></b-icon-patch-check-fll>
                   <b-icon-patch-exclamation-fll variant="danger" class="mr-2" v-else></b-icon-patch-exclamation-fll>
                   Submission {{ index + 1 }}
                 </b-dropdown-item>
@@ -44,7 +44,7 @@
               <b-icon-patch-check-fll variant="success" class="mr-2"
                                       v-if="data.item.passed"></b-icon-patch-check-fll>
               <b-icon-patch-exclamation-fll variant="danger" class="mr-2" v-else></b-icon-patch-exclamation-fll>
-              {{ data.item.test.name }}
+              {{ data.item.name }}
             </template>
             <template #cell(options)="data">
               <b-link :to="`/submit/${data.item._id}`">Submit</b-link>

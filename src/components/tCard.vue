@@ -4,7 +4,9 @@
         <div>
           <div class="card-title mt-1">{{ title }}</div>
           <div class="card-subtitle mb-2">{{ subtitle }}</div>
+
         </div>
+
         <div>
           <div class="mb-2">
             <slot name="button"></slot>

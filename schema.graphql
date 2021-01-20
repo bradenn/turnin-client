@@ -7,43 +7,43 @@ schema {
 
 type Assignment {
     _id: ObjectId!
+    assigned: Boolean!
+    assignmentSubmissions: [Submission!]!
     brief: Brief!
     course: Course!
+    created: String
     due: String!
-    assigned: Boolean!
     late: String!
     name: String!
     specification: Specification!
-    assignmentSubmissions: [Submission!]!
-    created: String
 }
 
 type Brief {
     _id: ObjectId!
+    created: String!
     description: String!
     markdown: File!
     title: String!
-    created: String!
 }
 
 type Course {
     _id: ObjectId!
     courseAssignmentCount: Float!
     courseAssignments: [Assignment!]!
-    description: String!
     courseFullName: String!
+    courseStudentCount: Float!
+    created: String!
+    description: String!
     instructor: User!
     locked: Boolean!
     name: String!
     section: Float!
-    courseStudentCount: Float!
-    created: String!
 }
 
 type File {
     _id: ObjectId!
     created: String!
-    fileLink: String!
+    link: String!
     name: String!
     owner: User!
     reference: String!
@@ -78,25 +78,26 @@ type Query {
 
 type Specification {
     _id: ObjectId!
+    command: String!
     course: Course!
     created: String!
-    command: String!
-    timeout: Float!
     providedFiles: [File!]!
     requiredFiles: [String!]!
     tests: [TestSpecification!]!
+    timeout: Float!
 }
 
 type Submission {
     _id: ObjectId!
+    assignment: Assignment!
     created: String!
-    submissionAssignment: Assignment!
-    submissionCompilationOutput: [String!]
-    submissionCompilationTime: String!
-    submissionFiles: [File!]!
+    duration: String!
+    files: [File!]!
+    owner: User!
+    passed: Boolean!
+    results: [SubmissionResult!]!
+    stdout: [String!]
     submissionOwner: User!
-    submissionPassedTest: Boolean!
-    submissionResults: [SubmissionResult!]!
 }
 
 type SubmissionResult {
@@ -104,27 +105,26 @@ type SubmissionResult {
     created: String!
     exit: Float!
     memory: Float!
-    test: TestSpecification!
-    testElapsedTime: String!
+    passed: Boolean!
     stderr: [String!]
     stdout: [String!]
-    passed: Boolean!
+    test: TestSpecification!
+    testElapsedTime: String!
 }
 
 type TestSpecification {
     _id: ObjectId!
-    created: String!
     args: [String!]!
-    testContext: [String!]!
-    testCriteria: [String!]!
-    stderr: File
+    created: String!
+    env: [String!]!
     exit: Float!
-    stdin: File
     hidden: Boolean
     leaks: Boolean
     name: String!
+    stderr: File
+    stdin: File
     stdout: File
-    testSource: [String!]!
+    testContext: [String!]!
     timeout: Float!
 }
 

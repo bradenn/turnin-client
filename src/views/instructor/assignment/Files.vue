@@ -1,93 +1,105 @@
 <template>
   <div>
-    <b-row>
+    <b-form-row>
       <b-col cols="8">
         {{ error.errors }}
-        <div class="py-3 d-flex justify-content-between align-items-end">
-          <div>
-            <h4 class="mb-1">Required Files</h4>
-            <span
-                class="mt-0 text-muted">Student's must submit all required files for their submission to be validated.</span>
-          </div>
-          <div>
-            <b-form inline @submit="addRequiredFile">
-              <b-form-input type="text" v-model="form.addFileName" class="mr-1" placeholder="main.cpp"
-                            size="sm"></b-form-input>
-              <b-button variant="primary" type="submit" size="sm">Add File</b-button>
-            </b-form>
-          </div>
 
-        </div>
+        <t-card title="Required Files"
+                subtitle="Required files must be uploaded to complete a submission.">
+          <template slot="table">
 
-        <div class="table-responsive mb-0">
-          <b-table :items="assignment.specification.requiredFiles"
-                   :fields="['name', 'options']" small show-empty>
-            <template #empty>
-              No files specified.
-            </template>
-            <template #cell(name)="data">
-              {{ data.item }}
-            </template>
-            <template #cell(options)="data">
-              <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
-            </template>
-          </b-table>
-        </div>
+            <b-table :items="assignment.specification.requiredFiles"
+                     :fields="['name']" show-empty>
+              <template #empty>
+                No files specified.
+              </template>
+              <template #cell(name)="data">
+                <div class="d-flex justify-content-between">
+                  {{ data.item }}
+                  <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
+                </div>
+              </template>
+            </b-table>
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="4">
+        <t-card title="Add Required File"
+                subtitle="Type the names of any required files.">
+          <template slot="body">
+            <div>
+              <b-form inline @submit="addRequiredFile">
+                <b-form-input type="text" v-model="form.addFileName" class="mr-1" placeholder="main.cpp"
+                              size="sm"></b-form-input>
+                <b-button variant="primary" type="submit" size="sm">Add File</b-button>
+              </b-form>
+            </div>
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="8">
+        <t-card title="Provided Files"
+                subtitle="These files will be included with the required file during compilation.">
+          <template slot="table">
+            <b-table :items="assignment.specification.providedFiles"
+                     :fields="['name']" show-empty>
+              <template #empty>
+                No files specified.
+              </template>
+              <template #cell(name)="data">
+                <div class="d-flex justify-content-between">
+                  <span>{{ data.item.name }}</span>
+                  <div>
+                    <b-link :href="`${data.item.link}`" target="_blank">View</b-link>&nbsp;|&nbsp;
+                    <b-link @click="removeProvidedFile(data.item._id)">Delete</b-link>
+                  </div>
+                </div>
+              </template>
+              <template slot="custom-foot" v-if="loading.addProvidedFile">
+                <b-th>
+                  <strong>Uploading...</strong>
+                </b-th>
+                <b-th>
+                  <b-spinner class="ml-auto" variant="primary" small></b-spinner>
+                </b-th>
+              </template>
+              <template slot="custom-foot" v-if="loading.removeProvidedFile">
+                <b-th>
+                  <strong>Removing...</strong>
+                </b-th>
+                <b-th>
+                  <b-spinner class="ml-auto" variant="primary" small></b-spinner>
+                </b-th>
+              </template>
 
-        <div class="py-3 d-flex justify-content-between align-items-end">
-          <div>
-            <h4 class="mb-1">Provided Files</h4>
-            <span class="mt-0 text-muted">These files will be included with the required file during compilation.</span>
-
-          </div>
-          <div>
-            <b-form-file accept="*" :busy="loading.addProvidedFile" @change="addProvidedFile" type="file" size="sm">
-
-            </b-form-file>
-          </div>
-
-        </div>
-        <div class="table-responsive mb-0">
-          <b-table :items="assignment.specification.providedFiles"
-                   :fields="['name', 'options']" small show-empty>
-            <template #empty>
-              No files specified.
-            </template>
-            <template #cell(name)="data">
-              <b-link :href="`https://swfs.turnin.co${data.item.reference}`">{{ data.item.name }}</b-link>
-            </template>
-            <template #cell(options)="data">
-              <b-link @click="removeProvidedFile(data.item._id)">Remove</b-link>
-            </template>
-            <template slot="custom-foot" v-if="loading.addProvidedFile">
-              <b-th>
+            </b-table>
+          </template>
+        </t-card>
+      </b-col>
+      <b-col cols="4">
+        <t-card title="Upload Provided File"
+                subtitle="Upload any required make files or dependencies.">
+          <template slot="body">
+            <div>
+              <b-form-file accept="*" :busy="loading.addProvidedFile" @change="addProvidedFile" type="file" size="sm">
+              </b-form-file>
+              <div v-if="loading.addProvidedFile">
+                <b-spinner class="mr-2 mt-2" variant="primary" small></b-spinner>
                 <strong>Uploading...</strong>
-              </b-th>
-              <b-th>
-                <b-spinner class="ml-auto" variant="primary" small></b-spinner>
-              </b-th>
-            </template>
-            <template slot="custom-foot" v-if="loading.removeProvidedFile">
-              <b-th>
-                <strong>Removing...</strong>
-              </b-th>
-              <b-th>
-                <b-spinner class="ml-auto" variant="primary" small></b-spinner>
-              </b-th>
-            </template>
-
-          </b-table>
-        </div>
+              </div>
+            </div>
+          </template>
+        </t-card>
       </b-col>
 
-    </b-row>
+    </b-form-row>
 
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-
+import TCard from "@/components/tCard";
 
 const ADD_FILE =
     gql`mutation addRequiredFile($SpecificationId: ObjectId!, $file: String!){
@@ -130,6 +142,7 @@ const GET_ASSIGNMENT =
                   providedFiles {
                     name,
                     reference,
+                    link,
                     _id
                   },
                   requiredFiles,
@@ -141,7 +154,7 @@ const GET_ASSIGNMENT =
 
 export default {
   name: 'AssignmentFiles',
-  components: {},
+  components: {TCard},
   data() {
     return {
       assignment: {

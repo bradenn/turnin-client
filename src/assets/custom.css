@@ -27,6 +27,7 @@
     --border-radius: 8px;
     --speed: 500ms;
     --primary-dim: rgba(0, 122, 255, 0.08);
+    --light-dim: rgba(200, 200, 200, 0.2);
     --success: rgba(52, 199, 89, 1);
     --success-dim: rgba(52, 199, 89, 0.15);
     --danger: rgba(255, 59, 48, 1);
@@ -43,15 +44,16 @@
     --border: 1px solid rgb(48, 54, 61);
     --border-color: rgb(48, 54, 61);
 
-    --nav:rgba(22, 27, 34,1) ;
-    --foreground-accent: rgba(13,17,23,1);
+    --nav: rgba(22, 27, 34, 1);
+    --foreground-accent: rgba(13, 17, 23, 1);
     --text-color: #FFFFFF;
     --nav-size: 48px;
     --muted: #9D9EA3;
     --border-radius: 8px;
     --speed: 500ms;
     --primary: rgb(88, 166, 255);
-    --primary-dim: rgba(88, 166, 255, 0.90);
+    --primary-dim: rgba(88, 166, 255, 0.2);
+    --light-dim: rgba(255, 255, 255, 0.1);
     --success: rgba(48, 209, 88, 1);
     --success-dim: rgba(48, 209, 88, 0.50);
     --danger: rgba(255, 69, 58, 1);
@@ -85,6 +87,7 @@ body[data-theme='dd'] {
     /*--box-shadow: 0 2px 2/8px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);*/
     --box-shadow: none;
 }
+
 
 body {
 
@@ -921,7 +924,8 @@ code {
 }
 
 .badge.badge-light {
-
+    color: var(--text-color);
+    background-color: var(--light-dim);
 
     font-size: 11px;
     padding: 5px 10px;

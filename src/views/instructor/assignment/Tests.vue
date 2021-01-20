@@ -1,11 +1,12 @@
 <template>
   <div>
-    <b-row>
+    <b-form-row>
       <b-col cols="8">
       </b-col>
       <b-col cols="8">
         <t-card title="Submission Tests"
-                subtitle="All of the following tests will be run and evaluated on all assignment submissions.">
+                subtitle="All of the following tests will be run and evaluated on all assignment submissions."
+        >
           <template slot="table">
 
             <b-table :items="assignment.specification.tests" sort-by="name"
@@ -47,67 +48,50 @@
 
               <template #row-details="row">
 
-                <b-form-row class="mb-3">
-                  <b-col cols="6" class="d-flex flex-column justify-content-between">
-                    <b-form>
-                      <b-form-group
-                          label="Input File"
-                          description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
-                        <b-form-file type="number" size="sm" :placeholder="row.item.stdin.name"></b-form-file>
-                      </b-form-group>
-                      <b-form-group
-                          label="Memory Leaks"
-                          description="Checks should be run on tests that provide wide code coverage.">
-                        <b-form-select size="sm" value="false">
-                          <b-select-option value="false">Ignore</b-select-option>
-                          <b-select-option value="true">Check for leaks</b-select-option>
-                          <b-form-select-option-group label="">
-                            <b-select-option value="true">Log Heap</b-select-option>
-                            <b-select-option value="true">Deep leak check</b-select-option>
-                          </b-form-select-option-group>
-                        </b-form-select>
-                      </b-form-group>
-                      <b-form-group
-                          label="Hide results from student"
-                          description="The test will be visibly hidden">
-                        <b-form-select size="sm" value="false">
-                          <b-select-option value="false">Show results</b-select-option>
-                          <b-select-option value="true">Hide results</b-select-option>
-                        </b-form-select>
-                      </b-form-group>
-                    </b-form>
-                  </b-col>
+
+                <b-row class="mb-3">
+
                   <b-col cols="6" class="d-flex flex-column justify-content-between"
                          style="border-color: var(--muted) !important;">
                     <b-form>
                       <b-form-group
-                          label="Program Timeout"
+                          label="Program Timeout (ms)"
                           description="Tests with a timeout above 6000ms will be run separately from the primary tests.">
                         <b-form-input type="number" size="sm" v-model="row.item.timeout"></b-form-input>
                       </b-form-group>
                       <b-form-group
-                          label="Memory Leaks"
-                          description="Checks should be run on tests that provide wide code coverage.">
-                        <b-form-select size="sm" value="false">
-                          <b-select-option value="false">Ignore</b-select-option>
-                          <b-select-option value="true">Check for leaks</b-select-option>
-                          <b-form-select-option-group label="">
-                            <b-select-option value="true">Log Heap</b-select-option>
-                            <b-select-option value="true">Deep leak check</b-select-option>
-                          </b-form-select-option-group>
-                        </b-form-select>
+                          label="Exit Code"
+                          description="If the program produces an error code other than the one provided, the test will not pass.">
+                        <b-form-input type="number" size="sm" v-model="row.item.exit"></b-form-input>
                       </b-form-group>
-                      <b-form-group
-                          label="Hide results from student"
-                          description="The test will be visibly hidden">
-                        <b-form-select size="sm" value="false">
-                          <b-select-option value="false">Show results</b-select-option>
-                          <b-select-option value="true">Hide results</b-select-option>
-                        </b-form-select>
-                      </b-form-group>
+
+
                     </b-form>
                   </b-col>
-                </b-form-row>
+                  <b-col cols="6" class="d-flex flex-column justify-content-between">
+                    <b-form>
+                      <b-form-group
+                          label="Memory"
+                          description="This operation may add time to the submission process and should not be run on more than 3 tests.">
+                        <b-form-checkbox v-model="row.item.leaks" name="check-button" switch>
+                          Check for memory leaks
+                        </b-form-checkbox>
+                      </b-form-group>
+                      <b-form-group
+                          label="Visibility"
+                          description="Hidden tests are visibly hidden and are not counted toward the student's grade.">
+                        <b-form-checkbox v-model="row.item.hidden" name="check-button" switch>
+                          Hide results from students
+                        </b-form-checkbox>
+                      </b-form-group>
+                    </b-form>
+                    <div class="d-flex justify-content-end">
+                      <b-button variant="danger" class="mr-2" size="sm">Delete</b-button>
+                      <b-button variant="primary" size="sm">Update</b-button>
+                    </div>
+                  </b-col>
+
+                </b-row>
 
               </template>
 
@@ -146,7 +130,7 @@
         </t-card>
       </b-col>
 
-    </b-row>
+    </b-form-row>
   </div>
 </template>
 
@@ -172,11 +156,13 @@ const GET_ASSIGNMENT =
                   tests {
                     name,
                     hidden,
-                    stdin { _id, reference, name, fileLink },
-                    stdout { _id, reference, name, fileLink },
+                    leaks,
+                    exit,
+                    stdin { _id, reference, name, link },
+                    stdout { _id, reference, name, link },
                     args,
                     testContext,
-timeout,
+                    timeout,
                     _id
                   },
                   _id
