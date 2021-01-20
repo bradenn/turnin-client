@@ -80,11 +80,11 @@ type Specification {
     _id: ObjectId!
     course: Course!
     created: String!
-    specificationCompilationCommand: String!
-    specificationCompilationTimeout: Float!
-    specificationProvidedFiles: [File!]!
-    specificationRequiredFiles: [String!]!
-    specificationTests: [TestSpecification!]!
+    command: String!
+    timeout: Float!
+    providedFiles: [File!]!
+    requiredFiles: [String!]!
+    tests: [TestSpecification!]!
 }
 
 type Submission {
@@ -155,8 +155,8 @@ input CourseInput {
 }
 
 input SpecificationInput {
-    specificationCompilationCommand: String!
-    specificationCompilationTimeout: Float!
+    command: String!
+    timeout: Float!
 }
 
 

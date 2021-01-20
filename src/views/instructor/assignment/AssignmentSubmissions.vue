@@ -50,14 +50,14 @@ const GET_ASSIGNMENT =
                  }
               },
               specification {
-                  specificationCompilationCommand,
-                  specificationCompilationTimeout,
-                  specificationProvidedFiles {
+                  command,
+                  timeout,
+                  providedFiles {
                     name,
                     reference,
                     _id
                   },
-                  specificationRequiredFiles,
+                  requiredFiles,
                   _id
               },
               created
@@ -71,7 +71,7 @@ export default {
     return {
       assignment: {
         specification: {
-          specificationRequiredFiles: [],
+          requiredFiles: [],
           _id: ""
         }
       },

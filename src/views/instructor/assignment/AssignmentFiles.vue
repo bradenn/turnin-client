@@ -20,7 +20,7 @@
         </div>
 
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.specification.specificationRequiredFiles"
+          <b-table :items="assignment.specification.requiredFiles"
                    :fields="['name', 'options']" small show-empty>
             <template #empty>
               No files specified.
@@ -48,7 +48,7 @@
 
         </div>
         <div class="table-responsive mb-0">
-          <b-table :items="assignment.specification.specificationProvidedFiles"
+          <b-table :items="assignment.specification.providedFiles"
                    :fields="['name', 'options']" small show-empty>
             <template #empty>
               No files specified.
@@ -125,14 +125,14 @@ const GET_ASSIGNMENT =
               assigned,
               due,
               specification {
-                  specificationCompilationCommand,
-                  specificationCompilationTimeout,
-                  specificationProvidedFiles {
+                  command,
+                  timeout,
+                  providedFiles {
                     name,
                     reference,
                     _id
                   },
-                  specificationRequiredFiles,
+                  requiredFiles,
                   _id
               },
               created
@@ -146,7 +146,7 @@ export default {
     return {
       assignment: {
         specification: {
-          specificationRequiredFiles: [],
+          requiredFiles: [],
           _id: ""
         }
       },

@@ -8,7 +8,7 @@
                 subtitle="All of the following tests will be run and evaluated on all assignment submissions.">
           <template slot="table">
 
-            <b-table :items="assignment.specification.specificationTests" sort-by="testName"
+            <b-table :items="assignment.specification.tests" sort-by="testName"
                      :fields="['name']" class="justify-content-between"
                      show-empty>
               <template #empty>
@@ -169,7 +169,7 @@ const GET_ASSIGNMENT =
               assigned,
               due,
               specification {
-                  specificationTests {
+                  tests {
                     testName,
                     testIsHidden,
                     testInput { _id, reference, name, fileLink },
@@ -192,7 +192,7 @@ export default {
     return {
       assignment: {
         specification: {
-          specificationRequiredFiles: [],
+          requiredFiles: [],
           _id: ""
         }
       },

@@ -26,7 +26,7 @@
                   description="This command will be used to compile the submitted project."
                   >
                 <b-form-input type="text"
-                              v-model="assignment.specification.specificationCompilationCommand"></b-form-input>
+                              v-model="assignment.specification.command"></b-form-input>
               </b-form-group>
 
               <b-form-group
@@ -35,7 +35,7 @@
                   description="The compilation will timeout after 5000ms by default."
                   >
                 <b-form-spinbutton id="demo-sb"
-                                   v-model="assignment.specification.specificationCompilationTimeout"
+                                   v-model="assignment.specification.timeout"
                                    min="200" step="500" max="20000"></b-form-spinbutton>
               </b-form-group>
               <div class="d-flex justify-content-between align-items-center mt-2">
@@ -76,14 +76,14 @@ const GET_ASSIGNMENT =
                 courseFullName
               },
               specification {
-                  specificationCompilationCommand,
-                  specificationCompilationTimeout,
-                  specificationProvidedFiles {
+                  command,
+                  timeout,
+                  providedFiles {
                     name,
                     reference,
                     _id
                   },
-                  specificationRequiredFiles,
+                  requiredFiles,
                   _id
               },
               created
@@ -97,7 +97,7 @@ export default {
     return {
       assignment: {
         specification: {
-          specificationRequiredFiles: [],
+          requiredFiles: [],
           _id: ""
         }
       },
@@ -132,8 +132,8 @@ export default {
         variables: {
           SpecificationId: this.assignment.specification._id,
           SpecificationInput: {
-            specificationCompilationCommand: this.assignment.specification.specificationCompilationCommand,
-            specificationCompilationTimeout: this.assignment.specification.specificationCompilationTimeout
+            command: this.assignment.specification.command,
+            timeout: this.assignment.specification.timeout
           }
         }
       }).then(() => {
