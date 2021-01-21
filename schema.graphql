@@ -43,7 +43,7 @@ type Course {
 type File {
     _id: ObjectId!
     created: String!
-    link: String!
+    link: String
     name: String!
     owner: User!
     reference: String!

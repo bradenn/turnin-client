@@ -3,8 +3,7 @@
     <div class="container-fluid">
       <a class="navbar-brand mr-0" href="/dashboard">
         <span class="text-light ml-2 " style="font-family: JetBrainsMonoBold, monospace;">
-        &lt;&#47;&gt;Turnin</span>
-        <span class="text-muted ml-2" style="font-family: JetBrainsMono, monospace;">BNM University</span>
+        <span style="letter-spacing: -2px;">&lt;&#47;&gt;</span>&nbsp;Turnin</span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
               aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
