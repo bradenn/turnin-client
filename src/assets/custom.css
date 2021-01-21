@@ -32,15 +32,15 @@
     --success-dim: rgba(52, 199, 89, 0.15);
     --danger: rgba(255, 59, 48, 1);
     --danger-dim: rgba(255, 59, 48, 0.15);
-    --box-shadow: none;
+    --box-shadow: 0 2px 2px 2px #000;
 
 
 }
 
 [data-theme='dark'] {
 
-    --background: rgba(13,17,23,1);
-    --foreground: rgba(13,17,23,1);
+    --background: rgba(13, 17, 23, 1);
+    --foreground: rgba(22, 27, 34, 1);
     --border: 1px solid rgb(48, 54, 61);
     --border-color: rgb(48, 54, 61);
 
@@ -58,7 +58,7 @@
     --success-dim: rgba(48, 209, 88, 0.50);
     --danger: rgba(255, 69, 58, 1);
     --danger-dim: rgba(255, 69, 58, 0.50);
-    --box-shadow: none;
+    --box-shadow: 0 2px 2/8px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 body[data-theme='dd'] {
@@ -474,10 +474,16 @@ hr {
     background-color: rgba(var(--primary), 0.3);
 }
 
-.btn-secondary {
-    background-color: rgba(var(--primary), 0.3) !important;
+.btn.btn-secondary {
+    background-color: var(--foreground);
+    color: var(--text-color);
     border: var(--border);
 }
+
+.btn.btn-secondary:hover {
+    opacity: 0.8;
+}
+
 
 .text-danger {
     color: var(--danger) !important;
@@ -575,18 +581,17 @@ a.text-success:hover {
     background-color: var(--nav) !important;
 }
 
-.table th, .table td {
-    border-top: var(--border);
-}
-
 .navbar {
-
+    border-bottom: var(--border);
     height: var(--nav-size);
     background-color: var(--nav) !important;
     box-shadow: var(--box-shadow);
-    border-bottom: none;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.table th, .table td {
+    border-top: var(--border);
 }
 
 .navbar-brand {
@@ -619,10 +624,6 @@ a.text-success:hover {
 }
 
 /*Workspace editor tabs*/
-
-.CodeMirror {
-    height: 35em !important;
-}
 
 .nav-tabs {
     background-color: transparent;

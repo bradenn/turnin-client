@@ -9,6 +9,7 @@ import {ApolloLink} from 'apollo-link'
 import VueApollo from 'vue-apollo'
 import {createUploadLink} from 'apollo-upload-client'
 import hljs from 'highlight.js'
+import VueCodemirror from 'vue-codemirror'
 
 
 import './assets/turnin.css'
@@ -16,6 +17,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import './assets/custom.css'
 import './assets/highlight.min.css'
+import '../node_modules/codemirror/lib/codemirror.css'
+import './assets/one-dark.css'
+import './assets/one-light.css'
+import '../node_modules/codemirror/mode/clike/clike'
 
 Vue.config.productionTip = false
 
@@ -25,6 +30,7 @@ Vue.prototype.$token = () => localStorage.getItem("token");
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.use(VueCodemirror)
 
 document.title = "Turnin"
 

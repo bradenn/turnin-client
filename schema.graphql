@@ -8,7 +8,6 @@ schema {
 type Assignment {
     _id: ObjectId!
     assigned: Boolean!
-    assignmentSubmissions: [Submission!]!
     brief: Brief!
     course: Course!
     created: String
@@ -16,6 +15,7 @@ type Assignment {
     late: String!
     name: String!
     specification: Specification!
+    submissions: [Submission!]!
 }
 
 type Brief {

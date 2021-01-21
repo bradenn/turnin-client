@@ -1,12 +1,16 @@
 <template>
   <div class="header mb-4">
     <b-container>
+
       <div class="pt-3">
         <div class="d-flex justify-content-between mb-3">
           <div>
-            <div class="card-subtitle mb-0"><slot name="breadcrumbs"></slot></div>
+            <div class="card-subtitle mb-0">
+              <slot name="breadcrumbs"></slot>
+            </div>
             <span class="nested-title">{{ previous }} <span class="text-muted bold">/</span> <span
                 class="bold">{{ current }}</span></span>
+
           </div>
           <div class="align-self-end">
             <component :is="button"></component>
@@ -65,7 +69,8 @@ export default {
 }
 
 .header {
-  background-color: var(--foreground-accent);
+
+  background-color: var(--foreground);
   border-bottom: var(--border);
 }
 </style>

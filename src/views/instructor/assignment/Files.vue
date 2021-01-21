@@ -50,7 +50,7 @@
                 <div class="d-flex justify-content-between">
                   <span>{{ data.item.name }}</span>
                   <div>
-                    <b-link :to="`/file/${data.item._id}`" target="_blank">View</b-link>&nbsp;|&nbsp;
+                    <b-link :to="`/file/${data.item._id}`">View</b-link>&nbsp;|&nbsp;
                     <b-link @click="removeProvidedFile(data.item._id)">Delete</b-link>
                   </div>
                 </div>
