@@ -21,6 +21,30 @@
                   <b-icon-fonts scale="1"></b-icon-fonts>
                 </b-button>
               </b-button-group>
+              <b-button-group size="sm" class="mr-1">
+                <b-dropdown size="sm" text="JetBrains Mono">
+                  <b-dropdown-item>JetBrains Mono</b-dropdown-item>
+                  <b-dropdown-divider></b-dropdown-divider>
+                  <b-dropdown-item>Fira Mono</b-dropdown-item>
+                  <b-dropdown-item>Fira Code</b-dropdown-item>
+                </b-dropdown>
+                <b-dropdown size="sm" text="One Dark">
+                  <b-dropdown-item>One Dark</b-dropdown-item>
+                  <b-dropdown-divider></b-dropdown-divider>
+                  <b-dropdown-item>Solarized</b-dropdown-item>
+                  <b-dropdown-item>Dracula</b-dropdown-item>
+                </b-dropdown>
+              </b-button-group>
+              <b-dropdown size="sm" text="C++">
+                <b-dropdown-item>C++</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item>C</b-dropdown-item>
+                <b-dropdown-item>Java</b-dropdown-item>
+                <b-dropdown-item>Golang</b-dropdown-item>
+                <b-dropdown-item>JavaScript</b-dropdown-item>
+                <b-dropdown-item>Python</b-dropdown-item>
+                <b-dropdown-item>Ruby</b-dropdown-item>
+              </b-dropdown>
             </b-button-toolbar>
           </div>
         </b-col>

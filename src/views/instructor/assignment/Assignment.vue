@@ -2,6 +2,7 @@
   <div>
     <t-header
         :loading="loading"
+        :back="back"
         :previous="assignment.name"
         :current="this.$route.meta.title"
         :subtitle="assignment.assigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
@@ -37,9 +38,12 @@ export default {
     tHeader
   },
   data() {
+
     return {
       assignment: {course: {}},
       loading: !!0,
+      back: "",
+      director: "",
       error: "",
       show: false,
       parent: `/assignment/${this.$route.params.assignmentId}/`,
@@ -55,6 +59,7 @@ export default {
   },
   mounted() {
     this.loadCourse();
+    this.back = "/dashboard/assignments"
   },
   apollo: {
     assignment: {

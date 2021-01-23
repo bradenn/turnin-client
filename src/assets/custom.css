@@ -32,7 +32,7 @@
     --success-dim: rgba(52, 199, 89, 0.15);
     --danger: rgba(255, 59, 48, 1);
     --danger-dim: rgba(255, 59, 48, 0.15);
-    --box-shadow: 0 2px 2px 2px #000;
+    --box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.06);
 
 
 }
@@ -47,7 +47,7 @@
     --nav: rgba(22, 27, 34, 1);
     --foreground-accent: rgba(13, 17, 23, 1);
     --text-color: #FFFFFF;
-    --nav-size: 48px;
+    --nav-size: 42px;
     --muted: #9D9EA3;
     --border-radius: 8px;
     --speed: 500ms;
@@ -58,7 +58,7 @@
     --success-dim: rgba(48, 209, 88, 0.50);
     --danger: rgba(255, 69, 58, 1);
     --danger-dim: rgba(255, 69, 58, 0.50);
-    --box-shadow: 0 2px 2/8px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    --box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
 }
 
 body[data-theme='dd'] {
@@ -435,28 +435,34 @@ a:hover {
 
 .dropdown-item {
     color: var(--text-color) !important;
-    padding: 8px 12px;
+    padding: 4px 8px;
     border: 1px solid transparent;
     text-decoration: none;
-    border-radius: 4px;
+    font-size: 1em !important;
+    line-height: 21px;
+}
+
+.dropdown-divider {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .dropdown-menu {
     background-color: var(--foreground);
+    box-shadow: var(--box-shadow);
     border: var(--border);
     color: var(--text-color);
-    padding: 8px;
-
-
+    padding: 0 0;
+    border-radius: 3.2px;
 }
-
 
 .dropdown-menu .dropdown-item:hover {
-    background-color: var(--foreground);
+    background-color: var(--foreground-accent) !important;
     color: var(--text-color);
-    border: var(--border);
+
     /*box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.03), 1px 2px 3px rgba(0, 0, 0, 0.02);*/
 }
+
 
 a:hover {
     color: var(--primary);
@@ -470,8 +476,23 @@ hr {
     margin-bottom: 0.5em;
 }
 
-.btn-primary.btn-sm {
-    background-color: rgba(var(--primary), 0.3);
+.btn {
+    font-weight: 400;
+}
+
+.dropdown-divider {
+    border-color: var(--border-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-dim) !important;
+    color: var(--primary)
+}
+
+.btn-primary:hover {
+    background-color: var(--foreground) !important;
+    border: var(--border) !important;
+    border-width: 2px !important;
 }
 
 .btn.btn-secondary {
@@ -482,6 +503,30 @@ hr {
 
 .btn.btn-secondary:hover {
     opacity: 0.8;
+    background-color: var(--foreground) !important;
+    color: var(--text-color) !important;
+    border: var(--border) !important;
+}
+
+.btn.btn-secondary:active {
+    opacity: 0.8;
+    background-color: var(--foreground) !important;
+    color: var(--text-color) !important;
+    border: var(--border) !important;
+}
+
+.btn.btn-secondary:focus {
+    opacity: 0.8;
+    background-color: var(--foreground) !important;
+    color: var(--text-color) !important;
+    border: var(--border) !important;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
+    opacity: 0.8;
+    background-color: var(--foreground) !important;
+    color: var(--text-color) !important;
+    border: var(--border) !important;
 }
 
 
@@ -576,6 +621,7 @@ a.text-success:hover {
 .navbar .nav-link:hover {
     color: var(--nav-text);
 }
+
 
 .bg-dark {
     background-color: var(--nav) !important;
@@ -738,7 +784,6 @@ td {
 
 
 .card {
-
 }
 
 .sub-header {
@@ -798,13 +843,13 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 40px; /* Set the fixed height of the footer here */
+    height: 42px; /* Set the fixed height of the footer here */
     line-height: 40px; /* Vertically center the text there */
     font-size: 14px;
     font-weight: 400;
     color: var(--text-color);
-    opacity: 0.8;
-    background-color: transparent;
+    opacity: 1;
+    background-color: var(--foreground);
     border-top: var(--border);
 }
 

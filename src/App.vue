@@ -5,7 +5,17 @@
       <div class="container-fluid no-gutters">
         <div class="" id="content-view">
           <router-view></router-view>
-
+          <div class="footer">
+            <b-container>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Copyright 2021 &copy; BNM</span>
+                <div>
+                  <b-link to="/legal/privacy" class="mr-2">privacy</b-link>
+                  <b-link to="/legal/terms">terms</b-link>
+                </div>
+              </div>
+            </b-container>
+          </div>
         </div>
       </div>
     </div>
@@ -25,9 +35,7 @@ export default {
     Navbar,
   },
   data() {
-    return {
-
-    }
+    return {}
   },
   mounted() {
     let localTheme = localStorage.getItem('theme'); //gets stored theme value if any
@@ -53,7 +61,7 @@ html, body {
   width: 100%;
 }
 
-.no-gutters{
+.no-gutters {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }

@@ -18,6 +18,7 @@ import CourseOverview from "@/views/instructor/course/CourseOverview";
 import DashboardAssignments from "@/views/instructor/dashboard/Assignments";
 import DashboardCourses from "@/views/instructor/dashboard/Courses";
 import DashboardNewAssignment from "@/views/instructor/dashboard/NewAssignment";
+import Workspace from "@/views/workspace/Workspace";
 import AssignmentBrief from "@/views/instructor/assignment/Brief";
 import AssignmentSettings from "@/views/instructor/assignment/Settings";
 import AssignmentTests from "@/views/instructor/assignment/Tests";
@@ -36,7 +37,8 @@ let router = new Router({
             path: '/dashboard',
             component: Dashboard,
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                transitionName: 'slide'
             },
             children: [
                 {
@@ -108,6 +110,14 @@ let router = new Router({
             path: '/file/:fileId',
             name: 'File',
             component: File,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/workspace/:workspaceId',
+            name: 'Workspace',
+            component: Workspace,
             meta: {
                 requiresAuth: true
             }
@@ -266,6 +276,7 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+    to.meta.from = from.fullPath;
     if (to.fullPath === '/logout') {
         localStorage.clear();
         return next({path: '/login'})
@@ -281,14 +292,14 @@ router.beforeEach((to, from, next) => {
         } else {
             next({
                 path: '/login',
-                params: {nextUrl: to.fullPath}
+                params: {nextUrl: to.fullPath, prevUrl: from.fullPath}
             })
         }
     } else if (to.matched.some(record => record.meta.guest)) {
         if (typeof localStorage.getItem('token') !== 'undefined') {
             next()
         } else {
-            next({path: '/dashboard', params: {nextUrl: to.fullPath}})
+            next({path: '/dashboard', params: {nextUrl: to.fullPath, prevUrl: from.fullPath}})
         }
     } else {
         next()

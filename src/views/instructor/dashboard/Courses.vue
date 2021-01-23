@@ -2,43 +2,29 @@
   <div>
     <b-form-row>
       <b-col cols="12">
-        <div class="mb-3">
-          <h3>Your Courses</h3>
-          <span>The courses below belong to you, or have been shared with you.</span>
-        </div>
-      </b-col>
-      <b-col cols="8">
-        <div v-for="course in instructorCourses" :key="course._id">
-          <b-link :to="`/course/${course._id}`">
-            <b-card no-body class="mb-3 px-3 py-3">
-              <div class="d-flex justify-content-between">
-                <div class="name">{{ course.name }}.{{ course.section }}</div>
-                <div class="d-flex justify-content-start mr-n2">
-                  <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
-                    <b-badge pill variant="primary" class="badge-top-right">{{ course.courseStudentCount }}</b-badge>
-                  </div>
-                  <div class="mr-1"><i class="fas fa-book fa-fw mr-1"></i>
-                    <b-badge pill variant="primary" class="badge-top-right">{{ course.courseAssignmentCount }}</b-badge>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mb-2">{{ course.description }}</div>
-
-            </b-card>
-          </b-link>
-        </div>
-      </b-col>
-      <b-col cols="4">
-        <t-card
-            title="Statistics"
-            subtitle="Aggregated information about your courses.">
-          <template slot="body">
-            <div class="d-flex justify-content-between">
-              <span>Total Students</span>
-              <strong>123</strong>
-            </div>
-            <hr>
+        <t-card title="Courses"
+                subtitle="The courses below belong to you, or have been shared with you.">
+          <template slot="table">
+            <b-table :items="instructorCourses" sort-by="test.name"
+                     :fields="['name', 'description', 'students', 'assignments', 'options']"
+                     class="justify-content-between"
+                     small show-empty>
+              <template #empty>
+                No tests specified.
+              </template>
+              <template #cell(name)="data">
+                {{ data.item.fullName }}
+              </template>
+              <template #cell(students)="data">
+                {{ data.item.courseStudentCount }}
+              </template>
+              <template #cell(assignments)="data">
+                {{ data.item.courseAssignmentCount }}
+              </template>
+              <template #cell(options)="data">
+                <b-link :to="`/course/${data.item._id}`">Manage</b-link>
+              </template>
+            </b-table>
           </template>
         </t-card>
       </b-col>
@@ -57,6 +43,7 @@ const GET_COURSES = gql`
 query instructorCourses{
     instructorCourses{
         name,
+        fullName,
         section,
         description,
         courseStudentCount,

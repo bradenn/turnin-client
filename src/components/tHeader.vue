@@ -1,15 +1,19 @@
 <template>
   <div class="header mb-4">
     <b-container>
-
       <div class="pt-3">
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between mb-2">
           <div>
-            <div class="card-subtitle mb-0">
-              <slot name="breadcrumbs"></slot>
+            <div class="d-flex justify-content-start">
+              <b-button-toolbar v-if="back">
+                <b-button size="sm" @click="$router.go(-1)" class="mr-2">
+                  <b-icon-arrow-left></b-icon-arrow-left>
+                </b-button>
+              </b-button-toolbar>
+              <div class="nested-title">{{ previous }} <span class="text-muted bold">/</span> <span
+                  class="bold">{{ current }}</span></div>
             </div>
-            <span class="nested-title">{{ previous }} <span class="text-muted bold">/</span> <span
-                class="bold">{{ current }}</span></span>
+
 
           </div>
           <div class="align-self-end">
@@ -33,6 +37,7 @@ export default {
   name: "t-header",
   props: {
     loading: Boolean,
+    back: String,
     previous: String,
     current: String,
     button: Object,

@@ -2,35 +2,38 @@
   <div>
     <b-form-row>
       <b-col cols="12">
-        <div class="mb-3">
-          <h3>Your Assignments</h3>
-          <span>The assignments below belong to you, or have been shared with you.</span>
-        </div>
-      </b-col>
-      <b-col cols="8">
-        <div v-for="course in instructorCourses" :key="course._id">
-          <h5>{{ course.name }}.{{ course.section }}</h5>
-          <div v-for="assignment in course.courseAssignments" :key="assignment._id">
-            <b-link :to="`/assignment/${assignment._id}`">
-              <b-card no-body class="mb-3 px-3 py-3">
-                <div class="d-flex justify-content-between">
-                  <div class="name">{{ assignment.name }}</div>
-                  <div class="d-flex justify-content-start mr-n2">
-                    <div class="mr-1 mr-2"><i class="fas fa-user fa-fw mr-1"></i>
-                      <b-badge pill variant="primary" class="badge-top-right">12</b-badge>
-                    </div>
-                    <div class="mr-1"><i class="fas fa-book fa-fw mr-1"></i>
-                      <b-badge pill variant="primary" class="badge-top-right">16</b-badge>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mb-2">{{ assignment.assignmentDescription || 'No Description' }}</div>
-
-              </b-card>
-            </b-link>
-          </div>
-        </div>
+        <t-card title="Assignments"
+                subtitle="The assignments below belong to you, or have been shared with you.">
+          <template slot="table">
+            <div v-for="course in instructorCourses" :key="course._id" class="mb-3">
+              <h6 class="ml-2 mt-2">{{ course.fullName }}</h6>
+              <b-table :items="course.courseAssignments" sort-by="test.name"
+                       :fields="['name', 'status', 'submissions', 'options']"
+                       class="justify-content-between border-top"
+                       small show-empty>
+                <template #empty>
+                  No tests specified.
+                </template>
+                <template #cell(name)="data">
+                  {{ data.item.name }}
+                </template>
+                <template #cell(status)="data">
+                  <b-badge variant="primary" v-if="data.item.assigned">Assigned</b-badge>
+                  <b-badge variant="light" v-else>Unassigned</b-badge>
+                </template>
+                <template #cell(submissions)="data">
+                  {{ data.item.submissions.length }}
+                </template>
+                <template #cell(assignments)="data">
+                  {{ data.item.courseAssignmentCount }}
+                </template>
+                <template #cell(options)="data">
+                  <b-link :to="`/assignment/${data.item._id}`">Manage</b-link>
+                </template>
+              </b-table>
+            </div>
+          </template>
+        </t-card>
       </b-col>
     </b-form-row>
 
@@ -89,14 +92,18 @@
 <script>
 
 import gql from 'graphql-tag'
+import TCard from "@/components/tCard";
 
 const GET_COURSES = gql`
 query instructorCourses{
     instructorCourses{
         name,
+        fullName,
         section,
         courseAssignments {
             _id,
+            assigned,
+            submissions { _id },
             name,
             due,
             late
@@ -119,13 +126,14 @@ mutation createAssignment($assignmentName: String!, $assignmentCourse: String!, 
 
 export default {
   name: 'Courses',
-  components: {},
+  components: {TCard},
   data() {
     return {
       fields: ['name'],
       items: [],
       instructorCourses: [],
       loading: 0,
+      assignments: [],
       show: false,
       form: {
         name: "",
@@ -144,12 +152,15 @@ export default {
         return {
           userId: this.$user()._id,
         }
+      }, result() {
+
       }
     },
   },
   mounted() {
 
   },
+  computed: {},
   methods: {
     createAssignment() {
       this.$apollo.mutate({
