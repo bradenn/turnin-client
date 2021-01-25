@@ -2,7 +2,7 @@
   <div>
     <t-header
         :loading="loading"
-        :back="back"
+        back="/dashboard/assignments"
         :previous="assignment.name"
         :current="this.$route.meta.title"
         :subtitle="assignment.assigned?'This assignment is currently assigned':'This assignment is currently unassigned.'"
@@ -59,7 +59,6 @@ export default {
   },
   mounted() {
     this.loadCourse();
-    this.back = "/dashboard/assignments"
   },
   apollo: {
     assignment: {

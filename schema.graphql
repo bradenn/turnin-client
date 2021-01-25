@@ -110,7 +110,7 @@ type SubmissionResult {
     stderr: [String!]
     stdout: [String!]
     test: TestSpecification!
-    testElapsedTime: String!
+    duration: String!
 }
 
 type TestSpecification {

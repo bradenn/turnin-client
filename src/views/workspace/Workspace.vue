@@ -2,10 +2,10 @@
   <div>
     <b-container class="mt-3">
       <b-form-row>
-        <b-col cols="3"></b-col>
+
         <b-col cols="9">
           <b-button-toolbar class="mb-2">
-            <b-button-group size="sm">
+            <b-button-group size="sm" class="mr-1">
               <b-dropdown text="Roboto Mono" size="sm">
                 <b-dropdown-item class="menu-item jetbrains-mono">JetBrains Mono</b-dropdown-item>
                 <b-dropdown-item class="menu-item menlo">Menlo</b-dropdown-item>
@@ -24,6 +24,11 @@
           <t-card>
             <template slot="body">
               <b-aspect aspect="8.5:11">
+                <div class="d-flex justify-content-start">
+                  <div class="editor-tab">main.cpp</div>
+                  <div class="editor-tab">dstack.cpp</div>
+                  <div class="editor-tab">dstack.h</div>
+                </div>
                 <codemirror v-model="body" :options="options">
 
                 </codemirror>
@@ -63,7 +68,13 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
+
+.editor-tab {
+  padding: 0.25em 1em !important;
+  border: var(--border);
+}
+
 
 .menu-item {
   font-size: 12px;

@@ -30,14 +30,14 @@
         <b-col cols="8">
           <div class="table-responsive mb-0">
             <b-table :items="submission.submissionResults" sort-by="test.name"
-                     :fields="['name', 'memory', 'testElapsedTime', 'options']" class="justify-content-between"
+                     :fields="['name', 'memory', 'duration', 'options']" class="justify-content-between"
                      small show-empty>
               <template #empty>
                 No tests specified.
               </template>
               <template #cell(name)="data">
                 <b-icon-patch-check-fll variant="success" class="mr-2"
-                                        v-if="data.item.passed"></b-icon-patch-check-fll>
+                                        v-if="data.item"></b-icon-patch-check-fll>
                 <b-icon-patch-exclamation-fll variant="danger" class="mr-2" v-else></b-icon-patch-exclamation-fll>
                 {{ data.item.test.name }}
               </template>
@@ -87,14 +87,14 @@
           <hr class="mt-1">
           <div class="d-flex justify-content-between">
             <span class="bold">Elapsed Time</span>
-            <code>{{ submission.submissionCompilationTime }}</code>
+            <code>{{ submission.duration }}</code>
           </div>
           <hr>
           <div class="d-flex justify-content-between">
             <span>Standard Output/Error</span>
             <code>3 lines</code>
           </div>
-          <code>{{ submission.submissionCompilationOutput.join('\n') }}</code>
+          <code>{{ submission.stdout.join('\n') }}</code>
           <hr>
         </b-col>
       </b-row>
@@ -116,13 +116,13 @@ const GET_SUBMISSION =
     gql`query submission($submissionId: ObjectId!){
           submission(submissionId: $submissionId){
             _id
-            submissionCompilationOutput,
-            submissionCompilationTime,
-            submissionResults {
-                passed,
+            stdout,
+            duration,
+            results {
+
                 memory,
                 exit,
-                testElapsedTime,
+                duration,
                 stdout,
                 stderr,
                 test {

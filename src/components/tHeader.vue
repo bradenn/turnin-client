@@ -6,7 +6,7 @@
           <div>
             <div class="d-flex justify-content-start">
               <b-button-toolbar v-if="back">
-                <b-button size="sm" @click="$router.go(-1)" class="mr-2">
+                <b-button size="sm" :to="back" class="mr-2">
                   <b-icon-arrow-left></b-icon-arrow-left>
                 </b-button>
               </b-button-toolbar>

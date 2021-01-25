@@ -25,7 +25,7 @@
                             description="Percentage of students who have completed the assignment.">
                 <b-progress class="" :max="assignment.specification.tests.length" show-value height="1rem">
                   <b-progress-bar :value="1" :label="test.name" v-for="test in assignment.specification.tests"
-                                  :variant="info" :key="test._id"></b-progress-bar>
+                                  :key="test._id"></b-progress-bar>
                 </b-progress>
               </b-form-group>
             </template>
