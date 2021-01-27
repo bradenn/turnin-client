@@ -8,7 +8,6 @@ import {InMemoryCache} from 'apollo-cache-inmemory'
 import {ApolloLink} from 'apollo-link'
 import VueApollo from 'vue-apollo'
 import {createUploadLink} from 'apollo-upload-client'
-import hljs from 'highlight.js'
 import VueCodemirror from 'vue-codemirror'
 
 
@@ -16,10 +15,10 @@ import './assets/turnin.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import './assets/custom.css'
-import './assets/highlight.min.css'
+import '../public/highlight.min.css'
 import '../node_modules/codemirror/lib/codemirror.css'
-import './assets/one-dark.css'
-import './assets/one-light.css'
+import '../public/one-dark.css'
+import '../public/one-light.css'
 import '../node_modules/codemirror/mode/clike/clike'
 
 Vue.config.productionTip = false
@@ -77,31 +76,6 @@ const apolloProvider = new VueApollo({
     defaultClient: client
 })
 
-Vue.directive('highlightjs', {
-    deep: true,
-    bind: function (el, binding) {
-        // on first bind, highlight all targets
-        let targets = el.querySelectorAll('code')
-        targets.forEach((target) => {
-            // if a value is directly assigned to the directive, use this
-            // instead of the element content.
-            if (binding.value) {
-                target.textContent = binding.value
-            }
-            hljs.highlightBlock(target)
-        })
-    },
-    componentUpdated: function (el, binding) {
-        // after an update, re-fill the content and then highlight
-        let targets = el.querySelectorAll('code')
-        targets.forEach((target) => {
-            if (binding.value) {
-                target.textContent = binding.value
-                hljs.highlightBlock(target)
-            }
-        })
-    }
-});
 
 new Vue({
     render: h => h(App),

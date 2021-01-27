@@ -64,7 +64,7 @@ type Mutation {
 
 type Query {
     Specification(SpecificationId: ObjectId!): Specification!
-    TestSpecification(TestSpecificationId: ObjectId!): TestSpecification!
+    Test(TestSpecificationId: ObjectId!): Test!
     assignment(assignmentId: ObjectId!): Assignment!
     course(courseId: ObjectId!): Course!
     file(fileId: ObjectId!): File!
@@ -84,7 +84,7 @@ type Specification {
     created: String!
     providedFiles: [File!]!
     requiredFiles: [String!]!
-    tests: [TestSpecification!]!
+    tests: [Test!]!
     timeout: Float!
 }
 
@@ -96,12 +96,12 @@ type Submission {
     files: [File!]!
     owner: User!
     passed: Boolean!
-    results: [SubmissionResult!]!
+    results: [Result!]!
     stdout: [String!]
     submissionOwner: User!
 }
 
-type SubmissionResult {
+type Result {
     _id: ObjectId!
     created: String!
     exit: Float!
@@ -109,11 +109,11 @@ type SubmissionResult {
     passed: Boolean!
     stderr: [String!]
     stdout: [String!]
-    test: TestSpecification!
+    test: Test!
     duration: String!
 }
 
-type TestSpecification {
+type Test {
     _id: ObjectId!
     args: [String!]!
     created: String!

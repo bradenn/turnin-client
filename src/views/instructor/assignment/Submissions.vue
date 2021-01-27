@@ -8,7 +8,7 @@
                 subtitle="The full instructions for the assignment. Upload a markup file, pdf, or docx file.">
           <template slot="body">
 
-            <b-table :items="assignment.submission"
+            <b-table :items="assignment.submissions"
                      :fields="['student', 'options']" small show-empty>
               <template #empty>
                 No files specified.
@@ -17,6 +17,8 @@
                 {{ data.item.owner.fullName }}
               </template>
               <template #cell(options)="data">
+                <b-link :to="`/submission/${data.item._id}`">View</b-link>
+                |
                 <b-link @click="removeRequiredFile(data.item)">Remove</b-link>
               </template>
             </b-table>
@@ -42,7 +44,7 @@ const GET_ASSIGNMENT =
               name,
               assigned,
               due,
-              assignmentSubmissions {
+              submissions {
                  _id,
                  owner {
                     _id,

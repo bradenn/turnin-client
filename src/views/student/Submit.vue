@@ -31,7 +31,7 @@
               </div>
             </template>
           </t-card>
-          <t-card :title="`Tests`"
+          <t-card :title="`Pipe Tests`"
                   :subtitle="`This assignment has ${assignment.specification.tests.length} tests`">
             <template slot="table">
               <b-table :items="assignment.specification.tests" sort-by="name"
@@ -76,7 +76,13 @@
             </template>
           </t-card>
         </b-col>
+
         <b-col cols="4">
+          <b-alert variant="notice" show>
+            <b-badge variant="primary" class="mr-2">Leaks</b-badge>
+            <span class="text-muted">Any and all memory leaks will be found.</span>
+
+          </b-alert>
           <t-card :title="`Structure`"
                   :subtitle="`Required files: ${assignment.specification.requiredFiles.join(', ')}`">
             <template slot="table">
@@ -252,6 +258,11 @@ export default {
 
   background-position: center top;
   background-size: 75% auto;
+}
+
+.alert.alert-notice {
+  border: var(--border);
+  background-color: var(--foreground);
 }
 
 </style>

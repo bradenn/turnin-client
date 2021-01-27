@@ -290,8 +290,7 @@ body {
 }
 
 .cm-s-one-dark {
-    border-bottom-left-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+
     background-color: var(--foreground) !important;
 }
 
@@ -877,14 +876,14 @@ pre {
 
 @font-face {
     font-family: 'JetBrainsMono';
-    src: url('JetBrainsMono.ttf');
+    src: url('../../public/JetBrainsMonoNL-Bold.ttf');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'JetBrainsMonoBold';
-    src: url('JetBrainsMonoNL-Bold.ttf');
+    src: url('../../public/JetBrainsMonoNL-Bold.ttf');
     font-weight: 700;
     font-style: normal;
 }
@@ -930,7 +929,7 @@ code {
 
 .beta {
     color: #333;
-    background: url(/images/support.jpg) no-repeat;
+
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
