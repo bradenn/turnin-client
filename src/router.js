@@ -24,6 +24,7 @@ import AssignmentSettings from "@/views/instructor/assignment/Settings";
 import AssignmentTests from "@/views/instructor/assignment/Tests";
 import Submit from "@/views/student/Submit";
 import Submission from "@/views/student/Submission";
+import Result from "@/views/student/Result";
 import AssignmentSubmissions from "@/views/instructor/assignment/Submissions";
 import File from "@/views/student/File";
 
@@ -102,6 +103,14 @@ let router = new Router({
             path: '/submission/:submissionId',
             name: 'Submission',
             component: Submission,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/result/:resultId',
+            name: 'Result',
+            component: Result,
             meta: {
                 requiresAuth: true
             }

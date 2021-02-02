@@ -5,7 +5,7 @@
       <div class="container-fluid no-gutters">
         <div class="" id="content-view">
           <router-view></router-view>
-          <div class="footer">
+<!--          <div class="footer">
             <b-container>
               <div class="d-flex justify-content-between">
                 <span class="text-muted">Copyright 2021 &copy; BNM</span>
@@ -15,7 +15,7 @@
                 </div>
               </div>
             </b-container>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

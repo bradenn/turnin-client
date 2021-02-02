@@ -20,6 +20,7 @@ import '../node_modules/codemirror/lib/codemirror.css'
 import '../public/one-dark.css'
 import '../public/one-light.css'
 import '../node_modules/codemirror/mode/clike/clike'
+import '../node_modules/codemirror/mode/diff/diff'
 
 Vue.config.productionTip = false
 
