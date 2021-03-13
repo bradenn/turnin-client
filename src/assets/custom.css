@@ -101,9 +101,6 @@ body {
     padding: 0.5rem 0.75em;
 }
 
-.col-md-10 {
-    background-color: var(--background);
-}
 
 .container-fluid {
     width: 100%;
@@ -112,12 +109,12 @@ body {
 }
 
 
-
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     background-color: var(--foreground);
 }
+
 
 ::-webkit-scrollbar-track-piece {
     background-color: var(--foreground);
@@ -629,14 +626,18 @@ a.text-success:hover {
 .navbar {
     border-bottom: var(--border);
     height: var(--nav-size);
-    background-color: var(--nav) !important;
+    background-color: var(--foreground) !important;
     box-shadow: var(--box-shadow);
     padding-top: 0;
     padding-bottom: 0;
 }
 
 .table th, .table td {
-    border-top: var(--border);
+
+}
+
+.navbar.bg-dark {
+    background-color: var(--foreground) !important;
 }
 
 .navbar-brand {
@@ -755,13 +756,6 @@ a.text-success:hover {
     box-shadow: var(--box-shadow);
 }
 
-.table {
-    margin-bottom: 0;
-    background-color: var(--foreground);
-    color: var(--text-color);
-
-}
-
 td {
     font-family: Roboto, sans-serif;
     -moz-osx-font-smoothing: grayscale;
@@ -775,12 +769,31 @@ td {
     box-sizing: border-box;
     text-overflow: ellipsis;
     overflow: hidden;
+
 }
 
-.table thead th {
+.bg-dark {
+    background-color: var(--background) !important;
+}
+
+
+.table tbody th {
     border: none;
 }
 
+.card .table .b-table {
+    border: var(--border) !important;
+    border-radius: var(--border-radius) !important;
+}
+
+.v-sep {
+    width: 1px;
+    margin: 0.25em 1.25em;
+    height: 1em;
+    vertical-align: center;
+    background-color: var(--muted);
+    opacity: 0.5;
+}
 
 .card {
 }

@@ -5,7 +5,7 @@
         <t-card title="Assignments"
                 subtitle="The assignments below belong to you, or have been shared with you.">
           <template slot="table">
-            <div v-for="course in instructorCourses" :key="course._id" class="mb-3">
+            <div v-for="course in instructorCourses" :key="course._id" class="mb-3 bd">
               <h6 class="ml-2 mt-2">{{ course.fullName }}</h6>
               <b-table :items="course.courseAssignments" sort-by="test.name"
                        :fields="['name', 'status', 'submissions', 'options']"
@@ -221,5 +221,10 @@ export default {
   background-color: var(--foreground);
   border: var(--border);
   box-shadow: var(--bs);
+}
+
+.bd {
+  border-radius: var(--border-radius);
+  border: var(--border);
 }
 </style>

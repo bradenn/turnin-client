@@ -44,17 +44,18 @@
               </div>
             </template>
             <template slot="body">
-              <div v-for="result in submission.results" :key="result._id">
+              <div v-for="result in sortResults(submission.results)" :key="result._id">
                 <div class="mb-1">
-                  <b-card no-body class="pb-0" style="border-radius: 4px;">
+                  <b-card no-body class="pb-0 bg-dark" :class="` ${classifyResult(result)}`"
+                          style="border-radius: 4px;">
                     <div class="d-flex justify-content-between my-1 mx-1">
                       <div>
-                        <b-icon-patch-check-fll variant="success" class="mx-2"
-                                                v-if="!!result.passed"></b-icon-patch-check-fll>
+                        <b-icon-check-circle-fill variant="success" class="mx-2"
+                                                  v-if="!!result.passed"></b-icon-check-circle-fill>
                         <b-icon icon="exclamation-triangle-fill" variant="warning" class="mx-2"
                                 v-else-if="result.timeout"></b-icon>
-                        <b-icon-patch-exclamation-fll variant="danger" class="mx-2"
-                                                      v-else></b-icon-patch-exclamation-fll>
+                        <b-icon-exclamation-octagon-fill variant="danger" class="mx-2"
+                                                         v-else></b-icon-exclamation-octagon-fill>
                         {{ result.test.name }}
                       </div>
 
@@ -78,7 +79,7 @@
                 </div>
               </template>
             </t-card>
-            <t-card title="Compilation Details" aspect="4:6" class="mt-2 pt-1 mb-2"
+            <t-card title="Compilation Details" aspect="4:6" class="mt-2 pt-1 mb-2 bg-dark"
                     subtitle="The following results to your previous submission">
 
               <template slot="body">
@@ -180,6 +181,20 @@ export default {
     },
   },
   methods: {
+    sortResults: (list) => {
+      return list.sort((a, b) => {
+        return b.passed - a.passed
+      })
+    },
+    classifyResult: (test) => {
+      if (test.passed && !test.timeout) {
+        return 'test-success'
+      } else if (!test.passed && test.timeout) {
+        return 'test-warning'
+      } else if (!test.passed && !test.timeout) {
+        return 'test-failed'
+      }
+    },
     largest(list) {
       return list.reduce((a, b) => b > a ? b : a)
     },
@@ -277,6 +292,23 @@ hr {
 
 .file-row:last-of-type {
   border-bottom: none;
+}
+
+.test-failed {
+  border-left: 2px solid var(--danger);
+}
+
+.test-success {
+  border-left: 2px solid var(--success);
+}
+
+.test-warning {
+  border-left: 2px solid var(--warning);
+}
+
+.bg-dark {
+  background: var(--background) !important;
+  /* //  */
 }
 
 </style>

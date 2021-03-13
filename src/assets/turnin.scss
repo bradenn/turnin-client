@@ -1,3 +1,5 @@
+/* Colors */
+
 $theme-colors: (
         "primary": #0366d6,
         "secondary": #272B2F,
@@ -6,18 +8,29 @@ $theme-colors: (
         "warning": #ffd60a
 );
 
-$body-bg: #212529;
-$foreground: #272b2f;
+$body-bg: rgba(13, 17, 23, 1);
+$foreground: rgba(22, 27, 34, 1);
 $body-color: #ffffff;
-//d
-$border-color: #474a4d;
-
-$border-radius: .375rem;
-//           0 1px 2px rgba(0, 0, 0, 0.16), 0 0 0 1px         , 0 0 0 2px            , 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.23);
-/*$box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 0 0 1px $body-bg, 0 0 0 2px $foreground, 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.23);*/
-
+$border-color: rgb(48, 54, 61);
 $component-active-color: $foreground;
 
+$border-radius: .375rem;
 $enable-transitions: true;
+
+
+/* Tables */
+
+$table-bg: $body-bg;
+.table {
+  margin-bottom: 0 !important;
+}
+
+.td {
+  border: 1px solid #fff !important;
+  padding-bottom: 1em !important;
+}
+
+
+/* Import All */
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
